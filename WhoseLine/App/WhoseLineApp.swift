@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct WhoseLineApp: App {
+    @ObservedObject var homeVM = HomeViewModel()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomeView()
+                .environmentObject(homeVM)
         }
     }
 }
