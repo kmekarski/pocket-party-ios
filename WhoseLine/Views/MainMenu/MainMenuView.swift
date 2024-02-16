@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MainMenuView: View {
     @EnvironmentObject var homeVM: HomeViewModel
+    @State var showSettings: Bool = false
     var body: some View {
         ZStack {
             Color.theme.background.ignoresSafeArea()
@@ -20,7 +21,10 @@ struct MainMenuView: View {
                 }
             }
             .padding(.top)
-        .padding(.horizontal, 24)
+            .padding(.horizontal, 24)
+            ModalView(isShowing: $showSettings, height: 350, content: {
+                settingsModalContent
+            }, headerImage: { Image(systemName: "gearshape.fill") })
         }
     }
 }
@@ -41,9 +45,10 @@ extension MainMenuView {
                 .resizable()
                 .scaledToFit()
                 .frame(height: 156)
-//                .background(Color.blue)
+            //                .background(Color.blue)
             Spacer()
             Button {
+                showSettings.toggle()
             } label: {
                 IconButtonView("gearshape.fill")
                     .offset(y: 18)
@@ -59,6 +64,12 @@ extension MainMenuView {
                 } label: {
                     MainMenuOptionView(title: "Scenes from a Hat", subtitle: "Classic WLIIA Game", icon: "gear", foregroundColor: .white, backgroundColor: .theme.accent)                }
             }
+        }
+    }
+    
+    private var settingsModalContent: some View {
+        VStack {
+            Text("Settings")
         }
     }
 }

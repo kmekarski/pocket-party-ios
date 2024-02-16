@@ -11,6 +11,7 @@ struct ModalView<Content: View>: View {
     @Binding var isShowing: Bool
     var height: CGFloat
     @ViewBuilder let content: Content
+    @ViewBuilder let headerImage: Image
     
     var body: some View {
         VStack {
@@ -50,6 +51,8 @@ struct ModalView_Previews: PreviewProvider {
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
+        } headerImage: {
+            Image("MainLogo")
         }
     }
 }
@@ -65,19 +68,20 @@ extension ModalView {
         .padding(.vertical, isShowing ? 20 : 0)
         .padding(.horizontal, 28)
         .frame(maxWidth: .infinity)
-        .background(Material.thick)
+        .background(Color.theme.background)
         .cornerRadius(20)
     }
     
     private var logo: some View {
-        Image("MainLogo")
+        headerImage
             .resizable()
             .scaledToFit()
-            .frame(height: 80)
-            .padding(8)
-            .background(Material.thick)
-            .cornerRadius(20)
-            .offset(y: 58)
+            .foregroundColor(.theme.accent)
+            .frame(height: 60)
+            .padding(16)
+            .background(Color.theme.background)
+            .cornerRadius(100)
+            .offset(y: 50)
             .zIndex(1)
     }
 }

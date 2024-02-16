@@ -23,6 +23,8 @@ struct GameView: View {
                     .padding(.horizontal)
                     ModalView(isShowing: $showInfo, height: 350) {
                         infoModalContent
+                    } headerImage: {
+                        Image("MainLogo")
                     }
                 }
                 .transition(.move(edge: .bottom))
