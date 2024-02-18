@@ -11,9 +11,15 @@ struct WideButtonView: View {
     var text: String
     var foregroundColor: Color = .white
     var backgroundColor: Color = Color.theme.accent
+    var disabled: Bool = false
     
     init(_ text: String) {
         self.text = text
+    }
+    
+    init(_ text: String, disabled: Bool) {
+        self.text = text
+        self.disabled = disabled
     }
     
     init(_ text: String, foregroundColor: Color, backgroundColor: Color) {
@@ -23,11 +29,11 @@ struct WideButtonView: View {
     }
     var body: some View {
         Text(text)
-            .font(.system(size: 20, weight: .bold))
+            .font(.system(size: 16, weight: .bold))
             .foregroundColor(foregroundColor)
             .frame(maxWidth: .infinity)
-            .padding(.vertical)
-            .background(backgroundColor)
+            .padding(.vertical, 10)
+            .background(backgroundColor.opacity(disabled ? 0.55 : 1))
             .cornerRadius(20)
             .shadow(color: .black.opacity(0.15), radius: 3, x: 0, y: 5)
 
@@ -38,7 +44,7 @@ struct WideButtonView_Previews: PreviewProvider {
     static var previews: some View {
         VStack(spacing: 20) {
             WideButtonView("Game")
-            WideButtonView("Game")
+            WideButtonView("Game", disabled: true)
             WideButtonView("Game")
         }
         .padding()

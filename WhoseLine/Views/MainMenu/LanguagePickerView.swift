@@ -10,39 +10,30 @@ import SwiftUI
 struct LanguagePickerView: View {
     @State private var selectedLanguageIndex = 0
     
-    let languages = [("🇺🇸", "English"), ("🇪🇸", "Spanish")]
-    
+    let languages = [("🇺🇸", "English"), ("🇪🇸", "Spanish"), ("🇫🇷", "French"), ("🇩🇪", "German"), ("🇨🇳", "Chinese"), ("🇯🇵", "Japanese")]
+
     var body: some View {
         HStack {
             Text("App language:")
-                .font(.system(size: 16, weight: .semibold))
-                .frame(maxWidth: .infinity, alignment: .leading)
+                .font(.system(size: 16))
+            Spacer()
             Picker(selection: $selectedLanguageIndex) {
                 ForEach(0..<languages.count, id: \.self) { index in
-                    Text(self.languages[index].0)
+                    languageLabel(index: index)
                 }
             } label: {
                 Text("")
             }
-            .pickerStyle(.segmented)
-            
         }
     }
 }
 
 #Preview {
-    ModalView(isShowing: .constant(true), height: 350) {
-        SettingsModalView()
-    } headerImage: {
-        Image(systemName: "gearshape.fill")
-    }
+    SettingsModalView(isShowing: .constant(true))
 }
 
 extension LanguagePickerView {
-    func languageLabel(language: String) -> some View {
-        HStack {
-            Text(language)
-            Text("language")
-        }
+    func languageLabel(index: Int) -> some View {
+        Text("\(self.languages[index].0) \(self.languages[index].1)")
     }
 }

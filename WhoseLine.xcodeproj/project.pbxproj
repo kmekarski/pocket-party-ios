@@ -23,6 +23,9 @@
 		A7138D352B7B93EE0031B709 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7138D342B7B93EE0031B709 /* HomeViewModel.swift */; };
 		A74A325C2B81814700438E8C /* SettingsModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A325B2B81814700438E8C /* SettingsModalView.swift */; };
 		A74A325E2B8182B500438E8C /* LanguagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A325D2B8182B500438E8C /* LanguagePickerView.swift */; };
+		A74A32612B823A2700438E8C /* GameInfoModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A32602B823A2700438E8C /* GameInfoModalView.swift */; };
+		A74A32632B825F1F00438E8C /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = A74A32622B825F1F00438E8C /* Localizable.xcstrings */; };
+		A74A32672B82606D00438E8C /* QuestionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A32662B82606D00438E8C /* QuestionsManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +46,9 @@
 		A7138D342B7B93EE0031B709 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		A74A325B2B81814700438E8C /* SettingsModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModalView.swift; sourceTree = "<group>"; };
 		A74A325D2B8182B500438E8C /* LanguagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagePickerView.swift; sourceTree = "<group>"; };
+		A74A32602B823A2700438E8C /* GameInfoModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameInfoModalView.swift; sourceTree = "<group>"; };
+		A74A32622B825F1F00438E8C /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		A74A32662B82606D00438E8C /* QuestionsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionsManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +109,7 @@
 				A7138D1C2B7B8CAF0031B709 /* Views */,
 				A7138D102B7B8C2F0031B709 /* Assets.xcassets */,
 				A7138D122B7B8C2F0031B709 /* Preview Content */,
+				A74A32622B825F1F00438E8C /* Localizable.xcstrings */,
 			);
 			path = WhoseLine;
 			sourceTree = "<group>";
@@ -118,9 +125,9 @@
 		A7138D1C2B7B8CAF0031B709 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A74A325F2B823A1400438E8C /* Game */,
 				A704D4002B7F8BCB0005F8A5 /* MainMenu */,
 				A7138D1F2B7B8CD90031B709 /* HomeView.swift */,
-				A7138D302B7B938B0031B709 /* GameView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -152,6 +159,7 @@
 		A7138D242B7B8D340031B709 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				A74A32662B82606D00438E8C /* QuestionsManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -181,6 +189,15 @@
 				A704D3FE2B7F88D20005F8A5 /* IconButtonView.swift */,
 			);
 			path = Buttons;
+			sourceTree = "<group>";
+		};
+		A74A325F2B823A1400438E8C /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				A7138D302B7B938B0031B709 /* GameView.swift */,
+				A74A32602B823A2700438E8C /* GameInfoModalView.swift */,
+			);
+			path = Game;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -225,6 +242,7 @@
 			knownRegions = (
 				en,
 				Base,
+				pl,
 			);
 			mainGroup = A7138D002B7B8C2E0031B709;
 			productRefGroup = A7138D0A2B7B8C2E0031B709 /* Products */;
@@ -243,6 +261,7 @@
 			files = (
 				A7138D142B7B8C2F0031B709 /* Preview Assets.xcassets in Resources */,
 				A7138D112B7B8C2F0031B709 /* Assets.xcassets in Resources */,
+				A74A32632B825F1F00438E8C /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,9 +279,11 @@
 				A7138D352B7B93EE0031B709 /* HomeViewModel.swift in Sources */,
 				A7138D0D2B7B8C2E0031B709 /* WhoseLineApp.swift in Sources */,
 				A704D3FF2B7F88D20005F8A5 /* IconButtonView.swift in Sources */,
+				A74A32672B82606D00438E8C /* QuestionsManager.swift in Sources */,
 				A704D4092B7F93520005F8A5 /* ModalView.swift in Sources */,
 				A7138D312B7B938B0031B709 /* GameView.swift in Sources */,
 				A7138D232B7B8D060031B709 /* AppState.swift in Sources */,
+				A74A32612B823A2700438E8C /* GameInfoModalView.swift in Sources */,
 				A7138D2F2B7B902A0031B709 /* Color.swift in Sources */,
 				A74A325C2B81814700438E8C /* SettingsModalView.swift in Sources */,
 				A7138D2D2B7B8EE00031B709 /* WideButtonView.swift in Sources */,

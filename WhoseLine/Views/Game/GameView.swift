@@ -19,11 +19,7 @@ struct GameView: View {
             }
             .padding()
             .padding(.horizontal)
-            ModalView(isShowing: $showInfo, height: 350) {
-                infoModalContent
-            } headerImage: {
-                Image("MainLogo")
-            }
+            GameInfoModalView(isShowing: $showInfo)
         }
     }
 }
@@ -49,17 +45,6 @@ extension GameView {
             } label: {
                 IconButtonView("info")
             }
-        }
-    }
-    
-    private var infoModalContent: some View {
-        VStack(spacing: 16) {
-            Text("Scenes From a Hat")
-                .font(.system(size: 28, weight: .bold))
-                .frame(maxWidth: .infinity, alignment: .center)
-            Text("The rules are simple. Blahblahblah blhablhjhqskjdb asdjbasdkjasbf askjfbask jfbasfj")
-                .multilineTextAlignment(.leading)
-                .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 }

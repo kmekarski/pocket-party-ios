@@ -8,19 +8,23 @@
 import SwiftUI
 
 struct SettingsModalView: View {
+    @Binding var isShowing: Bool
     var body: some View {
-        Text("Settings")
-            .font(.system(size: 28, weight: .bold))
-            .padding(.bottom)
-        LanguagePickerView()
+        ModalView(isShowing: $isShowing, height: 350, content: {
+            VStack {
+                Text("Settings")
+                    .font(.system(size: 28, weight: .bold))
+                Divider()
+                LanguagePickerView()
+                Spacer()
+                Button(action: {
+                }, label: {
+                    WideButtonView("Save")
+                })
+            }        }, headerImage: { Image(systemName: "gearshape.fill") })
     }
 }
 
 #Preview {
-    ModalView(isShowing: .constant(true), height: 350) {
-        SettingsModalView()
-    } headerImage: {
-        Image(systemName: "gearshape.fill")
-    }
-
+    SettingsModalView(isShowing: .constant(true))
 }

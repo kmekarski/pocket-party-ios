@@ -13,18 +13,16 @@ struct MainMenuView: View {
     var body: some View {
         ZStack {
             Color.theme.background.ignoresSafeArea()
-            VStack {
-                ScrollView {
+            ScrollView {
+                VStack {
                     header
                         .padding(.bottom, 8)
                     menuButtons
                 }
+                .padding(.top)
+                .padding(.horizontal, 24)
             }
-            .padding(.top)
-            .padding(.horizontal, 24)
-            ModalView(isShowing: $showSettings, height: 550, content: {
-                SettingsModalView()
-            }, headerImage: { Image(systemName: "gearshape.fill") })
+            SettingsModalView(isShowing: $showSettings)
         }
     }
 }
@@ -45,7 +43,6 @@ extension MainMenuView {
                 .resizable()
                 .scaledToFit()
                 .frame(height: 156)
-            //                .background(Color.blue)
             Spacer()
             Button {
                 showSettings.toggle()
@@ -62,7 +59,8 @@ extension MainMenuView {
                 Button {
                     homeVM.startGame()
                 } label: {
-                    MainMenuOptionView(title: "Scenes from a Hat", subtitle: "Classic WLIIA Game", icon: "gear", foregroundColor: .white, backgroundColor: .theme.accent)                }
+                    MainMenuOptionView(title: "Scenes from a Hat", subtitle: "Classic WLIIA Game", icon: "gear", foregroundColor: .white, backgroundColor: .theme.accent)
+                }
             }
         }
     }

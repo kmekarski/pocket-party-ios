@@ -15,4 +15,5 @@ extension Color {
 struct ColorTheme {
     let accent = Color("AccentColor")
     let background = Color("BackgroundColor")
+    let secondaryBackground = Color("SecondaryBackgroundColor")
 }

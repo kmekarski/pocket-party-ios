@@ -10,13 +10,13 @@ import SwiftUI
 struct ModalView<Content: View>: View {
     @Binding var isShowing: Bool
     var height: CGFloat
+    var showX: Bool = true
     @ViewBuilder let content: Content
     @ViewBuilder let headerImage: Image
     
     var body: some View {
         VStack {
             ZStack {
-                
                 if isShowing {
                     Color.black
                         .frame(maxWidth: .infinity, alignment: .bottom)
@@ -25,6 +25,7 @@ struct ModalView<Content: View>: View {
                         .onTapGesture {
                             isShowing = false
                         }
+
                 }
                 VStack {
                     if isShowing {
@@ -32,7 +33,7 @@ struct ModalView<Content: View>: View {
                         mainView
                     }
                 }
-                .padding()
+                .padding(.horizontal, 24)
                 .frame(height: isShowing ? height : 0)
             }
             .ignoresSafeArea()
@@ -50,6 +51,10 @@ struct ModalView_Previews: PreviewProvider {
                 Text("The rules are simple. Blahblahblah blhablhjhqskjdb asdjbasdkjasbf askjfbask jfbasfj")
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                Spacer()
+                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                    WideButtonView("Button")
+                })
             }
         } headerImage: {
             Image("MainLogo")
@@ -60,16 +65,27 @@ struct ModalView_Previews: PreviewProvider {
 extension ModalView {
     private var mainView: some View {
         VStack {
+            HStack {
+                Spacer()
+                Button(action: {
+                    isShowing.toggle()
+                }, label: {
+                    IconButtonView("xmark", size: .small)
+                        .opacity(showX ? 1 : 0)
+                })
+            }
             content
-                .offset(y: 32)
+                .offset(y: 16)
             Spacer()
         }
         .frame(maxHeight: height)
-        .padding(.vertical, isShowing ? 20 : 0)
+        .padding(.top, 20)
+        .padding(.bottom, 28)
         .padding(.horizontal, 28)
         .frame(maxWidth: .infinity)
         .background(Color.theme.background)
         .cornerRadius(20)
+        .shadow(color: .black.opacity(0.15), radius: 3, x: 0, y: 5)
     }
     
     private var logo: some View {
