@@ -22,8 +22,8 @@ struct MainMenuView: View {
             }
             .padding(.top)
             .padding(.horizontal, 24)
-            ModalView(isShowing: $showSettings, height: 350, content: {
-                settingsModalContent
+            ModalView(isShowing: $showSettings, height: 550, content: {
+                SettingsModalView()
             }, headerImage: { Image(systemName: "gearshape.fill") })
         }
     }
@@ -64,12 +64,6 @@ extension MainMenuView {
                 } label: {
                     MainMenuOptionView(title: "Scenes from a Hat", subtitle: "Classic WLIIA Game", icon: "gear", foregroundColor: .white, backgroundColor: .theme.accent)                }
             }
-        }
-    }
-    
-    private var settingsModalContent: some View {
-        VStack {
-            Text("Settings")
         }
     }
 }

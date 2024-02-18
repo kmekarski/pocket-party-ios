@@ -21,6 +21,8 @@
 		A7138D2F2B7B902A0031B709 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7138D2E2B7B902A0031B709 /* Color.swift */; };
 		A7138D312B7B938B0031B709 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7138D302B7B938B0031B709 /* GameView.swift */; };
 		A7138D352B7B93EE0031B709 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7138D342B7B93EE0031B709 /* HomeViewModel.swift */; };
+		A74A325C2B81814700438E8C /* SettingsModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A325B2B81814700438E8C /* SettingsModalView.swift */; };
+		A74A325E2B8182B500438E8C /* LanguagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A325D2B8182B500438E8C /* LanguagePickerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +41,8 @@
 		A7138D2E2B7B902A0031B709 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		A7138D302B7B938B0031B709 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		A7138D342B7B93EE0031B709 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		A74A325B2B81814700438E8C /* SettingsModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModalView.swift; sourceTree = "<group>"; };
+		A74A325D2B8182B500438E8C /* LanguagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagePickerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +61,8 @@
 			children = (
 				A7138D1A2B7B8C660031B709 /* MainMenuView.swift */,
 				A704D4012B7F8BDC0005F8A5 /* MainMenuOptionView.swift */,
+				A74A325B2B81814700438E8C /* SettingsModalView.swift */,
+				A74A325D2B8182B500438E8C /* LanguagePickerView.swift */,
 			);
 			path = MainMenu;
 			sourceTree = "<group>";
@@ -249,6 +255,7 @@
 			files = (
 				A7138D202B7B8CD90031B709 /* HomeView.swift in Sources */,
 				A7138D292B7B8DF60031B709 /* PreviewProvider.swift in Sources */,
+				A74A325E2B8182B500438E8C /* LanguagePickerView.swift in Sources */,
 				A7138D1B2B7B8C660031B709 /* MainMenuView.swift in Sources */,
 				A7138D352B7B93EE0031B709 /* HomeViewModel.swift in Sources */,
 				A7138D0D2B7B8C2E0031B709 /* WhoseLineApp.swift in Sources */,
@@ -257,6 +264,7 @@
 				A7138D312B7B938B0031B709 /* GameView.swift in Sources */,
 				A7138D232B7B8D060031B709 /* AppState.swift in Sources */,
 				A7138D2F2B7B902A0031B709 /* Color.swift in Sources */,
+				A74A325C2B81814700438E8C /* SettingsModalView.swift in Sources */,
 				A7138D2D2B7B8EE00031B709 /* WideButtonView.swift in Sources */,
 				A704D4022B7F8BDC0005F8A5 /* MainMenuOptionView.swift in Sources */,
 			);

@@ -13,6 +13,7 @@ struct HomeView: View {
         ZStack {
             MainMenuView()
             GameView()
+                .offset(y: homeVM.appState == .game ? 0 : UIScreen.main.bounds.height)
         }
     }
 }

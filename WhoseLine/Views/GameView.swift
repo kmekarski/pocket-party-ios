@@ -12,22 +12,17 @@ struct GameView: View {
     @State var showInfo: Bool = false
     var body: some View {
         ZStack {
-            if homeVM.appState == .game {
-                ZStack {
-                    Color.theme.background.ignoresSafeArea()
-                    VStack {
-                        header
-                        Spacer()
-                    }
-                    .padding()
-                    .padding(.horizontal)
-                    ModalView(isShowing: $showInfo, height: 350) {
-                        infoModalContent
-                    } headerImage: {
-                        Image("MainLogo")
-                    }
-                }
-                .transition(.move(edge: .bottom))
+            Color.theme.background.ignoresSafeArea()
+            VStack {
+                header
+                Spacer()
+            }
+            .padding()
+            .padding(.horizontal)
+            ModalView(isShowing: $showInfo, height: 350) {
+                infoModalContent
+            } headerImage: {
+                Image("MainLogo")
             }
         }
     }
