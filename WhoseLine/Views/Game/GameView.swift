@@ -37,13 +37,13 @@ extension GameView {
             Button {
                 homeVM.goToMainMenu()
             } label: {
-                IconButtonView("arrow.left")
+                IconButtonView("xmark")
             }
             Spacer()
             Button {
                 showInfo.toggle()
             } label: {
-                IconButtonView("info.circle")
+                IconButtonView("info")
             }
         }
     }

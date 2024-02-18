@@ -10,10 +10,10 @@ import SwiftUI
 struct SettingsModalView: View {
     @Binding var isShowing: Bool
     var body: some View {
-        ModalView(isShowing: $isShowing, height: 350, content: {
+        ModalWithImageView(isShowing: $isShowing, height: 330, content: {
             VStack {
                 Text("Settings")
-                    .font(.system(size: 28, weight: .bold))
+                    .font(.system(size: 24, weight: .semibold))
                 Divider()
                 LanguagePickerView()
                 Spacer()
@@ -21,7 +21,8 @@ struct SettingsModalView: View {
                 }, label: {
                     WideButtonView("Save")
                 })
-            }        }, headerImage: { Image(systemName: "gearshape.fill") })
+            }
+        }, headerImage: Image("MainLogo"))
     }
 }
 

@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		A704D3FF2B7F88D20005F8A5 /* IconButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A704D3FE2B7F88D20005F8A5 /* IconButtonView.swift */; };
 		A704D4022B7F8BDC0005F8A5 /* MainMenuOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A704D4012B7F8BDC0005F8A5 /* MainMenuOptionView.swift */; };
-		A704D4092B7F93520005F8A5 /* ModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A704D4082B7F93520005F8A5 /* ModalView.swift */; };
+		A704D4092B7F93520005F8A5 /* ModalWithImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A704D4082B7F93520005F8A5 /* ModalWithImageView.swift */; };
 		A7138D0D2B7B8C2E0031B709 /* WhoseLineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7138D0C2B7B8C2E0031B709 /* WhoseLineApp.swift */; };
 		A7138D112B7B8C2F0031B709 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A7138D102B7B8C2F0031B709 /* Assets.xcassets */; };
 		A7138D142B7B8C2F0031B709 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A7138D132B7B8C2F0031B709 /* Preview Assets.xcassets */; };
@@ -30,12 +30,14 @@
 		A74A32722B82675000438E8C /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A32712B82675000438E8C /* Player.swift */; };
 		A74A32742B8269DF00438E8C /* PlayersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A32732B8269DF00438E8C /* PlayersViewModel.swift */; };
 		A74A32762B826ACF00438E8C /* SetPlayersRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A32752B826ACF00438E8C /* SetPlayersRowView.swift */; };
+		A74A32792B82739000438E8C /* RegularTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A32782B82739000438E8C /* RegularTextFieldView.swift */; };
+		A74A327D2B8276BC00438E8C /* ModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A327C2B8276BC00438E8C /* ModalView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		A704D3FE2B7F88D20005F8A5 /* IconButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconButtonView.swift; sourceTree = "<group>"; };
 		A704D4012B7F8BDC0005F8A5 /* MainMenuOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuOptionView.swift; sourceTree = "<group>"; };
-		A704D4082B7F93520005F8A5 /* ModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalView.swift; sourceTree = "<group>"; };
+		A704D4082B7F93520005F8A5 /* ModalWithImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalWithImageView.swift; sourceTree = "<group>"; };
 		A7138D092B7B8C2E0031B709 /* WhoseLine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhoseLine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7138D0C2B7B8C2E0031B709 /* WhoseLineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoseLineApp.swift; sourceTree = "<group>"; };
 		A7138D102B7B8C2F0031B709 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -57,6 +59,8 @@
 		A74A32712B82675000438E8C /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		A74A32732B8269DF00438E8C /* PlayersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayersViewModel.swift; sourceTree = "<group>"; };
 		A74A32752B826ACF00438E8C /* SetPlayersRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPlayersRowView.swift; sourceTree = "<group>"; };
+		A74A32782B82739000438E8C /* RegularTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularTextFieldView.swift; sourceTree = "<group>"; };
+		A74A327C2B8276BC00438E8C /* ModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,7 +88,8 @@
 		A704D4032B7F93160005F8A5 /* Modals */ = {
 			isa = PBXGroup;
 			children = (
-				A704D4082B7F93520005F8A5 /* ModalView.swift */,
+				A704D4082B7F93520005F8A5 /* ModalWithImageView.swift */,
+				A74A327C2B8276BC00438E8C /* ModalView.swift */,
 			);
 			path = Modals;
 			sourceTree = "<group>";
@@ -187,6 +192,7 @@
 		A7138D2A2B7B8ED10031B709 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				A74A32772B82738200438E8C /* TextFields */,
 				A704D4032B7F93160005F8A5 /* Modals */,
 				A7138D2B2B7B8ED60031B709 /* Buttons */,
 			);
@@ -218,6 +224,14 @@
 				A74A32752B826ACF00438E8C /* SetPlayersRowView.swift */,
 			);
 			path = SetPlayers;
+			sourceTree = "<group>";
+		};
+		A74A32772B82738200438E8C /* TextFields */ = {
+			isa = PBXGroup;
+			children = (
+				A74A32782B82739000438E8C /* RegularTextFieldView.swift */,
+			);
+			path = TextFields;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -292,8 +306,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A74A327D2B8276BC00438E8C /* ModalView.swift in Sources */,
 				A7138D202B7B8CD90031B709 /* HomeView.swift in Sources */,
 				A7138D292B7B8DF60031B709 /* PreviewProvider.swift in Sources */,
+				A74A32792B82739000438E8C /* RegularTextFieldView.swift in Sources */,
 				A74A325E2B8182B500438E8C /* LanguagePickerView.swift in Sources */,
 				A7138D1B2B7B8C660031B709 /* MainMenuView.swift in Sources */,
 				A7138D352B7B93EE0031B709 /* HomeViewModel.swift in Sources */,
@@ -301,7 +317,7 @@
 				A704D3FF2B7F88D20005F8A5 /* IconButtonView.swift in Sources */,
 				A74A32722B82675000438E8C /* Player.swift in Sources */,
 				A74A32672B82606D00438E8C /* QuestionsManager.swift in Sources */,
-				A704D4092B7F93520005F8A5 /* ModalView.swift in Sources */,
+				A704D4092B7F93520005F8A5 /* ModalWithImageView.swift in Sources */,
 				A7138D312B7B938B0031B709 /* GameView.swift in Sources */,
 				A7138D232B7B8D060031B709 /* AppState.swift in Sources */,
 				A74A32612B823A2700438E8C /* GameInfoModalView.swift in Sources */,

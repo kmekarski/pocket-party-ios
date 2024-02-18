@@ -54,8 +54,8 @@ extension MainMenuView {
     }
     
     private var menuButtons: some View {
-        VStack(spacing: 16) {
-            ForEach(1..<6) {_ in
+        VStack(spacing: 24) {
+            ForEach(1..<4) {_ in
                 Button {
                     homeVM.goToSetPlayers()
                 } label: {

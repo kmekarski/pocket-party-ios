@@ -26,7 +26,7 @@ struct IconButtonView: View {
     }
     var body: some View {
         Image(systemName: icon)
-        .font(.system(size: size.rawValue))    }
+        .font(.system(size: size.rawValue, weight: .semibold))    }
 }
 
 struct IconButtonView_Previews: PreviewProvider {

@@ -2,17 +2,17 @@
 //  ModalView.swift
 //  WhoseLine
 //
-//  Created by Klaudiusz Mękarski on 16/02/2024.
+//  Created by Klaudiusz Mękarski on 18/02/2024.
 //
 
 import SwiftUI
 
 struct ModalView<Content: View>: View {
     @Binding var isShowing: Bool
+    var title: String
     var height: CGFloat
     var showX: Bool = true
     @ViewBuilder let content: Content
-    @ViewBuilder let headerImage: Image
     
     var body: some View {
         VStack {
@@ -29,11 +29,10 @@ struct ModalView<Content: View>: View {
                 }
                 VStack {
                     if isShowing {
-                        logo
                         mainView
                     }
                 }
-                .padding(.horizontal, 32)
+                .padding(.horizontal)
                 .frame(height: isShowing ? height : 0)
             }
             .ignoresSafeArea()
@@ -43,22 +42,34 @@ struct ModalView<Content: View>: View {
 
 struct ModalView_Previews: PreviewProvider {
     static var previews: some View {
-        ModalView(isShowing: .constant(true), height: 400) {
-            VStack(spacing: 16) {
-                Text("Scenes From a Hat")
-                    .font(.system(size: 28, weight: .bold))
-                    .frame(maxWidth: .infinity, alignment: .center)
-                Text("The rules are simple. Blahblahblah blhablhjhqskjdb asdjbasdkjasbf askjfbask jfbasfj")
-                    .multilineTextAlignment(.leading)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                Spacer()
-                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                    WideButtonView("Button")
-                })
+        VStack {
+            ModalWithImageView(isShowing: .constant(true), height: 400, headerImage: Image("MainLogo")) {
+                VStack {
+                    Text("Scenes From a Hat")
+                        .font(.system(size: 28, weight: .bold))
+                        .frame(maxWidth: .infinity, alignment: .center)
+                    Text("The rules are simple. Blahblahblah blhablhjhqskjdb asdjbasdkjasbf askjfbask jfbasfj")
+                        .multilineTextAlignment(.leading)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Spacer()
+                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                        WideButtonView("Button")
+                    })
+                }
             }
-        } headerImage: {
-            Image("MainLogo")
+            ModalView(isShowing: .constant(true), title: "Title", height: 220) {
+                VStack {
+                    Text("The rules are simple. Blahblahblah blhablhjhqskjdb asdjbasdkjasbf askjfbask jfbasfj")
+                        .multilineTextAlignment(.leading)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Spacer()
+                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                        WideButtonView("Button")
+                    })
+                }
+            }
         }
+        
     }
 }
 
@@ -66,38 +77,31 @@ extension ModalView {
     private var mainView: some View {
         VStack {
             HStack {
+                IconButtonView("xmark", size: .small)
+                    .fontWeight(.semibold)
+                    .opacity(0)
+                Spacer()
+                Text(title)
+                    .font(.system(size: 24, weight: .semibold))
                 Spacer()
                 Button(action: {
                     isShowing.toggle()
                 }, label: {
                     IconButtonView("xmark", size: .small)
+                        .fontWeight(.semibold)
                         .opacity(showX ? 1 : 0)
                 })
             }
+            .padding(.bottom, 8)
             content
-                .offset(y: 16)
-            Spacer()
         }
         .frame(maxHeight: height)
         .padding(.top, 20)
-        .padding(.bottom, 28)
+        .padding(.bottom, 20)
         .padding(.horizontal, 28)
         .frame(maxWidth: .infinity)
         .background(Color.theme.background)
         .cornerRadius(20)
         .shadow(color: .black.opacity(0.15), radius: 3, x: 0, y: 5)
-    }
-    
-    private var logo: some View {
-        headerImage
-            .resizable()
-            .scaledToFit()
-            .foregroundColor(.theme.accent)
-            .frame(height: 60)
-            .padding(16)
-            .background(Color.theme.background)
-            .cornerRadius(100)
-            .offset(y: 50)
-            .zIndex(1)
     }
 }

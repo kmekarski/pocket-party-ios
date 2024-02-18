@@ -10,21 +10,30 @@ import SwiftUI
 struct SetPlayersView: View {
     @EnvironmentObject var homeVM: HomeViewModel
     @EnvironmentObject var playersVM: PlayersViewModel
+    @State var showAddPlayerModel: Bool = false
+    @State var newPlayerName: String = ""
     var body: some View {
         ZStack {
             Color.theme.background.ignoresSafeArea()
             VStack {
                 header
-                playersList
+                if playersVM.players.isEmpty {
+                    noPlayersInfo
+                } else {
+                    playersList
+                }
                 Spacer()
                 Button(action: {
                     homeVM.goToGame()
                 }, label: {
-                    WideButtonView("Start Game", size: .big)
+                    WideButtonView("Start Game", disabled: playersVM.players.isEmpty, size: .big)
                 })
             }
             .padding()
             .padding(.horizontal)
+            ModalView(isShowing: $showAddPlayerModel, title: "New player", height: 190, content: {
+                addPlayerModalContent
+            })
         }
     }
 }
@@ -37,7 +46,7 @@ struct SetPlayersView: View {
 
 extension SetPlayersView {
     private var header: some View {
-        HStack {
+        HStack(alignment: .top) {
             Button {
                 homeVM.goToMainMenu()
             } label: {
@@ -45,9 +54,10 @@ extension SetPlayersView {
             }
             Spacer()
             Text("Players")
+                .font(.system(size: 28, weight: .semibold))
             Spacer()
             Button {
-                playersVM.addPlayer()
+                showAddPlayerModel = true
             } label: {
                 IconButtonView("plus")
             }
@@ -55,10 +65,45 @@ extension SetPlayersView {
     }
     
     private var playersList: some View {
-        VStack {
-            ForEach(playersVM.players) { player in
-                SetPlayersRowView(player: player)
+        ScrollView {
+            VStack {
+                ForEach(playersVM.players) { player in
+                    SetPlayersRowView(player: player)
+                }
             }
+            .padding(.horizontal)
+        }
+        .padding(.vertical, 24)
+    }
+    
+    private var noPlayersInfo: some View {
+        VStack {
+            Spacer()
+            Text("No players set to play")
+                .font(.system(size: 24))
+                .padding(.bottom, 4)
+            Button(action: {
+                showAddPlayerModel = true
+            }, label: {
+                Text("Let's add some!")
+                    .font(.system(size: 28, weight: .semibold))
+            })
+            Spacer()
+        }
+    }
+    
+    private var addPlayerModalContent: some View {
+        VStack {
+            RegularTextFieldView(title: "Name:", text: $newPlayerName)
+            Divider()
+            Spacer()
+            Button(action: {
+                playersVM.addPlayer(newPlayerName)
+                newPlayerName = ""
+                showAddPlayerModel = false
+            }, label: {
+                WideButtonView("Add", disabled: newPlayerName.isEmpty)
+            })
         }
     }
 }
