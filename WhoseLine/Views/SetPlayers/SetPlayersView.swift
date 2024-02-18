@@ -10,7 +10,7 @@ import SwiftUI
 struct SetPlayersView: View {
     @EnvironmentObject var homeVM: HomeViewModel
     @EnvironmentObject var playersVM: PlayersViewModel
-    @State var showAddPlayerModel: Bool = true
+    @State var showAddPlayerModel: Bool = false
     @State var newPlayerName: String = ""
     @State var selectedThemeIndex: Int?
     var body: some View {
@@ -18,20 +18,23 @@ struct SetPlayersView: View {
             Color.theme.background.ignoresSafeArea()
             VStack {
                 header
-                if playersVM.players.isEmpty {
-                    noPlayersInfo
-                } else {
+                if !playersVM.players.isEmpty {
                     playersList
                 }
                 Spacer()
                 Button(action: {
+                    guard playersVM.players.count > 1 else { return }
                     homeVM.goToGame()
+                    playersVM.startGame()
                 }, label: {
-                    WideButtonView("Start Game", disabled: playersVM.players.isEmpty, size: .big, colorScheme: .primary)
+                    WideButtonView("Start Game", disabled: playersVM.players.count < 2, size: .big, colorScheme: .primary)
                 })
             }
             .padding()
             .padding(.horizontal)
+            if playersVM.players.count < 2 {
+                tooFewPlayersInfo
+            }
             ModalView(isShowing: $showAddPlayerModel, title: "New player", height: 210, content: {
                 addPlayerModalContent
             })
@@ -46,6 +49,10 @@ struct SetPlayersView: View {
 }
 
 extension SetPlayersView {
+    private var playerIsValid: Bool {
+        return !newPlayerName.isEmpty && selectedThemeIndex != nil
+    }
+    
     private var header: some View {
         HStack(alignment: .top) {
             Button {
@@ -67,7 +74,7 @@ extension SetPlayersView {
     
     private var playersList: some View {
         ScrollView {
-            VStack {
+            VStack(spacing: 12) {
                 ForEach(playersVM.players) { player in
                     SetPlayersRowView(player: player)
                 }
@@ -77,10 +84,10 @@ extension SetPlayersView {
         .padding(.vertical, 24)
     }
     
-    private var noPlayersInfo: some View {
+    private var tooFewPlayersInfo: some View {
         VStack {
             Spacer()
-            Text("No players set to play")
+            Text(playersVM.players.count == 0 ?  "No players set to play" : "We need 2 or more players")
                 .font(.system(size: 24))
                 .padding(.bottom, 4)
             Button(action: {
@@ -100,13 +107,13 @@ extension SetPlayersView {
             emojiPicker
             Spacer()
             Button(action: {
-                guard !newPlayerName.isEmpty, let selectedThemeIndex = selectedThemeIndex else { return }
-                playersVM.addPlayer(name: newPlayerName, theme: PlayerTheme.allCases[selectedThemeIndex])
+                guard playerIsValid else { return }
+                playersVM.addPlayer(name: newPlayerName, theme: PlayerTheme.allCases[selectedThemeIndex!])
                 newPlayerName = ""
-                self.selectedThemeIndex = nil
+                selectedThemeIndex = nil
                 showAddPlayerModel = false
             }, label: {
-                WideButtonView("Add", disabled: newPlayerName.isEmpty, colorScheme: .primary)
+                WideButtonView("Add", disabled: !playerIsValid, colorScheme: .primary)
             })
         }
     }

@@ -23,7 +23,7 @@ struct SetPlayersRowView: View {
             Button(action: {
                 playersVM.deletePlayer(id: player.id)
             }, label: {
-                IconButtonView("xmark", size: .small)
+                IconButtonView("xmark", color: player.theme.textColor, size: .small)
                     .fontWeight(.semibold)
             })
         }
