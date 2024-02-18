@@ -18,11 +18,10 @@ class DeveloperPreview {
     static let instance = DeveloperPreview()
     
     let homeVM: HomeViewModel
-    let homeVMGame: HomeViewModel
+    let playersVM: PlayersViewModel
     
     private init() {
         self.homeVM = HomeViewModel()
-        self.homeVMGame = HomeViewModel()
-        homeVMGame.startGame()
+        self.playersVM = PlayersViewModel()
     }
 }

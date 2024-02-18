@@ -9,7 +9,13 @@ import SwiftUI
 
 @main
 struct WhoseLineApp: App {
-    @ObservedObject var homeVM = HomeViewModel()
+    var homeVM: HomeViewModel
+    var playersVM: PlayersViewModel
+    
+    init() {
+        self.homeVM = HomeViewModel()
+        self.playersVM = PlayersViewModel()
+    }
     var body: some Scene {
         WindowGroup {
             HomeView()

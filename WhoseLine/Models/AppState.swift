@@ -9,5 +9,6 @@ import Foundation
 
 enum AppState {
     case mainMenu
+    case setPlayers
     case game
 }

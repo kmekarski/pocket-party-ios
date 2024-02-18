@@ -20,7 +20,7 @@ struct MainMenuView: View {
                     menuButtons
                 }
                 .padding(.top)
-                .padding(.horizontal, 24)
+                .padding(.horizontal)
             }
             SettingsModalView(isShowing: $showSettings)
         }
@@ -57,7 +57,7 @@ extension MainMenuView {
         VStack(spacing: 16) {
             ForEach(1..<6) {_ in
                 Button {
-                    homeVM.startGame()
+                    homeVM.goToSetPlayers()
                 } label: {
                     MainMenuOptionView(title: "Scenes from a Hat", subtitle: "Classic WLIIA Game", icon: "gear", foregroundColor: .white, backgroundColor: .theme.accent)
                 }

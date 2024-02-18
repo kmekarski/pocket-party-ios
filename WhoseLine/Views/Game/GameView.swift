@@ -27,7 +27,7 @@ struct GameView: View {
 struct GameView_Previews: PreviewProvider {
     static var previews: some View {
         GameView()
-            .environmentObject(dev.homeVMGame)
+            .environmentObject(dev.homeVM)
     }
 }
 
@@ -35,7 +35,7 @@ extension GameView {
     private var header: some View {
         HStack {
             Button {
-                homeVM.endGame()
+                homeVM.goToMainMenu()
             } label: {
                 IconButtonView("arrow.left")
             }
@@ -43,7 +43,7 @@ extension GameView {
             Button {
                 showInfo.toggle()
             } label: {
-                IconButtonView("info")
+                IconButtonView("info.circle")
             }
         }
     }

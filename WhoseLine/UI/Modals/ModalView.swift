@@ -33,7 +33,7 @@ struct ModalView<Content: View>: View {
                         mainView
                     }
                 }
-                .padding(.horizontal, 24)
+                .padding(.horizontal, 32)
                 .frame(height: isShowing ? height : 0)
             }
             .ignoresSafeArea()
@@ -43,7 +43,7 @@ struct ModalView<Content: View>: View {
 
 struct ModalView_Previews: PreviewProvider {
     static var previews: some View {
-        ModalView(isShowing: .constant(true), height: 350) {
+        ModalView(isShowing: .constant(true), height: 400) {
             VStack(spacing: 16) {
                 Text("Scenes From a Hat")
                     .font(.system(size: 28, weight: .bold))
