@@ -20,6 +20,7 @@ struct WhoseLineApp: App {
         WindowGroup {
             HomeView()
                 .environmentObject(homeVM)
+                .environmentObject(playersVM)
         }
     }
 }

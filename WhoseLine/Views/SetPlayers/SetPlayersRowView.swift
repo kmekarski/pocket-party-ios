@@ -12,8 +12,13 @@ struct SetPlayersRowView: View {
     var player: Player
     var body: some View {
         HStack {
-            Text(player.name)
-                .font(.system(size: 20, weight: .semibold))
+            HStack(spacing: 12) {
+                Text(player.name)
+                Text(player.theme.emoji)
+            }
+            .font(.system(size: 20, weight: .semibold))
+
+
             Spacer()
             Button(action: {
                 playersVM.deletePlayer(id: player.id)
@@ -25,18 +30,17 @@ struct SetPlayersRowView: View {
         .padding(.vertical)
         .padding(.trailing)
         .padding(.leading, 24)
-        .foregroundColor(Color.white)
-        .background(Color.theme.accent)
+        .foregroundColor(player.theme.textColor)
+        .background(player.theme.color)
         .cornerRadius(20)
     }
 }
 
 #Preview {
-    let player = Player(id: "1", name: "John")
     return VStack(spacing: 10) {
-        SetPlayersRowView(player: player)
-        SetPlayersRowView(player: player)
-        SetPlayersRowView(player: player)
+        ForEach(PlayerTheme.allCases, id: \.self) { theme in
+            SetPlayersRowView(player: Player(id: "1", name: "John", theme: theme))
+        }
     }
     .padding()
     .environmentObject(PlayersViewModel())

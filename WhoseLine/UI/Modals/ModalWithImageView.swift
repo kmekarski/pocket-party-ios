@@ -55,7 +55,7 @@ struct ModalWithImageView_Previews: PreviewProvider {
                     .frame(maxWidth: .infinity, alignment: .leading)
                 Spacer()
                 Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                    WideButtonView("Button")
+                    WideButtonView("Button", colorScheme: .primary)
                 })
             }
         }
@@ -81,12 +81,12 @@ extension ModalWithImageView {
         }
         .frame(maxHeight: height)
         .padding(.top, 20)
-        .padding(.bottom, 20)
+        .padding(.bottom, 16)
         .padding(.horizontal, 28)
         .frame(maxWidth: .infinity)
         .background(Color.theme.background)
         .cornerRadius(20)
-        .shadow(color: .black.opacity(0.15), radius: 3, x: 0, y: 5)
+        .subtleShadow()
     }
     
     private var logo: some View {

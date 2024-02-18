@@ -53,7 +53,7 @@ struct ModalView_Previews: PreviewProvider {
                         .frame(maxWidth: .infinity, alignment: .leading)
                     Spacer()
                     Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                        WideButtonView("Button")
+                        WideButtonView("Button", colorScheme: .primary)
                     })
                 }
             }
@@ -64,7 +64,7 @@ struct ModalView_Previews: PreviewProvider {
                         .frame(maxWidth: .infinity, alignment: .leading)
                     Spacer()
                     Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                        WideButtonView("Button")
+                        WideButtonView("Button", colorScheme: .primary)
                     })
                 }
             }
@@ -102,6 +102,6 @@ extension ModalView {
         .frame(maxWidth: .infinity)
         .background(Color.theme.background)
         .cornerRadius(20)
-        .shadow(color: .black.opacity(0.15), radius: 3, x: 0, y: 5)
+        .subtleShadow()
     }
 }

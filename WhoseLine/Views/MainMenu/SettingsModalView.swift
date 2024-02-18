@@ -17,10 +17,7 @@ struct SettingsModalView: View {
                 Divider()
                 LanguagePickerView()
                 Spacer()
-                Button(action: {
-                }, label: {
-                    WideButtonView("Save")
-                })
+                buttons
             }
         }, headerImage: Image("MainLogo"))
     }
@@ -28,4 +25,21 @@ struct SettingsModalView: View {
 
 #Preview {
     SettingsModalView(isShowing: .constant(true))
+}
+
+extension SettingsModalView {
+    private var buttons: some View {
+        HStack(spacing: 16) {
+            Button(action: {
+                isShowing = false
+            }, label: {
+                WideButtonView("Cancel", colorScheme: .secondary)
+            })
+            Button(action: {
+                isShowing = false
+            }, label: {
+                WideButtonView("Save", colorScheme: .primary)
+        })
+        }
+    }
 }

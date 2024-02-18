@@ -34,7 +34,7 @@ struct MainMenuOptionView: View {
         .padding(.leading)
         .background(backgroundColor)
         .cornerRadius(24)
-        .shadow(color: .black.opacity(0.2), radius: 3, x: 0, y: 6)
+        .subtleShadow()
     }
 }
 

@@ -22,7 +22,7 @@ struct GameInfoModalView: View {
                 Button(action: {
                     isShowing.toggle()
                 }, label: {
-                    WideButtonView("OK")
+                    WideButtonView("OK", colorScheme: .primary)
                 })
             }
         }

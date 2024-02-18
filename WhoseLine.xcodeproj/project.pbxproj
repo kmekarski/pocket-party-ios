@@ -32,6 +32,9 @@
 		A74A32762B826ACF00438E8C /* SetPlayersRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A32752B826ACF00438E8C /* SetPlayersRowView.swift */; };
 		A74A32792B82739000438E8C /* RegularTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A32782B82739000438E8C /* RegularTextFieldView.swift */; };
 		A74A327D2B8276BC00438E8C /* ModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A327C2B8276BC00438E8C /* ModalView.swift */; };
+		A74A32822B82898400438E8C /* SubtleShadowModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A32812B82898400438E8C /* SubtleShadowModifier.swift */; };
+		A74A32842B8289AE00438E8C /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A32832B8289AE00438E8C /* View.swift */; };
+		A74A32862B82BA2200438E8C /* PlayerTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A32852B82BA2200438E8C /* PlayerTheme.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,6 +64,9 @@
 		A74A32752B826ACF00438E8C /* SetPlayersRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPlayersRowView.swift; sourceTree = "<group>"; };
 		A74A32782B82739000438E8C /* RegularTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularTextFieldView.swift; sourceTree = "<group>"; };
 		A74A327C2B8276BC00438E8C /* ModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalView.swift; sourceTree = "<group>"; };
+		A74A32812B82898400438E8C /* SubtleShadowModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtleShadowModifier.swift; sourceTree = "<group>"; };
+		A74A32832B8289AE00438E8C /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		A74A32852B82BA2200438E8C /* PlayerTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerTheme.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +174,7 @@
 			children = (
 				A7138D222B7B8D060031B709 /* AppState.swift */,
 				A74A32712B82675000438E8C /* Player.swift */,
+				A74A32852B82BA2200438E8C /* PlayerTheme.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -185,6 +192,7 @@
 			children = (
 				A7138D282B7B8DF60031B709 /* PreviewProvider.swift */,
 				A7138D2E2B7B902A0031B709 /* Color.swift */,
+				A74A32832B8289AE00438E8C /* View.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -192,6 +200,7 @@
 		A7138D2A2B7B8ED10031B709 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				A74A32802B82895C00438E8C /* ViewModifiers */,
 				A74A32772B82738200438E8C /* TextFields */,
 				A704D4032B7F93160005F8A5 /* Modals */,
 				A7138D2B2B7B8ED60031B709 /* Buttons */,
@@ -232,6 +241,14 @@
 				A74A32782B82739000438E8C /* RegularTextFieldView.swift */,
 			);
 			path = TextFields;
+			sourceTree = "<group>";
+		};
+		A74A32802B82895C00438E8C /* ViewModifiers */ = {
+			isa = PBXGroup;
+			children = (
+				A74A32812B82898400438E8C /* SubtleShadowModifier.swift */,
+			);
+			path = ViewModifiers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -314,14 +331,17 @@
 				A7138D1B2B7B8C660031B709 /* MainMenuView.swift in Sources */,
 				A7138D352B7B93EE0031B709 /* HomeViewModel.swift in Sources */,
 				A7138D0D2B7B8C2E0031B709 /* WhoseLineApp.swift in Sources */,
+				A74A32842B8289AE00438E8C /* View.swift in Sources */,
 				A704D3FF2B7F88D20005F8A5 /* IconButtonView.swift in Sources */,
 				A74A32722B82675000438E8C /* Player.swift in Sources */,
 				A74A32672B82606D00438E8C /* QuestionsManager.swift in Sources */,
 				A704D4092B7F93520005F8A5 /* ModalWithImageView.swift in Sources */,
 				A7138D312B7B938B0031B709 /* GameView.swift in Sources */,
+				A74A32822B82898400438E8C /* SubtleShadowModifier.swift in Sources */,
 				A7138D232B7B8D060031B709 /* AppState.swift in Sources */,
 				A74A32612B823A2700438E8C /* GameInfoModalView.swift in Sources */,
 				A74A326A2B82618800438E8C /* SetPlayersView.swift in Sources */,
+				A74A32862B82BA2200438E8C /* PlayerTheme.swift in Sources */,
 				A7138D2F2B7B902A0031B709 /* Color.swift in Sources */,
 				A74A325C2B81814700438E8C /* SettingsModalView.swift in Sources */,
 				A74A32742B8269DF00438E8C /* PlayersViewModel.swift in Sources */,

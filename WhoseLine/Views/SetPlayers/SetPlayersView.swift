@@ -10,8 +10,9 @@ import SwiftUI
 struct SetPlayersView: View {
     @EnvironmentObject var homeVM: HomeViewModel
     @EnvironmentObject var playersVM: PlayersViewModel
-    @State var showAddPlayerModel: Bool = false
+    @State var showAddPlayerModel: Bool = true
     @State var newPlayerName: String = ""
+    @State var selectedThemeIndex: Int?
     var body: some View {
         ZStack {
             Color.theme.background.ignoresSafeArea()
@@ -26,12 +27,12 @@ struct SetPlayersView: View {
                 Button(action: {
                     homeVM.goToGame()
                 }, label: {
-                    WideButtonView("Start Game", disabled: playersVM.players.isEmpty, size: .big)
+                    WideButtonView("Start Game", disabled: playersVM.players.isEmpty, size: .big, colorScheme: .primary)
                 })
             }
             .padding()
             .padding(.horizontal)
-            ModalView(isShowing: $showAddPlayerModel, title: "New player", height: 190, content: {
+            ModalView(isShowing: $showAddPlayerModel, title: "New player", height: 210, content: {
                 addPlayerModalContent
             })
         }
@@ -96,14 +97,53 @@ extension SetPlayersView {
         VStack {
             RegularTextFieldView(title: "Name:", text: $newPlayerName)
             Divider()
+            emojiPicker
             Spacer()
             Button(action: {
-                playersVM.addPlayer(newPlayerName)
+                guard !newPlayerName.isEmpty, let selectedThemeIndex = selectedThemeIndex else { return }
+                playersVM.addPlayer(name: newPlayerName, theme: PlayerTheme.allCases[selectedThemeIndex])
                 newPlayerName = ""
+                self.selectedThemeIndex = nil
                 showAddPlayerModel = false
             }, label: {
-                WideButtonView("Add", disabled: newPlayerName.isEmpty)
+                WideButtonView("Add", disabled: newPlayerName.isEmpty, colorScheme: .primary)
             })
+        }
+    }
+    
+    private var emojiWidth: CGFloat { 48 }
+    private var highlightSize: CGFloat { 58 }
+    
+    private var emojiHighlightOffset: CGFloat {
+        if let index = selectedThemeIndex {
+            return CGFloat(-2.5*emojiWidth + CGFloat(index) * emojiWidth)
+        }
+        return 0
+    }
+    
+    private var emojiPicker: some View {
+        ZStack {
+            if selectedThemeIndex != nil {
+                Rectangle()
+                    .foregroundColor(.white.opacity(0.3))
+                    .frame(width: highlightSize, height: highlightSize)
+                    .cornerRadius(10)
+                    .offset(x: emojiHighlightOffset)
+            }
+            HStack(spacing: 0) {
+                ForEach(0..<PlayerTheme.allCases.count, id: \.self) { index in
+                    Text(PlayerTheme.allCases[index].emoji)
+                        .font(.system(size: selectedThemeIndex == index ? 36 : 24))
+                        .frame(minWidth: emojiWidth)
+                        .onTapGesture {
+                            withAnimation(.linear(duration: 0.2)) {
+                                selectedThemeIndex = index
+                            }
+                        }
+                }
+            }
+            .frame(height: 30)
+            .padding()
         }
     }
 }

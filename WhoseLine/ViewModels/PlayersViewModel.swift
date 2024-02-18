@@ -10,8 +10,8 @@ import Foundation
 final class PlayersViewModel: ObservableObject {
     @Published var players: [Player] = []
     
-    func addPlayer(_ name: String) {
-        let newPlayer = Player(id: UUID().uuidString, name: name)
+    func addPlayer(name: String, theme: PlayerTheme) {
+        let newPlayer = Player(id: UUID().uuidString, name: name, theme: theme)
         players.append(newPlayer)
     }
     

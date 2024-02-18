@@ -1,6 +1,22 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "" : {
+
+    },
+    "%@ %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ %2$@"
+          }
+        }
+      }
+    },
+    "App language:" : {
+
+    },
     "Hello, world!" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -17,6 +33,24 @@
           }
         }
       }
+    },
+    "Let's add some!" : {
+
+    },
+    "No players set to play" : {
+
+    },
+    "Players" : {
+
+    },
+    "Scenes From a Hat" : {
+
+    },
+    "Settings" : {
+
+    },
+    "The rules are simple. Blahblahblah blhablhjhqskjdb asdjbasdkjasbf askjfbask jfbasfj" : {
+
     }
   },
   "version" : "1.0"
