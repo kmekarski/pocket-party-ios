@@ -15,29 +15,31 @@ struct SetPlayersView: View {
     @State var selectedThemeIndex: Int?
     var body: some View {
         ZStack {
-            Color.theme.background.ignoresSafeArea()
-            VStack {
-                header
-                if !playersVM.players.isEmpty {
-                    playersList
+            if let gameMode = playersVM.gameMode {
+                Color.theme.background.ignoresSafeArea()
+                VStack {
+                    header
+                    if !playersVM.players.isEmpty {
+                        playersList
+                    }
+                    Spacer()
+                    Button(action: {
+                        guard playersVM.players.count >= gameMode.minimumPlayers else { return }
+                        homeVM.goToGame()
+                        playersVM.startGame()
+                    }, label: {
+                        WideButtonView("Start Game", disabled: playersVM.players.count < gameMode.minimumPlayers, size: .big, colorScheme: .primary)
+                    })
                 }
-                Spacer()
-                Button(action: {
-                    guard playersVM.players.count > 1 else { return }
-                    homeVM.goToGame()
-                    playersVM.startGame()
-                }, label: {
-                    WideButtonView("Start Game", disabled: playersVM.players.count < 2, size: .big, colorScheme: .primary)
+                .padding()
+                .padding(.horizontal)
+                if playersVM.players.count < gameMode.minimumPlayers {
+                    tooFewPlayersInfo
+                }
+                ModalView(isShowing: $showAddPlayerModel, title: "New player", height: 210, content: {
+                    addPlayerModalContent
                 })
             }
-            .padding()
-            .padding(.horizontal)
-            if playersVM.players.count < 2 {
-                tooFewPlayersInfo
-            }
-            ModalView(isShowing: $showAddPlayerModel, title: "New player", height: 210, content: {
-                addPlayerModalContent
-            })
         }
     }
 }
@@ -86,17 +88,19 @@ extension SetPlayersView {
     
     private var tooFewPlayersInfo: some View {
         VStack {
-            Spacer()
-            Text(playersVM.players.count == 0 ?  "No players set to play" : "We need 2 or more players")
-                .font(.system(size: 24))
-                .padding(.bottom, 4)
-            Button(action: {
-                showAddPlayerModel = true
-            }, label: {
-                Text("Let's add some!")
-                    .font(.system(size: 28, weight: .semibold))
-            })
-            Spacer()
+            if let gameMode = playersVM.gameMode {
+                Spacer()
+                Text(playersVM.players.count == 0 ?  "No players set to play" : "We need \(gameMode.minimumPlayers) or more players")
+                    .font(.system(size: 24))
+                    .padding(.bottom, 4)
+                Button(action: {
+                    showAddPlayerModel = true
+                }, label: {
+                    Text("Let's add some!")
+                        .font(.system(size: 28, weight: .semibold))
+                })
+                Spacer()
+            }
         }
     }
     

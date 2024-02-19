@@ -35,6 +35,7 @@
 		A74A32822B82898400438E8C /* SubtleShadowModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A32812B82898400438E8C /* SubtleShadowModifier.swift */; };
 		A74A32842B8289AE00438E8C /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A32832B8289AE00438E8C /* View.swift */; };
 		A74A32862B82BA2200438E8C /* PlayerTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A32852B82BA2200438E8C /* PlayerTheme.swift */; };
+		A74A32882B82CC2F00438E8C /* GameMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A32872B82CC2F00438E8C /* GameMode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,6 +68,7 @@
 		A74A32812B82898400438E8C /* SubtleShadowModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtleShadowModifier.swift; sourceTree = "<group>"; };
 		A74A32832B8289AE00438E8C /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		A74A32852B82BA2200438E8C /* PlayerTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerTheme.swift; sourceTree = "<group>"; };
+		A74A32872B82CC2F00438E8C /* GameMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameMode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,6 +177,7 @@
 				A7138D222B7B8D060031B709 /* AppState.swift */,
 				A74A32712B82675000438E8C /* Player.swift */,
 				A74A32852B82BA2200438E8C /* PlayerTheme.swift */,
+				A74A32872B82CC2F00438E8C /* GameMode.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -341,6 +344,7 @@
 				A7138D232B7B8D060031B709 /* AppState.swift in Sources */,
 				A74A32612B823A2700438E8C /* GameInfoModalView.swift in Sources */,
 				A74A326A2B82618800438E8C /* SetPlayersView.swift in Sources */,
+				A74A32882B82CC2F00438E8C /* GameMode.swift in Sources */,
 				A74A32862B82BA2200438E8C /* PlayerTheme.swift in Sources */,
 				A7138D2F2B7B902A0031B709 /* Color.swift in Sources */,
 				A74A325C2B81814700438E8C /* SettingsModalView.swift in Sources */,

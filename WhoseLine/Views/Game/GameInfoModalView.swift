@@ -9,13 +9,15 @@ import SwiftUI
 
 struct GameInfoModalView: View {
     @Binding var isShowing: Bool
+    var title: String
+    var description: String
     var body: some View {
         ModalWithImageView(isShowing: $isShowing, height: 400, showX: false, headerImage: Image("MainLogo")) {
             VStack {
-                Text("Scenes From a Hat")
+                Text(title)
                     .font(.system(size: 24, weight: .semibold))
                 Divider()
-                Text("The rules are simple. Blahblahblah blhablhjhqskjdb asdjbasdkjasbf askjfbask jfbasfj")
+                Text(description)
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 Spacer()
@@ -30,5 +32,5 @@ struct GameInfoModalView: View {
 }
 
 #Preview {
-    GameInfoModalView(isShowing: .constant(true))
+    GameInfoModalView(isShowing: .constant(true), title: "Never have I Ever", description: "The rules are simple. Blahblahblah blhablhjhqskjdb asdjbasdkjasbf askjfbask jfbasfj")
 }

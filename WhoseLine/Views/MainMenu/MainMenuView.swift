@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MainMenuView: View {
     @EnvironmentObject var homeVM: HomeViewModel
+    @EnvironmentObject var playersVM: PlayersViewModel
     @State var showSettings: Bool = false
     var body: some View {
         ZStack {
@@ -31,6 +32,7 @@ struct MainMenuView_Previews: PreviewProvider {
     static var previews: some View {
         MainMenuView()
             .environmentObject(dev.homeVM)
+            .environmentObject(dev.playersVM)
     }
 }
 
@@ -55,12 +57,17 @@ extension MainMenuView {
     
     private var menuButtons: some View {
         VStack(spacing: 24) {
-            ForEach(1..<4) {_ in
-                Button {
-                    homeVM.goToSetPlayers()
-                } label: {
-                    MainMenuOptionView(title: "Scenes from a Hat", subtitle: "Classic WLIIA Game", icon: "gear", foregroundColor: .white, backgroundColor: .theme.accent)
-                }
+            Button {
+                homeVM.goToSetPlayers()
+                playersVM.setGameMode(.scenesFromAHat)
+            } label: {
+                MainMenuOptionView(title: "Scenes from a Hat", subtitle: "Classic WLIIA Game", icon: "gear", foregroundColor: .white, backgroundColor: .theme.accent)
+            }
+            Button {
+                homeVM.goToSetPlayers()
+                playersVM.setGameMode(.neverHaveIEver)
+            } label: {
+                MainMenuOptionView(title: "Never have I ever", subtitle: "Everyone have played that", icon: "gear", foregroundColor: .white, backgroundColor: .theme.accent)
             }
         }
     }
