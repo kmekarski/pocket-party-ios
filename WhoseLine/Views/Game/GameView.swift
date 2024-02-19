@@ -11,21 +11,26 @@ struct GameView: View {
     @EnvironmentObject var homeVM: HomeViewModel
     @EnvironmentObject var playersVM: PlayersViewModel
     @State var showInfo: Bool = false
+    @State var folds: [Bool] = [false, false]
     var body: some View {
         ZStack {
-            if let gameMode = playersVM.gameMode,
-               !currentPlayers.isEmpty {
-                background
-                VStack {
-                    header
-                        .padding(.bottom)
-                    playersNames
-                    Spacer()
-                    question
-                    Spacer()
-                    bottomButtons
+            if playersVM.gameIsOn {
+                if let gameMode = playersVM.gameMode,
+                   !currentPlayers.isEmpty {
+                    background
+                    VStack {
+                        header
+                            .padding(.bottom)
+                        playersNames
+                        Spacer()
+                        question
+                        Spacer()
+                        bottomButtons
+                    }
+                    GameInfoModalView(isShowing: $showInfo, title: gameMode.title, description: gameMode.rulesDescription)
                 }
-                GameInfoModalView(isShowing: $showInfo, title: gameMode.title, description: gameMode.rulesDescription)
+            } else {
+                GameOverView()
             }
         }
         
@@ -36,13 +41,64 @@ struct GameView_Previews: PreviewProvider {
     static var previews: some View {
         GameView()
             .environmentObject(dev.homeVM)
+            .environmentObject(dev.playersVMNeverHaveIEver)
+        GameView()
+            .environmentObject(dev.homeVM)
             .environmentObject(dev.playersVMScenesFromAHat)
     }
 }
 
 extension GameView {
+    private var players: [Player] {
+        playersVM.players
+    }
+    
     private var currentPlayers: [Player] {
         playersVM.currentPlayers
+    }
+    
+    private var currentPlayersIndices: [Int] {
+        playersVM.currentPlayersIndices
+    }
+    
+    private var playersQueue: [Player] {
+        playersVM.playersQueue
+    }
+    
+    
+    private func playerCard(playerId: String, playerNumber: Int) -> some View {
+        let player = players.first { el in
+            el.id == playerId
+        }!
+        return ZStack {
+            player.theme.color.ignoresSafeArea()
+            VStack {
+                VStack(spacing: 6) {
+                    Text(player.name + " " + player.theme.emoji)
+                        .foregroundColor(player.theme.textColor)
+                        .font(.system(size: 28, weight: .semibold))
+                    heartsDisplay(player: player)
+                        .font(.system(size: 26, weight: .semibold))
+                }
+                Spacer()
+                Button(action: {
+                    withAnimation(.easeIn(duration: 0.5)) {
+                        folds[playerNumber] = true
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        playersVM.nextPlayer(playerNumber: playerNumber)
+                        folds[playerNumber] = false
+                    }
+                }, label: {
+                    WideButtonView("\(player.name) out!", size: .big, colorScheme: .primary)
+                })
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.top, 150)
+            .padding(.horizontal, 24)
+            .padding(.bottom, 32)
+            .ignoresSafeArea()
+        }
     }
     
     private var background: some View {
@@ -53,8 +109,20 @@ extension GameView {
                     currentPlayers[0].theme.color.ignoresSafeArea()
                 case .scenesFromAHat:
                     HStack(spacing: 0) {
-                        currentPlayers[0].theme.color.ignoresSafeArea()
-                        currentPlayers[1].theme.color.ignoresSafeArea()
+                        ZStack {
+                            ForEach(playersQueue.reversed()) { player in
+                                playerCard(playerId: player.id, playerNumber: 0)
+                            }
+                            playerCard(playerId: currentPlayers[0].id, playerNumber: 0)
+                                .rotationEffect(.degrees(folds[0] ? -90 : 0), anchor: UnitPoint(x: 0, y: 1.4))
+                        }
+                        ZStack {
+                            ForEach(playersQueue.reversed()) { player in
+                                playerCard(playerId: player.id, playerNumber: 1)
+                            }
+                            playerCard(playerId: currentPlayers[1].id, playerNumber: 1)
+                                .rotationEffect(.degrees(folds[1] ? 90 : 0), anchor: UnitPoint(x: 0, y: 1.4))
+                        }
                     }
                 }
             }
@@ -65,18 +133,37 @@ extension GameView {
         HStack {
             Button {
                 homeVM.goToMainMenu()
+                playersVM.resetPlayers()
             } label: {
-                IconButtonView("xmark", color: currentPlayers[0].theme.textColor)
+                IconButtonView("xmark")
             }
             Spacer()
             Button {
                 showInfo.toggle()
             } label: {
-                IconButtonView("info", color: currentPlayers[playersVM.gameMode == .neverHaveIEver ? 0 : 1].theme.textColor)
+                IconButtonView("info")
             }
         }
         .padding()
         .padding(.horizontal)
+    }
+    
+    private func heartsDisplay(playerNumber: Int) -> some View {
+        HStack(spacing: 0) {
+            ForEach(0..<currentPlayers[playerNumber].lives, id: \.self) { _ in
+                Image(systemName: "heart.fill")
+                    .foregroundColor(.accentColor)
+            }
+        }
+    }
+    
+    private func heartsDisplay(player: Player) -> some View {
+        HStack(spacing: 0) {
+            ForEach(0..<player.lives, id: \.self) { _ in
+                Image(systemName: "heart.fill")
+                    .foregroundColor(.accentColor)
+            }
+        }
     }
     
     private var playersNames: some View {
@@ -88,31 +175,26 @@ extension GameView {
                         .foregroundColor(currentPlayers[0].theme.textColor)
                         .font(.system(size: 36, weight: .semibold))
                 case .scenesFromAHat:
-                    HStack(spacing: 32) {
-                        Text(currentPlayers[0].name + " " + currentPlayers[0].theme.emoji)
-                            .foregroundColor(currentPlayers[0].theme.textColor)
-                            .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
-                        Text(currentPlayers[1].name + " " + currentPlayers[1].theme.emoji)
-                            .foregroundColor(currentPlayers[1].theme.textColor)
-                            .frame(maxWidth: .infinity)
-                        
-                    }
-                    .font(.system(size: 28, weight: .semibold))
-                    .padding()
+                    VStack {}
                 }
             }
         }
     }
     
     private var question: some View {
-        Text("Some question???")
-            .frame(maxWidth: .infinity)
-            .frame(height: 150)
-            .background(Color.white)
-            .cornerRadius(24)
-            .subtleShadow()
-            .offset(y: -32)
-            .padding(.horizontal, 32)
+        VStack {
+            if playersVM.gameMode == .neverHaveIEver {
+                Text("\(playersVM.currentQuestionIndex+1) / \(playersVM.questions.count)")
+            }
+            Text("Some question???")
+        }
+        .frame(maxWidth: .infinity)
+        .frame(height: 150)
+        .background(Color.white)
+        .cornerRadius(24)
+        .subtleShadow()
+        .offset(y: -32)
+        .padding(.horizontal, 32)
     }
     
     private var bottomButtons: some View {
@@ -127,16 +209,7 @@ extension GameView {
                     })
                     .padding(.horizontal, 32)
                 case .scenesFromAHat:
-                    HStack(spacing: 48) {
-                        ForEach(currentPlayers.indices, id: \.self) { index in
-                            Button(action: {
-                                playersVM.nextPlayer(playerNumber: index)
-                            }, label: {
-                                WideButtonView("\(currentPlayers[index].name) out!", size: .big, colorScheme: .primary)
-                            })
-                        }
-                    }
-                    .padding(.horizontal, 24)
+                    VStack {}
                 }
             }
             

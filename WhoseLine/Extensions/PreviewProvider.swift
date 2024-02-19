@@ -23,9 +23,10 @@ class DeveloperPreview {
     let playersVMScenesFromAHat: PlayersViewModel
     
     let players = [
-        Player(id: "1", name: "John", theme: .playful),
-        Player(id: "2", name: "Blake", theme: .dark),
-        Player(id: "3", name: "Emily", theme: .animal)
+        Player(id: "1", name: "John", theme: .playful, lives: 3),
+        Player(id: "2", name: "Blake", theme: .dark, lives: 3),
+        Player(id: "3", name: "Emily", theme: .animal, lives: 3),
+        Player(id: "4", name: "Sophie", theme: .sportsy, lives: 3)
     ]
     
     private init() {
@@ -33,12 +34,12 @@ class DeveloperPreview {
         self.playersVM = PlayersViewModel()
         self.playersVMNeverHaveIEver = PlayersViewModel()
         self.playersVMNeverHaveIEver.setGameMode(.neverHaveIEver)
-        self.playersVMNeverHaveIEver.players = players
+        self.playersVMNeverHaveIEver.tempPlayers = players
         self.playersVMNeverHaveIEver.startGame()
         
         self.playersVMScenesFromAHat = PlayersViewModel()
         self.playersVMScenesFromAHat.setGameMode(.scenesFromAHat)
-        self.playersVMScenesFromAHat.players = players
+        self.playersVMScenesFromAHat.tempPlayers = players
         self.playersVMScenesFromAHat.startGame()
     }
 }

@@ -11,4 +11,5 @@ struct Player: Identifiable {
     var id: String
     var name: String
     var theme: PlayerTheme
+    var lives: Int
 }

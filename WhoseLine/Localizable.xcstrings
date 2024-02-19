@@ -14,7 +14,20 @@
         }
       }
     },
+    "%lld / %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld / %2$lld"
+          }
+        }
+      }
+    },
     "App language:" : {
+
+    },
+    "Game is over!" : {
 
     },
     "Hello, world!" : {
@@ -35,6 +48,9 @@
       }
     },
     "Let's add some!" : {
+
+    },
+    "Main menu" : {
 
     },
     "No players set to play" : {

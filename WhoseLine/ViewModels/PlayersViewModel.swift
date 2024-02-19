@@ -9,17 +9,37 @@ import Foundation
 
 final class PlayersViewModel: ObservableObject {
     @Published var players: [Player] = []
+    @Published var tempPlayers: [Player] = []
     @Published var currentPlayers: [Player] = []
+    @Published var previousPlayer: Player?
     @Published var gameMode: GameMode?
+    @Published var currentQuestionIndex = 0
+    @Published var currentQuestion = ""
+    @Published var questions = [
+        "Question 1",
+        "Question 2",
+        "Question 3",
+        "Question 4",
+        "Question 5"
+    ]
+    @Published var gameIsOn: Bool = true
+    
+    var playersQueue: [Player] {
+        let unreversed = players.filter { player in
+            !currentPlayers.contains { $0.id == player.id }
+        }
+        return unreversed.reversed()
+    }
+    
     var currentPlayersIndices: [Int] = []
     
     func addPlayer(name: String, theme: PlayerTheme) {
-        let newPlayer = Player(id: UUID().uuidString, name: name, theme: theme)
-        players.append(newPlayer)
+        let newPlayer = Player(id: UUID().uuidString, name: name, theme: theme, lives: 3)
+        tempPlayers.append(newPlayer)
     }
     
     func deletePlayer(id: String) {
-        players.removeAll { player in
+        tempPlayers.removeAll { player in
             player.id == id
         }
     }
@@ -28,22 +48,65 @@ final class PlayersViewModel: ObservableObject {
         self.gameMode = gameMode
     }
     
+    func decreasePlayerLives(playerNumber: Int) {
+        let currentPlayer = currentPlayers[playerNumber]
+        let currentPlayerIndex = currentPlayersIndices[playerNumber]
+        if currentPlayer.lives > 0 {
+            currentPlayers[playerNumber].lives -= 1
+            players[currentPlayerIndex].lives -= 1
+        }
+        
+        if currentPlayers[playerNumber].lives == 0 {
+            removePlayerFromGame(currentPlayer)
+        }
+        
+        if players.count == 1 {
+            endGame()
+        }
+    }
+    
+    func removePlayerFromGame(_ playerToRemove: Player) {
+        players.removeAll { player in
+            player.id == playerToRemove.id
+        }
+    }
+    
     func nextPlayer(playerNumber: Int) {
         guard currentPlayersIndices.count > playerNumber  else { return }
-        currentPlayersIndices[playerNumber] += 1
-        if currentPlayersIndices[playerNumber] == players.count {
-            currentPlayersIndices[playerNumber] = 0
+        
+        if gameMode == .scenesFromAHat {
+            decreasePlayerLives(playerNumber: playerNumber)
         }
-        while !allPlayerIndicesAreUnique() {
-            currentPlayersIndices[playerNumber] += 1
-            if currentPlayersIndices[playerNumber] == players.count {
-                currentPlayersIndices[playerNumber] = 0
-            }
+        
+        if let firstInQueue = playersQueue.first {
+            currentPlayers[playerNumber] = firstInQueue
+            currentPlayersIndices[0] = players.firstIndex(where: { player in
+                player.id == currentPlayers[0].id
+            })!
+            currentPlayersIndices[1] = players.firstIndex(where: { player in
+                player.id == currentPlayers[1].id
+            })!
         }
-        currentPlayers[playerNumber] = players[currentPlayersIndices[playerNumber]]
+        
+        print("all players: ", players)
+        print("\n")
+        print("players queue: ", playersQueue)
+        print("\n")
+        print("current players: ", currentPlayers)
+        print("\n")
+        print("current players indices: ", currentPlayersIndices)
+    }
+    
+    func nextQuestion() {
+        if currentQuestionIndex < questions.count - 1 {
+            currentQuestionIndex += 1
+            currentQuestion = questions[currentQuestionIndex]
+        }
     }
     
     func startGame() {
+        gameIsOn = true
+        players = tempPlayers
         players.shuffle()
         switch(gameMode) {
         case .neverHaveIEver:
@@ -52,9 +115,26 @@ final class PlayersViewModel: ObservableObject {
         case .scenesFromAHat:
             currentPlayers = [players[0], players[1]]
             currentPlayersIndices = [0, 1]
+            print("all players: ", players)
+            print("\n")
+            print("players queue: ", playersQueue)
+            print("\n")
+            print("current players: ", currentPlayers)
+            print("\n")
+            print("current players indices: ", currentPlayersIndices)
         case .none:
             break
         }
+    }
+    
+    func endGame() {
+        gameIsOn = false
+    }
+    
+    func resetPlayers() {
+        players = []
+        currentPlayers = []
+        currentPlayersIndices = []
     }
     
     private func allPlayerIndicesAreUnique() -> Bool {

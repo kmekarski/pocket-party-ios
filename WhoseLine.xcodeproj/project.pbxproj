@@ -36,6 +36,8 @@
 		A74A32842B8289AE00438E8C /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A32832B8289AE00438E8C /* View.swift */; };
 		A74A32862B82BA2200438E8C /* PlayerTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A32852B82BA2200438E8C /* PlayerTheme.swift */; };
 		A74A32882B82CC2F00438E8C /* GameMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A32872B82CC2F00438E8C /* GameMode.swift */; };
+		A76BDF662B8376A700019FA4 /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BDF652B8376A700019FA4 /* GameOverView.swift */; };
+		A76BDF692B83882000019FA4 /* FoldOutTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BDF682B83882000019FA4 /* FoldOutTransition.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +71,8 @@
 		A74A32832B8289AE00438E8C /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		A74A32852B82BA2200438E8C /* PlayerTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerTheme.swift; sourceTree = "<group>"; };
 		A74A32872B82CC2F00438E8C /* GameMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameMode.swift; sourceTree = "<group>"; };
+		A76BDF652B8376A700019FA4 /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
+		A76BDF682B83882000019FA4 /* FoldOutTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldOutTransition.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -203,6 +207,7 @@
 		A7138D2A2B7B8ED10031B709 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				A76BDF672B83881400019FA4 /* Animations */,
 				A74A32802B82895C00438E8C /* ViewModifiers */,
 				A74A32772B82738200438E8C /* TextFields */,
 				A704D4032B7F93160005F8A5 /* Modals */,
@@ -225,6 +230,7 @@
 			children = (
 				A7138D302B7B938B0031B709 /* GameView.swift */,
 				A74A32602B823A2700438E8C /* GameInfoModalView.swift */,
+				A76BDF652B8376A700019FA4 /* GameOverView.swift */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -252,6 +258,14 @@
 				A74A32812B82898400438E8C /* SubtleShadowModifier.swift */,
 			);
 			path = ViewModifiers;
+			sourceTree = "<group>";
+		};
+		A76BDF672B83881400019FA4 /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				A76BDF682B83882000019FA4 /* FoldOutTransition.swift */,
+			);
+			path = Animations;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -348,9 +362,11 @@
 				A74A32862B82BA2200438E8C /* PlayerTheme.swift in Sources */,
 				A7138D2F2B7B902A0031B709 /* Color.swift in Sources */,
 				A74A325C2B81814700438E8C /* SettingsModalView.swift in Sources */,
+				A76BDF692B83882000019FA4 /* FoldOutTransition.swift in Sources */,
 				A74A32742B8269DF00438E8C /* PlayersViewModel.swift in Sources */,
 				A74A32762B826ACF00438E8C /* SetPlayersRowView.swift in Sources */,
 				A7138D2D2B7B8EE00031B709 /* WideButtonView.swift in Sources */,
+				A76BDF662B8376A700019FA4 /* GameOverView.swift in Sources */,
 				A704D4022B7F8BDC0005F8A5 /* MainMenuOptionView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

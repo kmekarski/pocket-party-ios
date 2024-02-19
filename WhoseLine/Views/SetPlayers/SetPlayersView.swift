@@ -19,21 +19,21 @@ struct SetPlayersView: View {
                 Color.theme.background.ignoresSafeArea()
                 VStack {
                     header
-                    if !playersVM.players.isEmpty {
+                    if !playersVM.tempPlayers.isEmpty {
                         playersList
                     }
                     Spacer()
                     Button(action: {
-                        guard playersVM.players.count >= gameMode.minimumPlayers else { return }
+                        guard playersVM.tempPlayers.count >= gameMode.minimumPlayers else { return }
                         homeVM.goToNextState()
                         playersVM.startGame()
                     }, label: {
-                        WideButtonView("Start Game", disabled: playersVM.players.count < gameMode.minimumPlayers, size: .big, colorScheme: .primary)
+                        WideButtonView("Start Game", disabled: playersVM.tempPlayers.count < gameMode.minimumPlayers, size: .big, colorScheme: .primary)
                     })
                 }
                 .padding()
                 .padding(.horizontal)
-                if playersVM.players.count < gameMode.minimumPlayers {
+                if playersVM.tempPlayers.count < gameMode.minimumPlayers {
                     tooFewPlayersInfo
                 }
                 ModalView(isShowing: $showAddPlayerModel, title: "New player", height: 210, content: {
@@ -45,9 +45,11 @@ struct SetPlayersView: View {
 }
 
 #Preview {
-    SetPlayersView()
+    let playersVM = PlayersViewModel()
+    playersVM.gameMode = .neverHaveIEver
+    return SetPlayersView()
         .environmentObject(HomeViewModel())
-        .environmentObject(PlayersViewModel())
+        .environmentObject(playersVM)
 }
 
 extension SetPlayersView {
@@ -77,7 +79,7 @@ extension SetPlayersView {
     private var playersList: some View {
         ScrollView {
             VStack(spacing: 12) {
-                ForEach(playersVM.players) { player in
+                ForEach(playersVM.tempPlayers) { player in
                     SetPlayersRowView(player: player)
                 }
             }
@@ -90,7 +92,7 @@ extension SetPlayersView {
         VStack {
             if let gameMode = playersVM.gameMode {
                 Spacer()
-                Text(playersVM.players.count == 0 ?  "No players set to play" : "We need \(gameMode.minimumPlayers) or more players")
+                Text(playersVM.tempPlayers.count == 0 ?  "No players set to play" : "We need \(gameMode.minimumPlayers) or more players")
                     .font(.system(size: 24))
                     .padding(.bottom, 4)
                 Button(action: {
