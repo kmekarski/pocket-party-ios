@@ -82,6 +82,10 @@ extension GameView {
                 }
                 Spacer()
                 Button(action: {
+                    if playersQueue.isEmpty {
+                        playersVM.nextPlayer(playerNumber: playerNumber)
+                        return
+                    }
                     withAnimation(.easeIn(duration: 0.5)) {
                         folds[playerNumber] = true
                     }
@@ -102,7 +106,8 @@ extension GameView {
     }
     
     private var background: some View {
-        VStack {
+        ZStack {
+            Color.theme.background.ignoresSafeArea()
             if let gameMode = playersVM.gameMode {
                 switch gameMode {
                 case .neverHaveIEver:
