@@ -12,13 +12,10 @@ struct SetPlayersRowView: View {
     var player: Player
     var body: some View {
         HStack {
-            HStack(spacing: 12) {
-                Text(player.name)
-                Text(player.theme.emoji)
-            }
-            .font(.system(size: 20, weight: .semibold))
-
-
+            Text(player.name + " " + player.theme.emoji)
+                .font(.system(size: 20, weight: .semibold))
+            
+            
             Spacer()
             Button(action: {
                 playersVM.deletePlayer(id: player.id)

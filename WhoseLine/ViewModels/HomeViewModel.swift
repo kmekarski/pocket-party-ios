@@ -28,4 +28,16 @@ final class HomeViewModel: ObservableObject {
             appState = .setPlayers
         }
     }
+    
+    func goToNextState() {
+        if let nextState = AppState(rawValue: appState.rawValue + 1) {
+            appState = nextState
+        }
+    }
+    
+    func goToPreviousState() {
+        if let previousState = AppState(rawValue: appState.rawValue - 1) {
+            appState = previousState
+        }
+    }
 }

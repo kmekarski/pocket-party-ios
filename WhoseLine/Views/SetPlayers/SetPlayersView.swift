@@ -25,7 +25,7 @@ struct SetPlayersView: View {
                     Spacer()
                     Button(action: {
                         guard playersVM.players.count >= gameMode.minimumPlayers else { return }
-                        homeVM.goToGame()
+                        homeVM.goToNextState()
                         playersVM.startGame()
                     }, label: {
                         WideButtonView("Start Game", disabled: playersVM.players.count < gameMode.minimumPlayers, size: .big, colorScheme: .primary)

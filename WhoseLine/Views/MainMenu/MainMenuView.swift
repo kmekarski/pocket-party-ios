@@ -58,13 +58,13 @@ extension MainMenuView {
     private var menuButtons: some View {
         VStack(spacing: 24) {
             Button {
-                homeVM.goToSetPlayers()
+                homeVM.goToNextState()
                 playersVM.setGameMode(.scenesFromAHat)
             } label: {
                 MainMenuOptionView(title: "Scenes from a Hat", subtitle: "Classic WLIIA Game", icon: "gear", foregroundColor: .white, backgroundColor: .theme.accent)
             }
             Button {
-                homeVM.goToSetPlayers()
+                homeVM.goToNextState()
                 playersVM.setGameMode(.neverHaveIEver)
             } label: {
                 MainMenuOptionView(title: "Never have I ever", subtitle: "Everyone have played that", icon: "gear", foregroundColor: .white, backgroundColor: .theme.accent)
