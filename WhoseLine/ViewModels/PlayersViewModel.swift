@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 final class PlayersViewModel: ObservableObject {
     @Published var players: [Player] = []
@@ -25,12 +26,11 @@ final class PlayersViewModel: ObservableObject {
     
     @Published var playersQueue: [Player] = []
     
-    @Published var topPlayers: [Player] = [
-        Player(id: "1", name: "John", theme: .playful, lives: 3),
-        Player(id: "2", name: "Blake", theme: .dark, lives: 3),
-        Player(id: "3", name: "Emily", theme: .animal, lives: 3),
-        Player(id: "4", name: "Sophie", theme: .sportsy, lives: 3)
-    ]
+    @Published var removedPlayers: [Player] = []
+    
+    var topPlayers: [Player] {
+        return removedPlayers.suffix(3).reversed()
+    }
     
     func addPlayer(name: String, theme: PlayerTheme) {
         let newPlayer = Player(id: UUID().uuidString, name: name, theme: theme, lives: 3)
@@ -64,12 +64,15 @@ final class PlayersViewModel: ObservableObject {
         if players.count == 1 {
             endGame()
         }
+        
+        print("players count: ", players.count)
     }
     
     func removePlayerFromGame(_ playerToRemove: Player) {
         players.removeAll { player in
             player.id == playerToRemove.id
         }
+        removedPlayers.append(playerToRemove)
     }
     
     func nextPlayer(playerNumber: Int) {
@@ -98,7 +101,9 @@ final class PlayersViewModel: ObservableObject {
     
     func startGame() {
         guard let gameMode = gameMode else { return }
-        gameIsOn = true
+        withAnimation(.spring()) {
+            gameIsOn = true
+        }
         players = tempPlayers
         players.shuffle()
         currentPlayers = Array(players.prefix(upTo: gameMode.playersOnScreen))
@@ -115,7 +120,12 @@ final class PlayersViewModel: ObservableObject {
     }
     
     func endGame() {
-        gameIsOn = false
+        if let lastPlayer = players.first {
+            removedPlayers.append(lastPlayer)
+        }
+        withAnimation(.spring()) {
+            gameIsOn = false
+        }
     }
     
     func resetPlayers() {

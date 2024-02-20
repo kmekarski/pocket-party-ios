@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct SetPlayersView: View {
-    @EnvironmentObject var homeVM: HomeViewModel
+    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var playersVM: PlayersViewModel
     @State var showAddPlayerModel: Bool = false
     @State var newPlayerName: String = ""
     @State var selectedThemeIndex: Int?
+    var gameMode: GameMode
     var body: some View {
         ZStack {
             if let gameMode = playersVM.gameMode {
@@ -23,13 +24,19 @@ struct SetPlayersView: View {
                         playersList
                     }
                     Spacer()
-                    Button(action: {
-                        guard playersVM.tempPlayers.count >= gameMode.minimumPlayers else { return }
-                        homeVM.goToNextState()
-                        playersVM.startGame()
-                    }, label: {
+                    //                    Button(action: {
+                    //                        guard playersVM.tempPlayers.count >= gameMode.minimumPlayers else { return }
+                    //                        playersVM.startGame()
+                    //                    }, label: {
+                    //
+                    //                    })
+                    NavigationLink {
+                        GameView()
+                    } label: {
                         WideButtonView("Start Game", disabled: playersVM.tempPlayers.count < gameMode.minimumPlayers, size: .big, colorScheme: .primary)
-                    })
+                    }
+                    .disabled(playersVM.tempPlayers.count < gameMode.minimumPlayers)
+                    
                 }
                 .padding()
                 .padding(.horizontal)
@@ -41,15 +48,21 @@ struct SetPlayersView: View {
                 })
             }
         }
+        .navigationBarBackButtonHidden(true)
+        .onAppear() {
+            playersVM.setGameMode(gameMode)
+        }
     }
 }
 
 #Preview {
     let playersVM = PlayersViewModel()
     playersVM.gameMode = .neverHaveIEver
-    return SetPlayersView()
-        .environmentObject(HomeViewModel())
-        .environmentObject(playersVM)
+    return NavigationStack {
+        SetPlayersView(gameMode: .neverHaveIEver)
+    }
+    .environmentObject(HomeViewModel())
+    .environmentObject(playersVM)
 }
 
 extension SetPlayersView {
@@ -60,7 +73,7 @@ extension SetPlayersView {
     private var header: some View {
         HStack(alignment: .top) {
             Button {
-                homeVM.goToMainMenu()
+                self.presentationMode.wrappedValue.dismiss()
             } label: {
                 IconButtonView("arrow.left")
             }

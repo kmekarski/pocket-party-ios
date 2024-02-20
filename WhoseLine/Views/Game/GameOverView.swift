@@ -13,15 +13,20 @@ struct GameOverView: View {
     var body: some View {
         ZStack {
             Color.theme.background.ignoresSafeArea()
-            SpinningSpotlightView(speed: 10)
-            .offset(y: 60)
-                    
-            VStack {
-                if let winner = playersVM.players.first {
-                    topSection
-                    buttonsSection
-                }
+            if homeVM.appState == .game && !playersVM.gameIsOn {
+                SpinningSpotlightView(speed: 10)
+                    .offset(y: 60)
             }
+            
+            VStack {
+                header
+                Spacer()
+                if playersVM.topPlayers.count >= 2 {
+                    podium
+                }
+                buttonsSection
+            }
+            .padding()
         }
         
     }
@@ -56,9 +61,10 @@ extension GameOverView {
             ZStack(alignment: .top) {
                 Rectangle()
                     .foregroundColor(player.theme.color)
-                    .frame(maxWidth: .infinity)
+                    .frame(maxWidth: 120)
                     .frame(height: height)
                     .cornerRadius(12)
+                    .shadow(color: .black.opacity(0.3), radius: 2)
                 
                 Text("\(place)")
                     .font(.system(size: 36, weight: .bold))
@@ -71,19 +77,16 @@ extension GameOverView {
     private var podium: some View {
         let top3 = Array(playersVM.topPlayers.prefix(upTo: 3))
         return HStack(alignment: .bottom, spacing: 16) {
-            podiumRectangle(player: top3[1], place: 2)
-            podiumRectangle(player: top3[0], place: 1)
-            podiumRectangle(player: top3[2], place: 3)
+            if top3.count > 2 {
+                podiumRectangle(player: top3[1], place: 2)
+                podiumRectangle(player: top3[0], place: 1)
+                podiumRectangle(player: top3[2], place: 3)
+            }
+            if top3.count == 2 {
+                podiumRectangle(player: top3[0], place: 1)
+                podiumRectangle(player: top3[1], place: 2)
+            }
         }
-    }
-    
-    private var topSection: some View {
-        VStack {
-            header
-            Spacer()
-            podium
-        }
-        .padding()
     }
     
     private var buttonsSection: some View {
@@ -103,9 +106,9 @@ extension GameOverView {
                 homeVM.goToSetPlayers()
             }, label: {
                 WideButtonView("Edit players", size: .big, colorScheme: .primary)
+                
             })
         }
-        .padding()
         .padding(.top)
     }
 }

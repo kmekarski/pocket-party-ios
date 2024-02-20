@@ -10,13 +10,7 @@ import SwiftUI
 struct HomeView: View {
     @EnvironmentObject var homeVM: HomeViewModel
     var body: some View {
-        ZStack {
-            MainMenuView()
-            SetPlayersView()
-                .offset(y: homeVM.appState != .mainMenu ? 0 : UIScreen.main.bounds.height)
-            GameView()
-                .offset(y: homeVM.appState == .game ? 0 : UIScreen.main.bounds.height)
-        }
+        MainMenuView()
     }
 }
 

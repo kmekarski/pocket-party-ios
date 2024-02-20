@@ -32,7 +32,7 @@ struct ModalView<Content: View>: View {
                         mainView
                     }
                 }
-                .padding(.horizontal)
+                .padding(.horizontal, 32)
                 .frame(height: isShowing ? height : 0)
             }
             .ignoresSafeArea()

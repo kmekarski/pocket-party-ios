@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct GameView: View {
+    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var homeVM: HomeViewModel
     @EnvironmentObject var playersVM: PlayersViewModel
     @State var showInfo: Bool = false
@@ -15,21 +16,23 @@ struct GameView: View {
     @State var foldDirection: FoldDirection = .left
     var body: some View {
         ZStack {
-            if playersVM.gameIsOn {
-                if let gameMode = playersVM.gameMode,
-                   !currentPlayers.isEmpty {
-                    background
-                    VStack {
-                        header
-                        Spacer()
-                        question
-                        Spacer()
-                    }
-                    GameInfoModalView(isShowing: $showInfo, title: gameMode.title, description: gameMode.rulesDescription)
+            if let gameMode = playersVM.gameMode,
+               !currentPlayers.isEmpty {
+                background
+                VStack {
+                    header
+                    Spacer()
+                    question
+                    Spacer()
                 }
-            } else {
+                GameInfoModalView(isShowing: $showInfo, title: gameMode.title, description: gameMode.rulesDescription)
                 GameOverView()
+                    .moveFromEdgeTransition(active: !playersVM.gameIsOn, edge: .bottom)
             }
+        }
+        .navigationBarBackButtonHidden(true)
+        .onAppear() {
+            playersVM.startGame()
         }
     }
 }
@@ -86,52 +89,52 @@ extension GameView {
         case .neverHaveIEver:
             return AnyView(
                 HStack(spacing: 16) {
-                Button(action: {
-                    setNewFoldDirection()
-                    withAnimation(.easeIn(duration: 0.5)) {
-                        folds[0] = true
-                    }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        playersVM.nextQuestion()
-                        playersVM.nextPlayer(playerNumber: 0)
-                        folds[0] = false
-                    }
-                }, label: {
-                    WideButtonView("Answer", size: .big, colorScheme: .primary)
-            })
-                Button(action: {
-                    setNewFoldDirection()
-                    withAnimation(.easeIn(duration: 0.5)) {
-                        folds[0] = true
-                    }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        playersVM.nextQuestion()
-                        playersVM.decreasePlayerLives(playerNumber: 0)
-                        playersVM.nextPlayer(playerNumber: 0)
-                        folds[0] = false
-                    }
-                }, label: {
-                    WideButtonView("Skip", size: .big, colorScheme: .primary)
-            })
-            })
+                    Button(action: {
+                        setNewFoldDirection()
+                        withAnimation(.easeIn(duration: 0.5)) {
+                            folds[0] = true
+                        }
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            playersVM.nextQuestion()
+                            playersVM.nextPlayer(playerNumber: 0)
+                            folds[0] = false
+                        }
+                    }, label: {
+                        WideButtonView("Answer", size: .big, colorScheme: .primary)
+                    })
+                    Button(action: {
+                        setNewFoldDirection()
+                        withAnimation(.easeIn(duration: 0.5)) {
+                            folds[0] = true
+                        }
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            playersVM.nextQuestion()
+                            playersVM.decreasePlayerLives(playerNumber: 0)
+                            playersVM.nextPlayer(playerNumber: 0)
+                            folds[0] = false
+                        }
+                    }, label: {
+                        WideButtonView("Skip", size: .big, colorScheme: .primary)
+                    })
+                })
         case .scenesFromAHat:
             return AnyView(
                 Button(action: {
-                if playersQueue.isEmpty {
-                    playersVM.nextPlayer(playerNumber: playerNumber)
-                    return
-                }
-                withAnimation(.easeIn(duration: 0.5)) {
-                    folds[playerNumber] = true
-                }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    playersVM.decreasePlayerLives(playerNumber: playerNumber)
-                    playersVM.nextPlayer(playerNumber: playerNumber)
-                    folds[playerNumber] = false
-                }
-            }, label: {
-                WideButtonView("\(player.name) out!", size: .big, colorScheme: .primary)
-            })
+                    if playersQueue.isEmpty {
+                        playersVM.nextPlayer(playerNumber: playerNumber)
+                        return
+                    }
+                    withAnimation(.easeIn(duration: 0.5)) {
+                        folds[playerNumber] = true
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        playersVM.decreasePlayerLives(playerNumber: playerNumber)
+                        playersVM.nextPlayer(playerNumber: playerNumber)
+                        folds[playerNumber] = false
+                    }
+                }, label: {
+                    WideButtonView("\(player.name) out!", size: .big, colorScheme: .primary)
+                })
             )
         }
     }
@@ -178,7 +181,7 @@ extension GameView {
                             }
                             playerCard(playerId: currentPlayers[0].id, playerNumber: 0)
                                 .foldTransition(active: folds[0], direction: .left)
-
+                            
                         }
                         ZStack {
                             currentPlayers[0].theme.color.ignoresSafeArea()
@@ -197,7 +200,7 @@ extension GameView {
     private var header: some View {
         HStack {
             Button {
-                homeVM.goToMainMenu()
+                presentationMode.wrappedValue.dismiss()
                 playersVM.resetPlayers()
             } label: {
                 IconButtonView("xmark")

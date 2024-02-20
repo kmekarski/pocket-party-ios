@@ -9,7 +9,13 @@ import Foundation
 import SwiftUI
 
 final class HomeViewModel: ObservableObject {
-    @Published private(set) var appState: AppState = .mainMenu
+    @Published private(set) var appState: AppState
+    init() {
+        self.appState = .mainMenu
+        withAnimation(.spring()) {
+            appState = .mainMenu
+        }
+    }
     
     func goToGame() {
         withAnimation(.spring()) {

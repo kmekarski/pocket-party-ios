@@ -30,6 +30,8 @@ struct SpinningSpotlightView: View {
         .blur(radius: 12)
         .rotationEffect(.init(degrees: self.animate ? 360 : 0))
         .animation(Animation.linear(duration: TimeInterval(200/speed)).repeatForever(autoreverses: false), value: animate)
+//        .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+//        .clipped()
         .onAppear {
             self.animate.toggle()
         }

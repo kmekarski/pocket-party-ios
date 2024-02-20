@@ -41,6 +41,7 @@
 		A76BDF6D2B84C41A00019FA4 /* ViewTitleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BDF6C2B84C41A00019FA4 /* ViewTitleModifier.swift */; };
 		A76BDF702B84F75600019FA4 /* Trapezoid.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BDF6F2B84F75600019FA4 /* Trapezoid.swift */; };
 		A76BDF722B84F97000019FA4 /* SpinningSpotlightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BDF712B84F97000019FA4 /* SpinningSpotlightView.swift */; };
+		A76BDF742B85108500019FA4 /* MoveFromEdgeTransitionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BDF732B85108500019FA4 /* MoveFromEdgeTransitionModifier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -79,6 +80,7 @@
 		A76BDF6C2B84C41A00019FA4 /* ViewTitleModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTitleModifier.swift; sourceTree = "<group>"; };
 		A76BDF6F2B84F75600019FA4 /* Trapezoid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trapezoid.swift; sourceTree = "<group>"; };
 		A76BDF712B84F97000019FA4 /* SpinningSpotlightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinningSpotlightView.swift; sourceTree = "<group>"; };
+		A76BDF732B85108500019FA4 /* MoveFromEdgeTransitionModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveFromEdgeTransitionModifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -264,6 +266,7 @@
 				A74A32812B82898400438E8C /* SubtleShadowModifier.swift */,
 				A76BDF6A2B84BF5700019FA4 /* FoldTransitionModifier.swift */,
 				A76BDF6C2B84C41A00019FA4 /* ViewTitleModifier.swift */,
+				A76BDF732B85108500019FA4 /* MoveFromEdgeTransitionModifier.swift */,
 			);
 			path = ViewModifiers;
 			sourceTree = "<group>";
@@ -376,6 +379,7 @@
 				A74A325C2B81814700438E8C /* SettingsModalView.swift in Sources */,
 				A74A32742B8269DF00438E8C /* PlayersViewModel.swift in Sources */,
 				A74A32762B826ACF00438E8C /* SetPlayersRowView.swift in Sources */,
+				A76BDF742B85108500019FA4 /* MoveFromEdgeTransitionModifier.swift in Sources */,
 				A7138D2D2B7B8EE00031B709 /* WideButtonView.swift in Sources */,
 				A76BDF662B8376A700019FA4 /* GameOverView.swift in Sources */,
 				A76BDF722B84F97000019FA4 /* SpinningSpotlightView.swift in Sources */,

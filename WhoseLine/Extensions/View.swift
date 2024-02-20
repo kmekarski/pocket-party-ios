@@ -20,4 +20,8 @@ extension View {
     func viewTitle() -> some View {
         modifier(ViewTitleModifier())
     }
+    
+    func moveFromEdgeTransition(active: Bool, edge: Edge) -> some View {
+        modifier(MoveFromEdgeTransitionModifier(active: active, edge: edge))
+    }
 }

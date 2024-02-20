@@ -12,18 +12,20 @@ struct MainMenuView: View {
     @EnvironmentObject var playersVM: PlayersViewModel
     @State var showSettings: Bool = false
     var body: some View {
-        ZStack {
-            Color.theme.background.ignoresSafeArea()
-            ScrollView {
-                VStack {
-                    header
-                        .padding(.bottom, 8)
-                    menuButtons
+        NavigationStack {
+            ZStack {
+                Color.theme.background.ignoresSafeArea()
+                ScrollView {
+                    VStack {
+                        header
+                            .padding(.bottom, 8)
+                        menuButtons
+                    }
+                    .padding(.top)
+                    .padding(.horizontal)
                 }
-                .padding(.top)
-                .padding(.horizontal)
+                SettingsModalView(isShowing: $showSettings)
             }
-            SettingsModalView(isShowing: $showSettings)
         }
     }
 }
@@ -57,17 +59,16 @@ extension MainMenuView {
     
     private var menuButtons: some View {
         VStack(spacing: 24) {
-            Button {
-                homeVM.goToNextState()
-                playersVM.setGameMode(.scenesFromAHat)
+            NavigationLink {
+                SetPlayersView(gameMode: .scenesFromAHat)
             } label: {
                 MainMenuOptionView(title: "Scenes from a Hat", subtitle: "Classic WLIIA Game", icon: "gear", foregroundColor: .white, backgroundColor: .theme.accent)
             }
-            Button {
-                homeVM.goToNextState()
-                playersVM.setGameMode(.neverHaveIEver)
+            
+            NavigationLink {
+                SetPlayersView(gameMode: .neverHaveIEver)
             } label: {
-                MainMenuOptionView(title: "Never have I ever", subtitle: "Everyone have played that", icon: "gear", foregroundColor: .white, backgroundColor: .theme.accent)
+                MainMenuOptionView(title: "Never Have I Ever", subtitle: "Classic WLIIA Game", icon: "gear", foregroundColor: .white, backgroundColor: .theme.accent)
             }
         }
     }
