@@ -20,6 +20,15 @@ enum GameMode {
         }
     }
     
+    var playersOnScreen: Int {
+        switch self {
+        case .scenesFromAHat:
+            return 2
+        case .neverHaveIEver:
+            return 1
+        }
+    }
+    
     var title: String {
         switch self {
         case .scenesFromAHat:

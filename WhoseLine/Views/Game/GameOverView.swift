@@ -14,7 +14,7 @@ struct GameOverView: View {
         ZStack {
             Color.theme.background.ignoresSafeArea()
             VStack {
-                if let winner = playersVM.currentPlayers.first {
+                if let winner = playersVM.players.first {
                     Text("Game is over!")
                     Text("Winner: " + winner.name)
                     Button(action: {

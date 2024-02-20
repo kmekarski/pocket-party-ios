@@ -12,6 +12,7 @@ struct GameView: View {
     @EnvironmentObject var playersVM: PlayersViewModel
     @State var showInfo: Bool = false
     @State var folds: [Bool] = [false, false]
+    @State var foldDirection: Int = 1
     var body: some View {
         ZStack {
             if playersVM.gameIsOn {
@@ -20,12 +21,9 @@ struct GameView: View {
                     background
                     VStack {
                         header
-                            .padding(.bottom)
-                        playersNames
                         Spacer()
                         question
                         Spacer()
-                        bottomButtons
                     }
                     GameInfoModalView(isShowing: $showInfo, title: gameMode.title, description: gameMode.rulesDescription)
                 }
@@ -57,76 +55,106 @@ extension GameView {
         playersVM.currentPlayers
     }
     
-    private var currentPlayersIndices: [Int] {
-        playersVM.currentPlayersIndices
-    }
-    
     private var playersQueue: [Player] {
         playersVM.playersQueue
     }
     
+    private var gameMode: GameMode {
+        playersVM.gameMode ?? .neverHaveIEver
+    }
+    
+    private func setNewFoldDirection() {
+        foldDirection *= -1
+    }
+    
+    private func playerTitle(player: Player) -> some View {
+        VStack(spacing: 6) {
+            Text(player.name + " " + player.theme.emoji)
+                .foregroundColor(player.theme.textColor)
+                .font(.system(size: 28, weight: .semibold))
+            heartsDisplay(player: player)
+                .font(.system(size: 26, weight: .semibold))
+        }
+    }
+    
+    private func bottomButtons(player: Player, playerNumber: Int) -> some View {
+        switch(gameMode) {
+        case .neverHaveIEver:
+            return Button(action: {
+                setNewFoldDirection()
+                withAnimation(.easeIn(duration: 0.5)) {
+                    folds[0] = true
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    playersVM.nextPlayer(playerNumber: 0)
+                    folds[0] = false
+                }
+            }, label: {
+                WideButtonView("Next question", size: .big, colorScheme: .primary)
+            })
+        case .scenesFromAHat:
+            return Button(action: {
+                if playersQueue.isEmpty {
+                    playersVM.nextPlayer(playerNumber: playerNumber)
+                    return
+                }
+                withAnimation(.easeIn(duration: 0.5)) {
+                    folds[playerNumber] = true
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    playersVM.nextPlayer(playerNumber: playerNumber)
+                    folds[playerNumber] = false
+                }
+            }, label: {
+                WideButtonView("\(player.name) out!", size: .big, colorScheme: .primary)
+            })
+        }
+    }
     
     private func playerCard(playerId: String, playerNumber: Int) -> some View {
-        let player = players.first { el in
-            el.id == playerId
-        }!
-        return ZStack {
-            player.theme.color.ignoresSafeArea()
-            VStack {
-                VStack(spacing: 6) {
-                    Text(player.name + " " + player.theme.emoji)
-                        .foregroundColor(player.theme.textColor)
-                        .font(.system(size: 28, weight: .semibold))
-                    heartsDisplay(player: player)
-                        .font(.system(size: 26, weight: .semibold))
+        ZStack {
+            if let player = players.first(where: { el in
+                el.id == playerId
+            }) {
+                player.theme.color.ignoresSafeArea()
+                VStack {
+                    playerTitle(player: player)
+                    Spacer()
+                    bottomButtons(player: player, playerNumber: playerNumber)
                 }
-                Spacer()
-                Button(action: {
-                    if playersQueue.isEmpty {
-                        playersVM.nextPlayer(playerNumber: playerNumber)
-                        return
-                    }
-                    withAnimation(.easeIn(duration: 0.5)) {
-                        folds[playerNumber] = true
-                    }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        playersVM.nextPlayer(playerNumber: playerNumber)
-                        folds[playerNumber] = false
-                    }
-                }, label: {
-                    WideButtonView("\(player.name) out!", size: .big, colorScheme: .primary)
-                })
+                .frame(maxWidth: .infinity)
+                .padding(.top, 150)
+                .padding(.horizontal, 24)
+                .padding(.bottom, 32)
+                .ignoresSafeArea()
             }
-            .frame(maxWidth: .infinity)
-            .padding(.top, 150)
-            .padding(.horizontal, 24)
-            .padding(.bottom, 32)
-            .ignoresSafeArea()
         }
     }
     
     private var background: some View {
         ZStack {
-            Color.theme.background.ignoresSafeArea()
             if let gameMode = playersVM.gameMode {
                 switch gameMode {
                 case .neverHaveIEver:
-                    currentPlayers[0].theme.color.ignoresSafeArea()
+                    ZStack {
+                        ForEach(playersQueue.reversed()) { player in
+                            playerCard(playerId: player.id, playerNumber: 0)
+                        }
+                        playerCard(playerId: currentPlayers[0].id, playerNumber: 0)
+                            .rotationEffect(.degrees(Double(folds[0] ? (foldDirection * 90) : 0)), anchor: UnitPoint(x: 0, y: 1.4))
+                    }
+                    
                 case .scenesFromAHat:
                     HStack(spacing: 0) {
-                        ZStack {
-                            ForEach(playersQueue.reversed()) { player in
-                                playerCard(playerId: player.id, playerNumber: 0)
+                        ForEach(0..<2, id: \.self) { index in
+                            ZStack {
+                                currentPlayers[1-index].theme.color.ignoresSafeArea()
+                                ForEach(playersQueue.reversed()) { player in
+                                    playerCard(playerId: player.id, playerNumber: index)
+                                }
+                                playerCard(playerId: currentPlayers[index].id, playerNumber: index)
+                                    .rotationEffect(.degrees(Double(folds[index] ? (-90 + 180 * index) : 0)), anchor: UnitPoint(x: 0, y: 1.4))
                             }
-                            playerCard(playerId: currentPlayers[0].id, playerNumber: 0)
-                                .rotationEffect(.degrees(folds[0] ? -90 : 0), anchor: UnitPoint(x: 0, y: 1.4))
-                        }
-                        ZStack {
-                            ForEach(playersQueue.reversed()) { player in
-                                playerCard(playerId: player.id, playerNumber: 1)
-                            }
-                            playerCard(playerId: currentPlayers[1].id, playerNumber: 1)
-                                .rotationEffect(.degrees(folds[1] ? 90 : 0), anchor: UnitPoint(x: 0, y: 1.4))
                         }
                     }
                 }
@@ -153,35 +181,11 @@ extension GameView {
         .padding(.horizontal)
     }
     
-    private func heartsDisplay(playerNumber: Int) -> some View {
-        HStack(spacing: 0) {
-            ForEach(0..<currentPlayers[playerNumber].lives, id: \.self) { _ in
-                Image(systemName: "heart.fill")
-                    .foregroundColor(.accentColor)
-            }
-        }
-    }
-    
     private func heartsDisplay(player: Player) -> some View {
         HStack(spacing: 0) {
             ForEach(0..<player.lives, id: \.self) { _ in
                 Image(systemName: "heart.fill")
                     .foregroundColor(.accentColor)
-            }
-        }
-    }
-    
-    private var playersNames: some View {
-        VStack {
-            if let gameMode = playersVM.gameMode {
-                switch gameMode {
-                case .neverHaveIEver:
-                    Text(currentPlayers[0].name + " " + currentPlayers[0].theme.emoji)
-                        .foregroundColor(currentPlayers[0].theme.textColor)
-                        .font(.system(size: 36, weight: .semibold))
-                case .scenesFromAHat:
-                    VStack {}
-                }
             }
         }
     }
@@ -200,24 +204,5 @@ extension GameView {
         .subtleShadow()
         .offset(y: -32)
         .padding(.horizontal, 32)
-    }
-    
-    private var bottomButtons: some View {
-        VStack {
-            if let gameMode = playersVM.gameMode {
-                switch gameMode {
-                case .neverHaveIEver:
-                    Button(action: {
-                        playersVM.nextPlayer(playerNumber: 0)
-                    }, label: {
-                        WideButtonView("Next question", size: .big, colorScheme: .primary)
-                    })
-                    .padding(.horizontal, 32)
-                case .scenesFromAHat:
-                    VStack {}
-                }
-            }
-            
-        }
     }
 }

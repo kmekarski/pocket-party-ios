@@ -32,6 +32,7 @@ class DeveloperPreview {
     private init() {
         self.homeVM = HomeViewModel()
         self.playersVM = PlayersViewModel()
+        
         self.playersVMNeverHaveIEver = PlayersViewModel()
         self.playersVMNeverHaveIEver.setGameMode(.neverHaveIEver)
         self.playersVMNeverHaveIEver.tempPlayers = players

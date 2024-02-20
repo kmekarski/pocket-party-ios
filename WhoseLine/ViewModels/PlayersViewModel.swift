@@ -11,7 +11,6 @@ final class PlayersViewModel: ObservableObject {
     @Published var players: [Player] = []
     @Published var tempPlayers: [Player] = []
     @Published var currentPlayers: [Player] = []
-    @Published var previousPlayer: Player?
     @Published var gameMode: GameMode?
     @Published var currentQuestionIndex = 0
     @Published var currentQuestion = ""
@@ -24,15 +23,8 @@ final class PlayersViewModel: ObservableObject {
     ]
     @Published var gameIsOn: Bool = true
     
-    var playersQueue: [Player] {
-        let unreversed = players.filter { player in
-            !currentPlayers.contains { $0.id == player.id }
-        }
-        return unreversed.reversed()
-    }
-    
-    var currentPlayersIndices: [Int] = []
-    
+    @Published var playersQueue: [Player] = []
+        
     func addPlayer(name: String, theme: PlayerTheme) {
         let newPlayer = Player(id: UUID().uuidString, name: name, theme: theme, lives: 3)
         tempPlayers.append(newPlayer)
@@ -50,7 +42,9 @@ final class PlayersViewModel: ObservableObject {
     
     func decreasePlayerLives(playerNumber: Int) {
         let currentPlayer = currentPlayers[playerNumber]
-        let currentPlayerIndex = currentPlayersIndices[playerNumber]
+        let currentPlayerIndex = players.firstIndex { player in
+            player.id == currentPlayer.id
+        }!
         if currentPlayer.lives > 0 {
             currentPlayers[playerNumber].lives -= 1
             players[currentPlayerIndex].lives -= 1
@@ -72,29 +66,19 @@ final class PlayersViewModel: ObservableObject {
     }
     
     func nextPlayer(playerNumber: Int) {
-        guard currentPlayersIndices.count > playerNumber  else { return }
-        
-        if gameMode == .scenesFromAHat {
-            decreasePlayerLives(playerNumber: playerNumber)
-        }
-        
+        decreasePlayerLives(playerNumber: playerNumber)
         if let firstInQueue = playersQueue.first {
+            let currentPlayer = currentPlayers[playerNumber]
             currentPlayers[playerNumber] = firstInQueue
-            currentPlayersIndices[0] = players.firstIndex(where: { player in
-                player.id == currentPlayers[0].id
-            })!
-            currentPlayersIndices[1] = players.firstIndex(where: { player in
-                player.id == currentPlayers[1].id
-            })!
+            playersQueue.append(currentPlayer)
+            playersQueue.remove(at: 0)
         }
         
         print("all players: ", players)
         print("\n")
-        print("players queue: ", playersQueue)
+        print("queue: ", playersQueue)
         print("\n")
-        print("current players: ", currentPlayers)
-        print("\n")
-        print("current players indices: ", currentPlayersIndices)
+        print("current: ", currentPlayers)
     }
     
     func nextQuestion() {
@@ -105,26 +89,12 @@ final class PlayersViewModel: ObservableObject {
     }
     
     func startGame() {
+        guard let gameMode = gameMode else { return }
         gameIsOn = true
         players = tempPlayers
         players.shuffle()
-        switch(gameMode) {
-        case .neverHaveIEver:
-            currentPlayers = [players[0]]
-            currentPlayersIndices = [0]
-        case .scenesFromAHat:
-            currentPlayers = [players[0], players[1]]
-            currentPlayersIndices = [0, 1]
-            print("all players: ", players)
-            print("\n")
-            print("players queue: ", playersQueue)
-            print("\n")
-            print("current players: ", currentPlayers)
-            print("\n")
-            print("current players indices: ", currentPlayersIndices)
-        case .none:
-            break
-        }
+        currentPlayers = Array(players.prefix(upTo: gameMode.playersOnScreen))
+        playersQueue = Array(players.suffix(from: gameMode.playersOnScreen))
     }
     
     func endGame() {
@@ -134,10 +104,5 @@ final class PlayersViewModel: ObservableObject {
     func resetPlayers() {
         players = []
         currentPlayers = []
-        currentPlayersIndices = []
-    }
-    
-    private func allPlayerIndicesAreUnique() -> Bool {
-        return Set(currentPlayersIndices).count == currentPlayersIndices.count
     }
 }
