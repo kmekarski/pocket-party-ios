@@ -43,7 +43,7 @@ struct ModalView<Content: View>: View {
 struct ModalView_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            ModalWithImageView(isShowing: .constant(true), height: 400, headerImage: Image("MainLogo")) {
+            ModalWithImageView(isShowing: .constant(true), height: 400, content:  {
                 VStack {
                     Text("Scenes From a Hat")
                         .font(.system(size: 28, weight: .bold))
@@ -56,7 +56,7 @@ struct ModalView_Previews: PreviewProvider {
                         WideButtonView("Button", colorScheme: .primary)
                     })
                 }
-            }
+            }, headerImage: Image("MainLogo"))
             ModalView(isShowing: .constant(true), title: "Title", height: 220) {
                 VStack {
                     Text("The rules are simple. Blahblahblah blhablhjhqskjdb asdjbasdkjasbf askjfbask jfbasfj")

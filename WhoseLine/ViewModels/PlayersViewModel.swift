@@ -24,7 +24,14 @@ final class PlayersViewModel: ObservableObject {
     @Published var gameIsOn: Bool = true
     
     @Published var playersQueue: [Player] = []
-        
+    
+    @Published var topPlayers: [Player] = [
+        Player(id: "1", name: "John", theme: .playful, lives: 3),
+        Player(id: "2", name: "Blake", theme: .dark, lives: 3),
+        Player(id: "3", name: "Emily", theme: .animal, lives: 3),
+        Player(id: "4", name: "Sophie", theme: .sportsy, lives: 3)
+    ]
+    
     func addPlayer(name: String, theme: PlayerTheme) {
         let newPlayer = Player(id: UUID().uuidString, name: name, theme: theme, lives: 3)
         tempPlayers.append(newPlayer)
@@ -42,9 +49,9 @@ final class PlayersViewModel: ObservableObject {
     
     func decreasePlayerLives(playerNumber: Int) {
         let currentPlayer = currentPlayers[playerNumber]
-        let currentPlayerIndex = players.firstIndex { player in
+        guard let currentPlayerIndex = players.firstIndex(where: { player in
             player.id == currentPlayer.id
-        }!
+        }) else { return }
         if currentPlayer.lives > 0 {
             currentPlayers[playerNumber].lives -= 1
             players[currentPlayerIndex].lives -= 1
@@ -66,7 +73,6 @@ final class PlayersViewModel: ObservableObject {
     }
     
     func nextPlayer(playerNumber: Int) {
-        decreasePlayerLives(playerNumber: playerNumber)
         if let firstInQueue = playersQueue.first {
             let currentPlayer = currentPlayers[playerNumber]
             currentPlayers[playerNumber] = firstInQueue
@@ -85,6 +91,8 @@ final class PlayersViewModel: ObservableObject {
         if currentQuestionIndex < questions.count - 1 {
             currentQuestionIndex += 1
             currentQuestion = questions[currentQuestionIndex]
+        } else {
+            endGame()
         }
     }
     
@@ -95,6 +103,15 @@ final class PlayersViewModel: ObservableObject {
         players.shuffle()
         currentPlayers = Array(players.prefix(upTo: gameMode.playersOnScreen))
         playersQueue = Array(players.suffix(from: gameMode.playersOnScreen))
+        
+        switch gameMode {
+        case .neverHaveIEver:
+            questions.shuffle()
+            currentQuestion = questions.first!
+            currentQuestionIndex = 0
+        case .scenesFromAHat:
+            break
+        }
     }
     
     func endGame() {

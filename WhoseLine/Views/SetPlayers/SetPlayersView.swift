@@ -66,7 +66,7 @@ extension SetPlayersView {
             }
             Spacer()
             Text("Players")
-                .font(.system(size: 28, weight: .semibold))
+                .viewTitle()
             Spacer()
             Button {
                 showAddPlayerModel = true

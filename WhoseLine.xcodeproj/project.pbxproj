@@ -37,7 +37,8 @@
 		A74A32862B82BA2200438E8C /* PlayerTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A32852B82BA2200438E8C /* PlayerTheme.swift */; };
 		A74A32882B82CC2F00438E8C /* GameMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A32872B82CC2F00438E8C /* GameMode.swift */; };
 		A76BDF662B8376A700019FA4 /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BDF652B8376A700019FA4 /* GameOverView.swift */; };
-		A76BDF692B83882000019FA4 /* FoldOutTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BDF682B83882000019FA4 /* FoldOutTransition.swift */; };
+		A76BDF6B2B84BF5700019FA4 /* FoldTransitionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BDF6A2B84BF5700019FA4 /* FoldTransitionModifier.swift */; };
+		A76BDF6D2B84C41A00019FA4 /* ViewTitleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BDF6C2B84C41A00019FA4 /* ViewTitleModifier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,7 +73,8 @@
 		A74A32852B82BA2200438E8C /* PlayerTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerTheme.swift; sourceTree = "<group>"; };
 		A74A32872B82CC2F00438E8C /* GameMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameMode.swift; sourceTree = "<group>"; };
 		A76BDF652B8376A700019FA4 /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
-		A76BDF682B83882000019FA4 /* FoldOutTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldOutTransition.swift; sourceTree = "<group>"; };
+		A76BDF6A2B84BF5700019FA4 /* FoldTransitionModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldTransitionModifier.swift; sourceTree = "<group>"; };
+		A76BDF6C2B84C41A00019FA4 /* ViewTitleModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTitleModifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -207,7 +209,6 @@
 		A7138D2A2B7B8ED10031B709 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				A76BDF672B83881400019FA4 /* Animations */,
 				A74A32802B82895C00438E8C /* ViewModifiers */,
 				A74A32772B82738200438E8C /* TextFields */,
 				A704D4032B7F93160005F8A5 /* Modals */,
@@ -256,16 +257,10 @@
 			isa = PBXGroup;
 			children = (
 				A74A32812B82898400438E8C /* SubtleShadowModifier.swift */,
+				A76BDF6A2B84BF5700019FA4 /* FoldTransitionModifier.swift */,
+				A76BDF6C2B84C41A00019FA4 /* ViewTitleModifier.swift */,
 			);
 			path = ViewModifiers;
-			sourceTree = "<group>";
-		};
-		A76BDF672B83881400019FA4 /* Animations */ = {
-			isa = PBXGroup;
-			children = (
-				A76BDF682B83882000019FA4 /* FoldOutTransition.swift */,
-			);
-			path = Animations;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -296,7 +291,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1430;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1530;
 				TargetAttributes = {
 					A7138D082B7B8C2E0031B709 = {
 						CreatedOnToolsVersion = 14.3.1;
@@ -349,7 +344,9 @@
 				A7138D352B7B93EE0031B709 /* HomeViewModel.swift in Sources */,
 				A7138D0D2B7B8C2E0031B709 /* WhoseLineApp.swift in Sources */,
 				A74A32842B8289AE00438E8C /* View.swift in Sources */,
+				A76BDF6D2B84C41A00019FA4 /* ViewTitleModifier.swift in Sources */,
 				A704D3FF2B7F88D20005F8A5 /* IconButtonView.swift in Sources */,
+				A76BDF6B2B84BF5700019FA4 /* FoldTransitionModifier.swift in Sources */,
 				A74A32722B82675000438E8C /* Player.swift in Sources */,
 				A74A32672B82606D00438E8C /* QuestionsManager.swift in Sources */,
 				A704D4092B7F93520005F8A5 /* ModalWithImageView.swift in Sources */,
@@ -362,7 +359,6 @@
 				A74A32862B82BA2200438E8C /* PlayerTheme.swift in Sources */,
 				A7138D2F2B7B902A0031B709 /* Color.swift in Sources */,
 				A74A325C2B81814700438E8C /* SettingsModalView.swift in Sources */,
-				A76BDF692B83882000019FA4 /* FoldOutTransition.swift in Sources */,
 				A74A32742B8269DF00438E8C /* PlayersViewModel.swift in Sources */,
 				A74A32762B826ACF00438E8C /* SetPlayersRowView.swift in Sources */,
 				A7138D2D2B7B8EE00031B709 /* WideButtonView.swift in Sources */,
@@ -378,6 +374,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -410,6 +407,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -438,6 +436,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -470,6 +469,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

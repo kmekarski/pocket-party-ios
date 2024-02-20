@@ -12,7 +12,7 @@ struct GameView: View {
     @EnvironmentObject var playersVM: PlayersViewModel
     @State var showInfo: Bool = false
     @State var folds: [Bool] = [false, false]
-    @State var foldDirection: Int = 1
+    @State var foldDirection: FoldDirection = .left
     var body: some View {
         ZStack {
             if playersVM.gameIsOn {
@@ -31,7 +31,6 @@ struct GameView: View {
                 GameOverView()
             }
         }
-        
     }
 }
 
@@ -64,7 +63,12 @@ extension GameView {
     }
     
     private func setNewFoldDirection() {
-        foldDirection *= -1
+        switch foldDirection {
+        case .left:
+            foldDirection = .right
+        case .right:
+            foldDirection = .left
+        }
     }
     
     private func playerTitle(player: Player) -> some View {
@@ -80,20 +84,39 @@ extension GameView {
     private func bottomButtons(player: Player, playerNumber: Int) -> some View {
         switch(gameMode) {
         case .neverHaveIEver:
-            return Button(action: {
-                setNewFoldDirection()
-                withAnimation(.easeIn(duration: 0.5)) {
-                    folds[0] = true
-                }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    playersVM.nextPlayer(playerNumber: 0)
-                    folds[0] = false
-                }
-            }, label: {
-                WideButtonView("Next question", size: .big, colorScheme: .primary)
+            return AnyView(
+                HStack(spacing: 16) {
+                Button(action: {
+                    setNewFoldDirection()
+                    withAnimation(.easeIn(duration: 0.5)) {
+                        folds[0] = true
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        playersVM.nextQuestion()
+                        playersVM.nextPlayer(playerNumber: 0)
+                        folds[0] = false
+                    }
+                }, label: {
+                    WideButtonView("Answer", size: .big, colorScheme: .primary)
+            })
+                Button(action: {
+                    setNewFoldDirection()
+                    withAnimation(.easeIn(duration: 0.5)) {
+                        folds[0] = true
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        playersVM.nextQuestion()
+                        playersVM.decreasePlayerLives(playerNumber: 0)
+                        playersVM.nextPlayer(playerNumber: 0)
+                        folds[0] = false
+                    }
+                }, label: {
+                    WideButtonView("Skip", size: .big, colorScheme: .primary)
+            })
             })
         case .scenesFromAHat:
-            return Button(action: {
+            return AnyView(
+                Button(action: {
                 if playersQueue.isEmpty {
                     playersVM.nextPlayer(playerNumber: playerNumber)
                     return
@@ -102,12 +125,14 @@ extension GameView {
                     folds[playerNumber] = true
                 }
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    playersVM.decreasePlayerLives(playerNumber: playerNumber)
                     playersVM.nextPlayer(playerNumber: playerNumber)
                     folds[playerNumber] = false
                 }
             }, label: {
                 WideButtonView("\(player.name) out!", size: .big, colorScheme: .primary)
             })
+            )
         }
     }
     
@@ -141,20 +166,27 @@ extension GameView {
                             playerCard(playerId: player.id, playerNumber: 0)
                         }
                         playerCard(playerId: currentPlayers[0].id, playerNumber: 0)
-                            .rotationEffect(.degrees(Double(folds[0] ? (foldDirection * 90) : 0)), anchor: UnitPoint(x: 0, y: 1.4))
+                            .foldTransition(active: folds[0], direction: foldDirection)
                     }
                     
                 case .scenesFromAHat:
                     HStack(spacing: 0) {
-                        ForEach(0..<2, id: \.self) { index in
-                            ZStack {
-                                currentPlayers[1-index].theme.color.ignoresSafeArea()
-                                ForEach(playersQueue.reversed()) { player in
-                                    playerCard(playerId: player.id, playerNumber: index)
-                                }
-                                playerCard(playerId: currentPlayers[index].id, playerNumber: index)
-                                    .rotationEffect(.degrees(Double(folds[index] ? (-90 + 180 * index) : 0)), anchor: UnitPoint(x: 0, y: 1.4))
+                        ZStack {
+                            currentPlayers[1].theme.color.ignoresSafeArea()
+                            ForEach(playersQueue.reversed()) { player in
+                                playerCard(playerId: player.id, playerNumber: 0)
                             }
+                            playerCard(playerId: currentPlayers[0].id, playerNumber: 0)
+                                .foldTransition(active: folds[0], direction: .left)
+
+                        }
+                        ZStack {
+                            currentPlayers[0].theme.color.ignoresSafeArea()
+                            ForEach(playersQueue.reversed()) { player in
+                                playerCard(playerId: player.id, playerNumber: 1)
+                            }
+                            playerCard(playerId: currentPlayers[1].id, playerNumber: 1)
+                                .foldTransition(active: folds[1], direction: .right)
                         }
                     }
                 }
@@ -195,7 +227,7 @@ extension GameView {
             if playersVM.gameMode == .neverHaveIEver {
                 Text("\(playersVM.currentQuestionIndex+1) / \(playersVM.questions.count)")
             }
-            Text("Some question???")
+            Text(playersVM.currentQuestion)
         }
         .frame(maxWidth: .infinity)
         .frame(height: 150)
