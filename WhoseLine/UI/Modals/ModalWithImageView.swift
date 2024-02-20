@@ -29,7 +29,7 @@ struct ModalWithImageView<Content: View>: View {
                 }
                 VStack {
                     if isShowing {
-                        if let headerImage = headerImage {
+                        if headerImage != nil {
                             logo
                         }
                         mainView
@@ -45,7 +45,7 @@ struct ModalWithImageView<Content: View>: View {
 
 struct ModalWithImageView_Previews: PreviewProvider {
     static var previews: some View {
-        ModalWithImageView(isShowing: .constant(true), height: 400, headerImage: Image("MainLogo")) {
+        ModalWithImageView(isShowing: .constant(true), height: 400, content:  {
             VStack {
                 Text("Scenes From a Hat")
                     .font(.system(size: 28, weight: .bold))
@@ -58,7 +58,7 @@ struct ModalWithImageView_Previews: PreviewProvider {
                     WideButtonView("Button", colorScheme: .primary)
                 })
             }
-        }
+        }, headerImage: Image("MainLogo"))
     }
 }
 

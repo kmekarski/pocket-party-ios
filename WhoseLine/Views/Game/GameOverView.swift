@@ -12,7 +12,10 @@ struct GameOverView: View {
     @EnvironmentObject var playersVM: PlayersViewModel
     var body: some View {
         ZStack {
-            Color.theme.secondaryBackground.ignoresSafeArea()
+            Color.theme.background.ignoresSafeArea()
+            SpinningSpotlightView(speed: 10)
+            .offset(y: 60)
+                    
             VStack {
                 if let winner = playersVM.players.first {
                     topSection
@@ -56,6 +59,7 @@ extension GameOverView {
                     .frame(maxWidth: .infinity)
                     .frame(height: height)
                     .cornerRadius(12)
+                
                 Text("\(place)")
                     .font(.system(size: 36, weight: .bold))
                     .foregroundColor(player.theme.textColor)
@@ -103,6 +107,5 @@ extension GameOverView {
         }
         .padding()
         .padding(.top)
-        .background(Color.theme.background)
     }
 }

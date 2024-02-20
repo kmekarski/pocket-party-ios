@@ -12,7 +12,7 @@ struct GameInfoModalView: View {
     var title: String
     var description: String
     var body: some View {
-        ModalWithImageView(isShowing: $isShowing, height: 400, showX: false, headerImage: Image("MainLogo")) {
+        ModalWithImageView(isShowing: $isShowing, height: 400, showX: false, content:  {
             VStack {
                 Text(title)
                     .font(.system(size: 24, weight: .semibold))
@@ -27,7 +27,7 @@ struct GameInfoModalView: View {
                     WideButtonView("OK", colorScheme: .primary)
                 })
             }
-        }
+        }, headerImage: Image("MainLogo"))
     }
 }
 

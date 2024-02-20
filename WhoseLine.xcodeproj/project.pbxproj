@@ -39,6 +39,8 @@
 		A76BDF662B8376A700019FA4 /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BDF652B8376A700019FA4 /* GameOverView.swift */; };
 		A76BDF6B2B84BF5700019FA4 /* FoldTransitionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BDF6A2B84BF5700019FA4 /* FoldTransitionModifier.swift */; };
 		A76BDF6D2B84C41A00019FA4 /* ViewTitleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BDF6C2B84C41A00019FA4 /* ViewTitleModifier.swift */; };
+		A76BDF702B84F75600019FA4 /* Trapezoid.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BDF6F2B84F75600019FA4 /* Trapezoid.swift */; };
+		A76BDF722B84F97000019FA4 /* SpinningSpotlightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BDF712B84F97000019FA4 /* SpinningSpotlightView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -75,6 +77,8 @@
 		A76BDF652B8376A700019FA4 /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
 		A76BDF6A2B84BF5700019FA4 /* FoldTransitionModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoldTransitionModifier.swift; sourceTree = "<group>"; };
 		A76BDF6C2B84C41A00019FA4 /* ViewTitleModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewTitleModifier.swift; sourceTree = "<group>"; };
+		A76BDF6F2B84F75600019FA4 /* Trapezoid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trapezoid.swift; sourceTree = "<group>"; };
+		A76BDF712B84F97000019FA4 /* SpinningSpotlightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinningSpotlightView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -209,6 +213,7 @@
 		A7138D2A2B7B8ED10031B709 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				A76BDF6E2B84F74A00019FA4 /* Shapes */,
 				A74A32802B82895C00438E8C /* ViewModifiers */,
 				A74A32772B82738200438E8C /* TextFields */,
 				A704D4032B7F93160005F8A5 /* Modals */,
@@ -261,6 +266,15 @@
 				A76BDF6C2B84C41A00019FA4 /* ViewTitleModifier.swift */,
 			);
 			path = ViewModifiers;
+			sourceTree = "<group>";
+		};
+		A76BDF6E2B84F74A00019FA4 /* Shapes */ = {
+			isa = PBXGroup;
+			children = (
+				A76BDF6F2B84F75600019FA4 /* Trapezoid.swift */,
+				A76BDF712B84F97000019FA4 /* SpinningSpotlightView.swift */,
+			);
+			path = Shapes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -355,6 +369,7 @@
 				A7138D232B7B8D060031B709 /* AppState.swift in Sources */,
 				A74A32612B823A2700438E8C /* GameInfoModalView.swift in Sources */,
 				A74A326A2B82618800438E8C /* SetPlayersView.swift in Sources */,
+				A76BDF702B84F75600019FA4 /* Trapezoid.swift in Sources */,
 				A74A32882B82CC2F00438E8C /* GameMode.swift in Sources */,
 				A74A32862B82BA2200438E8C /* PlayerTheme.swift in Sources */,
 				A7138D2F2B7B902A0031B709 /* Color.swift in Sources */,
@@ -363,6 +378,7 @@
 				A74A32762B826ACF00438E8C /* SetPlayersRowView.swift in Sources */,
 				A7138D2D2B7B8EE00031B709 /* WideButtonView.swift in Sources */,
 				A76BDF662B8376A700019FA4 /* GameOverView.swift in Sources */,
+				A76BDF722B84F97000019FA4 /* SpinningSpotlightView.swift in Sources */,
 				A704D4022B7F8BDC0005F8A5 /* MainMenuOptionView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
