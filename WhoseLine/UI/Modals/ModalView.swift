@@ -31,7 +31,7 @@ struct ModalView<Content: View>: View {
                         mainView
                     }
                 }
-                .padding(.horizontal, 32)
+                .frame(maxWidth: 330)
                 .frame(height: isShowing ? height : 0)
             }
             .ignoresSafeArea()
@@ -101,6 +101,6 @@ extension ModalView {
         .frame(maxWidth: .infinity)
         .background(Color.theme.background)
         .cornerRadius(20)
-        .subtleShadow()
+        .customShadow(.subtleDownShadow)
     }
 }

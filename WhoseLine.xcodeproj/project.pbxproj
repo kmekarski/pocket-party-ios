@@ -31,7 +31,7 @@
 		A74A32762B826ACF00438E8C /* SetPlayersRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A32752B826ACF00438E8C /* SetPlayersRowView.swift */; };
 		A74A32792B82739000438E8C /* RegularTextFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A32782B82739000438E8C /* RegularTextFieldView.swift */; };
 		A74A327D2B8276BC00438E8C /* ModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A327C2B8276BC00438E8C /* ModalView.swift */; };
-		A74A32822B82898400438E8C /* SubtleShadowModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A32812B82898400438E8C /* SubtleShadowModifier.swift */; };
+		A74A32822B82898400438E8C /* CustomShadowModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A32812B82898400438E8C /* CustomShadowModifier.swift */; };
 		A74A32842B8289AE00438E8C /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A32832B8289AE00438E8C /* View.swift */; };
 		A74A32862B82BA2200438E8C /* PlayerTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A32852B82BA2200438E8C /* PlayerTheme.swift */; };
 		A74A32882B82CC2F00438E8C /* GameMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A32872B82CC2F00438E8C /* GameMode.swift */; };
@@ -41,6 +41,9 @@
 		A76BDF702B84F75600019FA4 /* Trapezoid.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BDF6F2B84F75600019FA4 /* Trapezoid.swift */; };
 		A76BDF722B84F97000019FA4 /* SpinningSpotlightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BDF712B84F97000019FA4 /* SpinningSpotlightView.swift */; };
 		A76BDF742B85108500019FA4 /* MoveFromEdgeTransitionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BDF732B85108500019FA4 /* MoveFromEdgeTransitionModifier.swift */; };
+		A76BDF762B860EC600019FA4 /* GameQuestionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BDF752B860EC600019FA4 /* GameQuestionModifier.swift */; };
+		A76BDF7C2B861FAC00019FA4 /* TruthOrDarePickedState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BDF7B2B861FAC00019FA4 /* TruthOrDarePickedState.swift */; };
+		A76BDF7E2B861FB900019FA4 /* TruthOrDarePickResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BDF7D2B861FB900019FA4 /* TruthOrDarePickResult.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,7 +72,7 @@
 		A74A32752B826ACF00438E8C /* SetPlayersRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPlayersRowView.swift; sourceTree = "<group>"; };
 		A74A32782B82739000438E8C /* RegularTextFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularTextFieldView.swift; sourceTree = "<group>"; };
 		A74A327C2B8276BC00438E8C /* ModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalView.swift; sourceTree = "<group>"; };
-		A74A32812B82898400438E8C /* SubtleShadowModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubtleShadowModifier.swift; sourceTree = "<group>"; };
+		A74A32812B82898400438E8C /* CustomShadowModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomShadowModifier.swift; sourceTree = "<group>"; };
 		A74A32832B8289AE00438E8C /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		A74A32852B82BA2200438E8C /* PlayerTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerTheme.swift; sourceTree = "<group>"; };
 		A74A32872B82CC2F00438E8C /* GameMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameMode.swift; sourceTree = "<group>"; };
@@ -79,6 +82,9 @@
 		A76BDF6F2B84F75600019FA4 /* Trapezoid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trapezoid.swift; sourceTree = "<group>"; };
 		A76BDF712B84F97000019FA4 /* SpinningSpotlightView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinningSpotlightView.swift; sourceTree = "<group>"; };
 		A76BDF732B85108500019FA4 /* MoveFromEdgeTransitionModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveFromEdgeTransitionModifier.swift; sourceTree = "<group>"; };
+		A76BDF752B860EC600019FA4 /* GameQuestionModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameQuestionModifier.swift; sourceTree = "<group>"; };
+		A76BDF7B2B861FAC00019FA4 /* TruthOrDarePickedState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TruthOrDarePickedState.swift; sourceTree = "<group>"; };
+		A76BDF7D2B861FB900019FA4 /* TruthOrDarePickResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TruthOrDarePickResult.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,6 +193,8 @@
 				A74A32712B82675000438E8C /* Player.swift */,
 				A74A32852B82BA2200438E8C /* PlayerTheme.swift */,
 				A74A32872B82CC2F00438E8C /* GameMode.swift */,
+				A76BDF7B2B861FAC00019FA4 /* TruthOrDarePickedState.swift */,
+				A76BDF7D2B861FB900019FA4 /* TruthOrDarePickResult.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -260,10 +268,11 @@
 		A74A32802B82895C00438E8C /* ViewModifiers */ = {
 			isa = PBXGroup;
 			children = (
-				A74A32812B82898400438E8C /* SubtleShadowModifier.swift */,
+				A74A32812B82898400438E8C /* CustomShadowModifier.swift */,
 				A76BDF6A2B84BF5700019FA4 /* FoldTransitionModifier.swift */,
 				A76BDF6C2B84C41A00019FA4 /* ViewTitleModifier.swift */,
 				A76BDF732B85108500019FA4 /* MoveFromEdgeTransitionModifier.swift */,
+				A76BDF752B860EC600019FA4 /* GameQuestionModifier.swift */,
 			);
 			path = ViewModifiers;
 			sourceTree = "<group>";
@@ -357,6 +366,7 @@
 				A7138D1B2B7B8C660031B709 /* MainMenuView.swift in Sources */,
 				A7138D0D2B7B8C2E0031B709 /* WhoseLineApp.swift in Sources */,
 				A74A32842B8289AE00438E8C /* View.swift in Sources */,
+				A76BDF7E2B861FB900019FA4 /* TruthOrDarePickResult.swift in Sources */,
 				A76BDF6D2B84C41A00019FA4 /* ViewTitleModifier.swift in Sources */,
 				A704D3FF2B7F88D20005F8A5 /* IconButtonView.swift in Sources */,
 				A76BDF6B2B84BF5700019FA4 /* FoldTransitionModifier.swift in Sources */,
@@ -364,13 +374,15 @@
 				A74A32672B82606D00438E8C /* QuestionsManager.swift in Sources */,
 				A704D4092B7F93520005F8A5 /* ModalWithImageView.swift in Sources */,
 				A7138D312B7B938B0031B709 /* GameView.swift in Sources */,
-				A74A32822B82898400438E8C /* SubtleShadowModifier.swift in Sources */,
+				A74A32822B82898400438E8C /* CustomShadowModifier.swift in Sources */,
 				A7138D232B7B8D060031B709 /* AppState.swift in Sources */,
 				A74A32612B823A2700438E8C /* GameInfoModalView.swift in Sources */,
 				A74A326A2B82618800438E8C /* SetPlayersView.swift in Sources */,
+				A76BDF7C2B861FAC00019FA4 /* TruthOrDarePickedState.swift in Sources */,
 				A76BDF702B84F75600019FA4 /* Trapezoid.swift in Sources */,
 				A74A32882B82CC2F00438E8C /* GameMode.swift in Sources */,
 				A74A32862B82BA2200438E8C /* PlayerTheme.swift in Sources */,
+				A76BDF762B860EC600019FA4 /* GameQuestionModifier.swift in Sources */,
 				A7138D2F2B7B902A0031B709 /* Color.swift in Sources */,
 				A74A325C2B81814700438E8C /* SettingsModalView.swift in Sources */,
 				A74A32742B8269DF00438E8C /* PlayersViewModel.swift in Sources */,
@@ -438,7 +450,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -494,7 +506,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

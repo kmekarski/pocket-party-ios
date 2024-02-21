@@ -34,7 +34,7 @@ struct ModalWithImageView<Content: View>: View {
                         mainView
                     }
                 }
-                .padding(.horizontal, 32)
+                .frame(maxWidth: 330)
                 .frame(height: isShowing ? height : 0)
             }
             .ignoresSafeArea()
@@ -85,7 +85,7 @@ extension ModalWithImageView {
         .frame(maxWidth: .infinity)
         .background(Color.theme.background)
         .cornerRadius(20)
-        .subtleShadow()
+        .customShadow(.subtleDownShadow)
     }
     
     private var logo: some View {

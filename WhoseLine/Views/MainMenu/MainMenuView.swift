@@ -57,21 +57,23 @@ extension MainMenuView {
     }
     
     private var menuButtons: some View {
-        VStack(spacing: 24) {
-            NavigationLink(value: AppState.setPlayers.rawValue + GameMode.scenesFromAHat.rawValue) {
-                MainMenuOptionView(title: "Scenes From a Hat", subtitle: "Classic WLIIA Game", icon: "gear", foregroundColor: .white, backgroundColor: .theme.accent)
-            }
-            NavigationLink(value: AppState.setPlayers.rawValue + GameMode.neverHaveIEver.rawValue) {
-                MainMenuOptionView(title: "Never Have I Ever", subtitle: "Classic WLIIA Game", icon: "gear", foregroundColor: .white, backgroundColor: .theme.accent)
+        VStack {
+            ForEach(GameMode.allCases, id: \.self) { mode in
+                NavigationLink(value: AppState.setPlayers.rawValue + mode.rawValue) {
+                    MainMenuOptionView(title: mode.title, subtitle: mode.subtitle, icon: mode.icon, foregroundColor: .white, backgroundColor: .theme.accent)
+                }
+                .padding(.bottom, 10)
             }
             .navigationDestination(for: String.self) { pathValue in
-                if pathValue == AppState.setPlayers.rawValue + GameMode.scenesFromAHat.rawValue {
-                    SetPlayersView(gameMode: .scenesFromAHat)
-                } else if pathValue == AppState.setPlayers.rawValue + GameMode.neverHaveIEver.rawValue {
-                    SetPlayersView(gameMode: .neverHaveIEver)
-                } else if pathValue == AppState.game.rawValue {
+                ForEach(GameMode.allCases, id: \.self) { mode in
+                    if pathValue == AppState.setPlayers.rawValue + mode.rawValue {
+                        SetPlayersView(gameMode: mode)
+                    }
+                }
+                if pathValue == AppState.game.rawValue {
                     GameView()
-                } else if pathValue == AppState.gameOver.rawValue {
+                }
+                if pathValue == AppState.gameOver.rawValue {
                     GameOverView()
                 }
             }

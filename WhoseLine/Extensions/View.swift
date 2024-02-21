@@ -9,8 +9,8 @@ import Foundation
 import SwiftUI
 
 extension View {
-    func subtleShadow() -> some View {
-            modifier(SubtleShadowModifier())
+    func customShadow(_ type: CustomShadowType) -> some View {
+            modifier(CustomShadowModifier(type: type))
         }
     
     func foldTransition(active: Bool, direction: FoldDirection) -> some View {
@@ -23,5 +23,9 @@ extension View {
     
     func moveFromEdgeTransition(active: Bool, edge: Edge) -> some View {
         modifier(MoveFromEdgeTransitionModifier(active: active, edge: edge))
+    }
+    
+    func gameQuestionCard(_ type: GameQuestionCardType) -> some View {
+        modifier(GameQuestionModifier(type: type))
     }
 }

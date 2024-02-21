@@ -14,14 +14,10 @@ final class PlayersViewModel: ObservableObject {
     @Published var currentPlayers: [Player] = []
     @Published var gameMode: GameMode?
     @Published var currentQuestionIndex = 0
-    @Published var currentQuestion = ""
-    @Published var questions = [
-        "Question 1",
-        "Question 2",
-        "Question 3",
-        "Question 4",
-        "Question 5"
-    ]
+    @Published var currentQuestion: String = ""
+    @Published var currentTruthOrDareQuestion: TruthOrDareQuestion = TruthOrDareQuestion(truth: "", dare: "")
+    @Published var questions: [String] = []
+    @Published var truthOrDareQuestions: [TruthOrDareQuestion] = []
     @Published var gameIsOn: Bool = true
     
     @Published var playersQueue: [Player] = []
@@ -60,6 +56,8 @@ final class PlayersViewModel: ObservableObject {
     
     func setGameMode(_ gameMode: GameMode) {
         self.gameMode = gameMode
+        questions = gameMode.questions
+        truthOrDareQuestions = gameMode.truthOrDareQuestions
     }
     
     func decreasePlayerLives(playerNumber: Int) {
@@ -100,11 +98,23 @@ final class PlayersViewModel: ObservableObject {
     }
     
     func nextQuestion() {
-        if currentQuestionIndex < questions.count - 1 {
-            currentQuestionIndex += 1
-            currentQuestion = questions[currentQuestionIndex]
-        } else {
-            endGame()
+        guard let gameMode = gameMode else { return }
+        switch gameMode {
+        case .neverHaveIEver, .scenesFromAHat:
+            if currentQuestionIndex < questions.count - 1 {
+                currentQuestionIndex += 1
+                currentQuestion = questions[currentQuestionIndex]
+            } else {
+                endGame()
+            }
+        case .truthOrDare:
+            if currentQuestionIndex < truthOrDareQuestions.count - 1 {
+                currentQuestionIndex += 1
+                currentTruthOrDareQuestion = truthOrDareQuestions[currentQuestionIndex]
+            } else {
+                endGame()
+            }
+            print(currentQuestionIndex, truthOrDareQuestions.count)
         }
     }
     
@@ -120,12 +130,14 @@ final class PlayersViewModel: ObservableObject {
         playersQueue = Array(players.suffix(from: gameMode.playersOnScreen))
         
         switch gameMode {
-        case .neverHaveIEver:
+        case .neverHaveIEver, .scenesFromAHat:
             questions.shuffle()
             currentQuestion = questions.first!
             currentQuestionIndex = 0
-        case .scenesFromAHat:
-            break
+        case .truthOrDare:
+            truthOrDareQuestions.shuffle()
+            currentTruthOrDareQuestion = truthOrDareQuestions.first!
+            currentQuestionIndex = 0
         }
     }
     

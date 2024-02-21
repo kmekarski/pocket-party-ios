@@ -78,7 +78,7 @@ struct WideButtonView: View {
             .padding(.vertical, size == .big ? 16 : 10)
             .background(colorScheme.backgroundColor.opacity(disabled ? 0.55 : 1))
             .cornerRadius(20)
-            .subtleShadow()
+            .customShadow(.subtleDownShadow)
     }
 }
 

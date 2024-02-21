@@ -31,8 +31,11 @@ struct GameOverView: View {
 
 struct GameOverView_Previews: PreviewProvider {
     static var previews: some View {
-        GameOverView()
-            .environmentObject(dev.playersVMScenesFromAHat)
+        ForEach(GameMode.allCases, id: \.self) { mode in
+            GameOverView()
+                .environmentObject(dev.playerVMs[mode]!)
+                .previewDisplayName(mode.title)
+        }
     }
 }
 
@@ -60,8 +63,8 @@ extension GameOverView {
                     .frame(maxWidth: 120)
                     .frame(height: height)
                     .cornerRadius(12)
-                    .shadow(color: .black.opacity(0.3), radius: 2)
-                
+                    .customShadow(.subtleBorderShadow)
+
                 Text("\(place)")
                     .font(.system(size: 36, weight: .bold))
                     .foregroundColor(player.theme.textColor)

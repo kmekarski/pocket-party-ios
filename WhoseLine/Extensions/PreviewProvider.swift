@@ -18,8 +18,7 @@ class DeveloperPreview {
     static let instance = DeveloperPreview()
     
     let playersVM: PlayersViewModel
-    let playersVMNeverHaveIEver: PlayersViewModel
-    let playersVMScenesFromAHat: PlayersViewModel
+    var playerVMs: [GameMode: PlayersViewModel] = [:]
     
     let players = [
         Player(id: "1", name: "John", theme: .playful, lives: 3),
@@ -31,14 +30,12 @@ class DeveloperPreview {
     private init() {
         self.playersVM = PlayersViewModel()
         
-        self.playersVMNeverHaveIEver = PlayersViewModel()
-        self.playersVMNeverHaveIEver.setGameMode(.neverHaveIEver)
-        self.playersVMNeverHaveIEver.tempPlayers = players
-        self.playersVMNeverHaveIEver.startGame()
-        
-        self.playersVMScenesFromAHat = PlayersViewModel()
-        self.playersVMScenesFromAHat.setGameMode(.scenesFromAHat)
-        self.playersVMScenesFromAHat.tempPlayers = players
-        self.playersVMScenesFromAHat.startGame()
+        for mode in GameMode.allCases {
+            let viewModel = PlayersViewModel()
+            viewModel.setGameMode(mode)
+            viewModel.tempPlayers = players
+            viewModel.startGame()
+            playerVMs[mode] = viewModel
+        }
     }
 }
