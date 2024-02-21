@@ -40,7 +40,7 @@ class DeveloperPreview {
         PlayerWithPlace(player: Player(id: "1", name: "John", theme: .playful, lives: 3), place: 1),
         PlayerWithPlace(player: Player(id: "2", name: "Blake", theme: .dark, lives: 2), place: 2),
         PlayerWithPlace(player: Player(id: "3", name: "Emily", theme: .animal, lives: 2), place: 2),
-        PlayerWithPlace(player: Player(id: "4", name: "Sopgie", theme: .sportsy, lives: 1), place: 3)
+        PlayerWithPlace(player: Player(id: "4", name: "Sopgie", theme: .sportsy, lives: 0), place: 3)
     ]
     
     private init() {

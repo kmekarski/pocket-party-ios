@@ -12,10 +12,16 @@ struct TruthOrDareQuestion {
     let dare: String
 }
 
+struct TabooQuestion {
+    let wordToGuess: String
+    let forbiddenWords: [String]
+}
+
 enum GameMode: String, CaseIterable {
     case scenesFromAHat
     case truthOrDare
     case neverHaveIEver
+    case taboo
     
     var minimumPlayers: Int {
         switch self {
@@ -25,6 +31,8 @@ enum GameMode: String, CaseIterable {
             return 2
         case .truthOrDare:
             return 2
+        case .taboo:
+            return 4
         }
     }
     
@@ -36,6 +44,8 @@ enum GameMode: String, CaseIterable {
             return 1
         case .truthOrDare:
             return 1
+        case .taboo:
+            return 2
         }
     }
     
@@ -47,28 +57,34 @@ enum GameMode: String, CaseIterable {
             return "Never Have I Ever"
         case .truthOrDare:
             return "Truth or Dare"
+        case .taboo:
+            return "Taboo"
         }
     }
     
     var subtitle: String {
         switch self {
         case .scenesFromAHat:
-            return "Scenes From a Hat2"
+            return "Classic improvisation game"
         case .neverHaveIEver:
-            return "Never Have I Ever2"
+            return "Past adventures revealed"
         case .truthOrDare:
-            return "Truth or Dare2"
+            return "Everyone has played this one"
+        case .taboo:
+            return "Taboo subtitle"
         }
     }
     
     var icon: String {
         switch self {
         case .scenesFromAHat:
-            return "gear"
+            return "theatermasks.fill"
         case .neverHaveIEver:
-            return "heart"
+            return "eyes.inverse"
         case .truthOrDare:
-            return "heart.fill"
+            return "mouth.fill"
+        case .taboo:
+            return "mouth.fill"
         }
     }
     
@@ -80,6 +96,8 @@ enum GameMode: String, CaseIterable {
             return "Never Have I Ever is a game where players take turns admitting things they have never done."
         case .truthOrDare:
             return "Truth or Dare is a classic party game where players take turns choosing between answering a truth question or completing a dare."
+        case .taboo:
+            return "Taboo rules description"
         }
     }
     var truthOrDareQuestions: [TruthOrDareQuestion] {
@@ -96,29 +114,61 @@ enum GameMode: String, CaseIterable {
                 TruthOrDareQuestion(truth: "Truth 6", dare: "Dare 6"),
                 TruthOrDareQuestion(truth: "Truth 7", dare: "Dare 7")
             ]
+        case .taboo:
+            return []
+        }
+    }
+    
+    var tabooQuestions: [TabooQuestion] {
+        switch self {
+        case .scenesFromAHat, .neverHaveIEver, .truthOrDare:
+            return []
+        case .taboo:
+            return [
+                TabooQuestion(wordToGuess: "Cartoon", forbiddenWords: [
+                    "Forbidden 1",
+                    "Forbidden 2",
+                    "Forbidden 3",
+                    "Forbidden 4",
+                ]),
+                TabooQuestion(wordToGuess: "Lipstick", forbiddenWords: [
+                    "Forbidden 1",
+                    "Forbidden 2",
+                    "Forbidden 3",
+                    "Forbidden 4",
+                ]),
+                TabooQuestion(wordToGuess: "Chicken", forbiddenWords: [
+                    "Forbidden 1",
+                    "Forbidden 2",
+                    "Forbidden 3",
+                    "Forbidden 4",
+                ]),
+            ]
         }
     }
     
     var questions: [String] {
-           switch self {
-           case .scenesFromAHat:
-               return [
-                   "Scene 1",
-                   "Scene 2",
-                   "Scene 3",
-                   "Scene 4",
-                   "Scene 5"
-               ]
-           case .neverHaveIEver:
-               return [
-                   "Question 1",
-                   "Question 2",
-                   "Question 3",
-                   "Question 4",
-                   "Question 5"
-               ]
-           case .truthOrDare:
-               return []
-           }
-       }
+        switch self {
+        case .scenesFromAHat:
+            return [
+                "Scene 1",
+                "Scene 2",
+                "Scene 3",
+                "Scene 4",
+                "Scene 5"
+            ]
+        case .neverHaveIEver:
+            return [
+                "Question 1",
+                "Question 2",
+                "Question 3",
+                "Question 4",
+                "Question 5"
+            ]
+        case .truthOrDare:
+            return []
+        case .taboo:
+            return []
+        }
+    }
 }

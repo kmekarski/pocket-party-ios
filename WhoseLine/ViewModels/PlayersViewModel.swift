@@ -9,21 +9,28 @@ import Foundation
 import SwiftUI
 
 final class PlayersViewModel: ObservableObject {
+    @Published var gameMode: GameMode?
+    
+    @Published var currentQuestionIndex = 0
+    
+    @Published var currentQuestion: String = ""
+    @Published var currentTruthOrDareQuestion: TruthOrDareQuestion = TruthOrDareQuestion(truth: "", dare: "")
+    @Published var currentTabooQuestion: TabooQuestion = TabooQuestion(wordToGuess: "", forbiddenWords: [""])
+    
+    @Published var questions: [String] = []
+    @Published var truthOrDareQuestions: [TruthOrDareQuestion] = []
+    @Published var tabooQuestions: [TabooQuestion] = []
+    
+    @Published var gameIsOn: Bool = true
+    
     @Published var players: [Player] = []
     @Published var tempPlayers: [Player] = []
     @Published var currentPlayers: [Player] = []
-    @Published var gameMode: GameMode?
-    @Published var currentQuestionIndex = 0
-    @Published var currentQuestion: String = ""
-    @Published var currentTruthOrDareQuestion: TruthOrDareQuestion = TruthOrDareQuestion(truth: "", dare: "")
-    @Published var questions: [String] = []
-    @Published var truthOrDareQuestions: [TruthOrDareQuestion] = []
-    @Published var gameIsOn: Bool = true
-    
     @Published var playersQueue: [Player] = []
-    
     @Published var removedPlayers: [Player] = []
+    @Published var playersWithPlaces: [PlayerWithPlace] = []
     
+    // Navigation
     @Published var navPath: [String] = []
     
     func goBack() {
@@ -34,7 +41,17 @@ final class PlayersViewModel: ObservableObject {
         navPath.removeAll()
     }
     
-    @Published var playersWithPlaces: [PlayerWithPlace] = []
+    // Timer
+    private lazy var timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in self.timeElapsed += 1
+        if self.timeElapsed == self.tabooRoundTime + 1 {
+            // Time is up
+            self.nextTabooPair()
+        }
+    }
+    
+    @Published var timeElapsed: Int = 0
+    var tabooRoundTime: Int = 30
+
     
     func addPlayer(name: String, theme: PlayerTheme) {
         let newPlayer = Player(id: UUID().uuidString, name: name, theme: theme, lives: 3)
@@ -51,6 +68,7 @@ final class PlayersViewModel: ObservableObject {
         self.gameMode = gameMode
         questions = gameMode.questions
         truthOrDareQuestions = gameMode.truthOrDareQuestions
+        tabooQuestions = gameMode.tabooQuestions
     }
     
     func decreasePlayerLives(playerNumber: Int) {
@@ -64,14 +82,12 @@ final class PlayersViewModel: ObservableObject {
         }
         
         if currentPlayers[playerNumber].lives == 0 {
-            removePlayerFromGame(currentPlayer)
+            removePlayerFromGame(currentPlayers[playerNumber])
         }
         
         if players.count == 1 {
             endGame()
         }
-        
-        print("players count: ", players.count)
     }
     
     func removePlayerFromGame(_ playerToRemove: Player) {
@@ -107,15 +123,23 @@ final class PlayersViewModel: ObservableObject {
             } else {
                 endGame()
             }
-            print(currentQuestionIndex, truthOrDareQuestions.count)
+        case .taboo:
+            if currentQuestionIndex < tabooQuestions.count - 1 {
+                currentQuestionIndex += 1
+                currentTabooQuestion = tabooQuestions[currentQuestionIndex]
+            } else {
+                endGame()
+            }
         }
+    }
+    
+    func nextTabooPair() {
+        timeElapsed = 0
     }
     
     func startGame() {
         guard let gameMode = gameMode else { return }
-        withAnimation(.spring()) {
-            gameIsOn = true
-        }
+        gameIsOn = true
         resetPlayers()
         players = tempPlayers
         players.shuffle()
@@ -126,11 +150,13 @@ final class PlayersViewModel: ObservableObject {
         case .neverHaveIEver, .scenesFromAHat:
             questions.shuffle()
             currentQuestion = questions.first!
-            currentQuestionIndex = 0
         case .truthOrDare:
             truthOrDareQuestions.shuffle()
             currentTruthOrDareQuestion = truthOrDareQuestions.first!
-            currentQuestionIndex = 0
+        case .taboo:
+            tabooQuestions.shuffle()
+            currentTabooQuestion = tabooQuestions.first!
+            timer.fire()
         }
     }
     
@@ -149,11 +175,10 @@ final class PlayersViewModel: ObservableObject {
             let playerWithPlace = PlayerWithPlace(player: player, place: place)
             playersWithPlaces.append(playerWithPlace)
         }
-        print(playersWithPlaces
-        )
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             self.gameIsOn = false
             self.navPath.append(AppState.gameOver.rawValue)
+            self.currentQuestionIndex = 0
         }
     }
     

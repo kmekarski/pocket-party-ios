@@ -15,23 +15,22 @@ struct MainMenuOptionView: View {
     var backgroundColor: Color = Color.theme.accent
     
     var body: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 8) {
+        VStack(spacing: 12) {
+            HStack {
                 Text(title)
                     .foregroundColor(foregroundColor)
                             .font(.system(size: 24, weight: .bold))
-                Text(subtitle)
+                Spacer()
+                Image(systemName: icon)
                     .foregroundColor(foregroundColor)
-                    .font(.system(size: 20, weight: .regular))
+                    .font(.system(size: 36, weight: .regular))
             }
-
-            Spacer()
-            Image(systemName: icon)
+            Text(subtitle)
                 .foregroundColor(foregroundColor)
-                .font(.system(size: 36, weight: .regular))
+                .font(.system(size: 22, weight: .regular))
+                .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding(28)
-        .padding(.leading)
         .background(backgroundColor)
         .cornerRadius(24)
         .customShadow(.subtleDownShadow)
@@ -41,8 +40,9 @@ struct MainMenuOptionView: View {
 struct MainMenuOptionView_Previews: PreviewProvider {
     static var previews: some View {
         VStack(spacing: 16) {
-            ForEach(1..<6) { _ in
-                MainMenuOptionView(title: "Scenes from a Hat", subtitle: "Classic WLIIA Game", icon: "gear", foregroundColor: .white, backgroundColor: .theme.accent)
+            ForEach(GameMode.allCases, id:
+                    \.self) { mode in
+                MainMenuOptionView(title: mode.title, subtitle: mode.subtitle, icon: mode.icon, foregroundColor: .white, backgroundColor: .theme.accent)
             }
         }
         .padding(.horizontal, 24)

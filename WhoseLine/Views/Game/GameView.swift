@@ -12,6 +12,7 @@ struct GameView: View {
     @State var showInfo: Bool = false
     @State var folds: [Bool] = [false, false]
     @State var foldDirection: FoldDirection = .left
+    @State var cardGoingOut: Bool = false
     @State var truthOrDarePickedState: TruthOrDarePickedState = .notPicked
     @State var showSkipAnswerButtons: Bool = false
     var body: some View {
@@ -24,13 +25,15 @@ struct GameView: View {
                     Spacer()
                     question
                     Spacer()
+                    if gameMode == .taboo {
+                        tabooButtons
+                    }
                 }
             }
             GameInfoModalView(isShowing: $showInfo, title: gameMode.title, description: gameMode.rulesDescription)
         }
         .navigationBarBackButtonHidden(true)
         .onAppear() {
-            print("game starts")
             playersVM.startGame()
         }
     }
@@ -72,58 +75,65 @@ extension GameView {
         }
     }
     
-    private func playerTitle(player: Player) -> some View {
+    private func playerTitle(player: Player, playerNumber: Int) -> some View {
         VStack(spacing: 6) {
             Text(player.name + " " + player.theme.emoji)
                 .foregroundColor(player.theme.textColor)
                 .font(.system(size: 28, weight: .semibold))
-            heartsDisplay(player: player)
-                .font(.system(size: 26, weight: .semibold))
+            switch gameMode {
+            case .scenesFromAHat, .truthOrDare, .neverHaveIEver:
+                heartsDisplay(player: player)
+                    .font(.system(size: 26, weight: .semibold))
+            case .taboo:
+                Text(playerNumber == 0 ? "Speaker" : "Guesser")
+                    .foregroundColor(player.theme.textColor)
+                    .font(.system(size: 20, weight: .regular))
+                    .padding(.top, 8)
+            }
         }
     }
     
     private func bottomButtons(player: Player, playerNumber: Int) -> some View {
         switch(gameMode) {
         case .truthOrDare:
-                return AnyView(
-                    HStack(spacing: 16) {
-                        if currentPlayers.contains(where: { currentPlayer in
-                            currentPlayer.id == player.id
-                        }) && showSkipAnswerButtons {
-                            Button(action: {
-                                truthOrDarePickedState = .notPicked
-                                playersVM.nextQuestion()
-                                setNewFoldDirection()
-                                withAnimation(.easeIn(duration: 0.5)) {
-                                    folds[0] = true
-                                }
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                    playersVM.nextPlayer(playerNumber: 0)
-                                    folds[0] = false
-                                    showSkipAnswerButtons = false
-                                }
-                            }, label: {
-                                WideButtonView(truthOrDarePickedState == .truth ? "Answer" : "Complete", size: .big, colorScheme: .primary)
-                            })
-                            Button(action: {
-                                truthOrDarePickedState = .notPicked
-                                playersVM.nextQuestion()
-                                setNewFoldDirection()
-                                withAnimation(.easeIn(duration: 0.5)) {
-                                    folds[0] = true
-                                }
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                    playersVM.decreasePlayerLives(playerNumber: 0)
-                                    playersVM.nextPlayer(playerNumber: 0)
-                                    folds[0] = false
-                                    showSkipAnswerButtons = false
-
-                                }
-                            }, label: {
-                                WideButtonView("Skip", size: .big, colorScheme: .primary)
-                            })
-                        }
-                    })
+            return AnyView(
+                HStack(spacing: 16) {
+                    if currentPlayers.contains(where: { currentPlayer in
+                        currentPlayer.id == player.id
+                    }) && showSkipAnswerButtons {
+                        Button(action: {
+                            truthOrDarePickedState = .notPicked
+                            playersVM.nextQuestion()
+                            setNewFoldDirection()
+                            withAnimation(.easeIn(duration: 0.5)) {
+                                folds[0] = true
+                            }
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                playersVM.nextPlayer(playerNumber: 0)
+                                folds[0] = false
+                                showSkipAnswerButtons = false
+                            }
+                        }, label: {
+                            WideButtonView(truthOrDarePickedState == .truth ? "Answer" : "Complete", size: .big, colorScheme: .primary)
+                        })
+                        Button(action: {
+                            truthOrDarePickedState = .notPicked
+                            setNewFoldDirection()
+                            playersVM.nextQuestion()
+                            withAnimation(.easeIn(duration: 0.5)) {
+                                folds[0] = true
+                            }
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                playersVM.decreasePlayerLives(playerNumber: 0)
+                                playersVM.nextPlayer(playerNumber: 0)
+                                folds[0] = false
+                                showSkipAnswerButtons = false
+                            }
+                        }, label: {
+                            WideButtonView("Skip", size: .big, colorScheme: .primary)
+                        })
+                    }
+                })
             
         case .scenesFromAHat:
             return AnyView(
@@ -144,7 +154,7 @@ extension GameView {
                     WideButtonView("\(player.name) out!", size: .big, colorScheme: .primary)
                 })
             )
-        case .neverHaveIEver:
+        case .neverHaveIEver, .taboo:
             return AnyView(VStack{})
         }
     }
@@ -156,7 +166,7 @@ extension GameView {
             }) {
                 player.theme.color.ignoresSafeArea()
                 VStack {
-                    playerTitle(player: player)
+                    playerTitle(player: player, playerNumber: playerNumber)
                     Spacer()
                     bottomButtons(player: player, playerNumber: playerNumber)
                 }
@@ -207,6 +217,29 @@ extension GameView {
                     }
                 case .neverHaveIEver:
                     Color.theme.background.ignoresSafeArea()
+                case .taboo:
+                    HStack(spacing: 0) {
+                        ZStack {
+                            if currentPlayers.count >= 2 {
+                                currentPlayers[1].theme.color.ignoresSafeArea()
+                            }
+                            ForEach(playersQueue.reversed()) { player in
+                                playerCard(playerId: player.id, playerNumber: 0)
+                            }
+                            playerCard(playerId: currentPlayers[0].id, playerNumber: 0)
+                                .foldTransition(active: folds[0], direction: .left)
+                        }
+                        ZStack {
+                            if currentPlayers.count >= 1 {
+                                currentPlayers[0].theme.color.ignoresSafeArea()
+                            }
+                            ForEach(playersQueue.reversed()) { player in
+                                playerCard(playerId: player.id, playerNumber: 1)
+                            }
+                            playerCard(playerId: currentPlayers[1].id, playerNumber: 1)
+                                .foldTransition(active: folds[1], direction: .right)
+                        }
+                    }
                 }
             }
         }
@@ -220,6 +253,9 @@ extension GameView {
                 IconButtonView("xmark")
             }
             Spacer()
+            if gameMode == .taboo {
+                timer
+            }
             Button {
                 showInfo.toggle()
             } label: {
@@ -266,32 +302,34 @@ extension GameView {
                     .gameQuestionCard(.top)
                 )
             case .truthOrDare:
-                    switch truthOrDarePickedState {
-                    case .notPicked:
-                        VStack {
-                            Text("\(playersVM.currentQuestionIndex+1) / \(playersVM.truthOrDareQuestions.count)")
-                                .font(.system(size: 16, weight: .bold))
+                switch truthOrDarePickedState {
+                case .notPicked:
+                    VStack {
+                        Text("\(playersVM.currentQuestionIndex+1) / \(playersVM.truthOrDareQuestions.count)")
+                            .font(.system(size: 16, weight: .bold))
+                            .foregroundColor(.white)
+                        HStack(spacing: 10) {
+                            truthOrDatePickButton(result: .truth)
+                            Text("or")
                                 .foregroundColor(.white)
-                            HStack(spacing: 10) {
-                                truthOrDatePickButton(result: .truth)
-                                Text("or")
-                                    .foregroundColor(.white)
-                                    .font(.system(size: 20, weight: .bold))
-                                truthOrDatePickButton(result: .dare)
-                            }
-                            .frame(maxHeight: .infinity)
+                                .font(.system(size: 20, weight: .bold))
+                            truthOrDatePickButton(result: .dare)
                         }
-                        .gameQuestionCard(.flippedTop)
-
-                    case .truth:
-                        Text(playersVM.currentTruthOrDareQuestion.truth)
-                            .font(.system(size: 24,weight: .semibold))
-                            .gameQuestionCard(.top)
-                    case .dare:
-                        Text(playersVM.currentTruthOrDareQuestion.dare)
-                            .font(.system(size: 24,weight: .semibold))
-                            .gameQuestionCard(.top)
+                        .frame(maxHeight: .infinity)
                     }
+                    .gameQuestionCard(.flippedTop)
+                    
+                case .truth:
+                    Text(playersVM.currentTruthOrDareQuestion.truth)
+                        .font(.system(size: 24,weight: .semibold))
+                        .gameQuestionCard(.top)
+                        .foldTransition(active: folds[0], direction: foldDirection)
+                case .dare:
+                    Text(playersVM.currentTruthOrDareQuestion.dare)
+                        .font(.system(size: 24,weight: .semibold))
+                        .gameQuestionCard(.top)
+                        .foldTransition(active: folds[0], direction: foldDirection)
+                }
             case .neverHaveIEver:
                 AnyView(
                     VStack{
@@ -303,8 +341,60 @@ extension GameView {
                     }
                         .gameQuestionCard(.top)
                 )
+            case .taboo:
+                AnyView(
+                    ZStack {
+                        let nextQuestionIndex = playersVM.currentQuestionIndex + 1
+                        if nextQuestionIndex < playersVM.tabooQuestions.count {
+                            let nextTabooQuestion = playersVM.tabooQuestions[nextQuestionIndex]
+                            tabooCard(question: nextTabooQuestion)
+                        }
+                        tabooCard(question: playersVM.currentTabooQuestion)
+                    }
+                )
             }
         }
+    }
+    
+    private func truthOrDareCard() -> some View {
+        VStack {
+            Text("\(playersVM.currentQuestionIndex+1) / \(playersVM.truthOrDareQuestions.count)")
+                .font(.system(size: 16, weight: .bold))
+                .foregroundColor(.white)
+            HStack(spacing: 10) {
+                truthOrDatePickButton(result: .truth)
+                Text("or")
+                    .foregroundColor(.white)
+                    .font(.system(size: 20, weight: .bold))
+                truthOrDatePickButton(result: .dare)
+            }
+            .frame(maxHeight: .infinity)
+        }
+        .gameQuestionCard(.flippedTop)
+    }
+    
+    private func tabooCard(question: TabooQuestion) -> some View {
+        let isGoing = playersVM.currentTabooQuestion.wordToGuess == question.wordToGuess && cardGoingOut
+        return VStack{
+            Text(question.wordToGuess.uppercased())
+                .font(.system(size: 22, weight: .semibold))
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .padding(10)
+                .background(Color.theme.accent)
+                .cornerRadius(8)
+            VStack(spacing: 12) {
+                ForEach(question.forbiddenWords, id: \.self) { word in
+                    Text(word.uppercased())
+                        .font(.system(size: 20, weight: .regular))
+                }
+            }
+            .frame(maxHeight: .infinity)
+        }
+        .padding(.top)
+        .gameQuestionCard(.verticalTop)
+        .offset(x: CGFloat(isGoing ? foldDirection.rawValue * 500 : 0), y: isGoing ? 10 : 0)
+        .rotationEffect(.degrees(CGFloat(isGoing ? foldDirection.rawValue * 20 : 0)))
     }
     
     private var questionsStack: some View {
@@ -313,9 +403,9 @@ extension GameView {
             return AnyView(ZStack{})
         case .neverHaveIEver:
             return AnyView(ZStack {
-                ForEach(playersVM.currentQuestionIndex..<playersVM.questions.count, id: \.self) { index in
+                ForEach(0..<playersVM.questions.count - playersVM.currentQuestionIndex, id: \.self) { index in
                     Rectangle()
-                        .gameQuestionCard(.backgroundDark)
+                        .gameQuestionCard(.background)
                         .rotationEffect(Angle(degrees: log2(Double(index)) + 2))
                         .offset(x: 1)
                 }
@@ -324,11 +414,61 @@ extension GameView {
             return AnyView(ZStack {
                 ForEach(0..<playersVM.truthOrDareQuestions.count - playersVM.currentQuestionIndex, id: \.self) { index in
                     Rectangle()
-                        .gameQuestionCard(.backgroundDark)
+                        .gameQuestionCard(.background)
                         .rotationEffect(Angle(degrees: log2(Double(index)) + 2))
                         .offset(x: 1)
                 }
             })
+        case .taboo:
+            return AnyView(ZStack {
+                ForEach(0..<playersVM.tabooQuestions.count - playersVM.currentQuestionIndex, id: \.self) { index in
+                    Rectangle()
+                        .gameQuestionCard(.verticalBackground)
+                        .rotationEffect(Angle(degrees: log2(Double(index)) + 2))
+                        .offset(y: 4)
+                }
+            })
+        }
+    }
+    
+    private var timer: some View {
+        Text((playersVM.tabooRoundTime - playersVM.timeElapsed).asClockString())
+            .foregroundColor(.white)
+            .font(.system(size: 22, weight: .semibold))
+            .padding()
+            .frame(width: 90)
+            .background(Color.theme.accent)
+            .cornerRadius(12)
+            .frame(maxWidth: .infinity)
+            .offset(x: -5)
+            .customShadow(.subtleDownShadow)
+    }
+    
+    private var tabooButtons: some View {
+        HStack(spacing: 48) {
+            Button(action: {
+                foldDirection = .left
+                swipeCard()
+            }, label: {
+                WideButtonView("Correct", size: .big, colorScheme: .primary)
+            })
+            Button(action: {
+                foldDirection = .right
+                swipeCard()
+            }, label: {
+                WideButtonView("Skip", size: .big, colorScheme: .secondary)
+            })
+        }
+        .padding(.horizontal, 24)
+    }
+    
+    private func swipeCard() {
+        withAnimation(.easeIn) {
+            cardGoingOut = true
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            cardGoingOut = false
+            playersVM.nextQuestion()
         }
     }
 }

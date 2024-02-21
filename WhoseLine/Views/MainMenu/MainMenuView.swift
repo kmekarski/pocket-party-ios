@@ -56,13 +56,13 @@ extension MainMenuView {
     }
     
     private var menuButtons: some View {
-        VStack {
+        VStack(spacing: 16) {
             ForEach(GameMode.allCases, id: \.self) { mode in
                 NavigationLink(value: AppState.gameSettings.rawValue + mode.rawValue) {
                     MainMenuOptionView(title: mode.title, subtitle: mode.subtitle, icon: mode.icon, foregroundColor: .white, backgroundColor: .theme.accent)
                 }
-                .padding(.bottom, 10)
             }
+            MainMenuOptionView(title: "Another game modes", subtitle: "Coming soon...", icon: "hammer.fill")
         }
     }
 }
