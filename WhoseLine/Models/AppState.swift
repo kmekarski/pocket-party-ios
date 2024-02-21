@@ -9,6 +9,7 @@ import Foundation
 
 enum AppState: String {
     case mainMenu
+    case gameSettings
     case setPlayers
     case game
     case gameOver

@@ -14,7 +14,6 @@ struct SetPlayersView: View {
     @State var showAddPlayerModel: Bool = false
     @State var newPlayerName: String = ""
     @State var selectedThemeIndex: Int?
-    var gameMode: GameMode
     var body: some View {
         ZStack {
             if let gameMode = playersVM.gameMode {
@@ -38,9 +37,6 @@ struct SetPlayersView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
-        .onAppear() {
-            playersVM.setGameMode(gameMode)
-        }
     }
 }
 
@@ -48,7 +44,7 @@ struct SetPlayersView: View {
     let playersVM = PlayersViewModel()
     playersVM.gameMode = .neverHaveIEver
     return NavigationStack {
-        SetPlayersView(gameMode: .neverHaveIEver)
+        SetPlayersView()
     }
     .environmentObject(playersVM)
 }
@@ -107,11 +103,15 @@ extension SetPlayersView {
         }
     }
     
-    private var startButton: some View {        
-        NavigationLink(value: "game") {
-            WideButtonView("Start Game", disabled: playersVM.tempPlayers.count < gameMode.minimumPlayers, size: .big, colorScheme: .primary)
+    private var startButton: some View {
+        VStack {
+            if let gameMode = playersVM.gameMode {
+                NavigationLink(value: "game") {
+                    WideButtonView("Start Game", disabled: playersVM.tempPlayers.count < gameMode.minimumPlayers, size: .big, colorScheme: .primary)
+                }
+                .disabled(playersVM.tempPlayers.count < gameMode.minimumPlayers)
+            }
         }
-        .disabled(playersVM.tempPlayers.count < gameMode.minimumPlayers)
     }
     
     private var addPlayerModalContent: some View {

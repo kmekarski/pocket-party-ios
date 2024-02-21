@@ -8,32 +8,31 @@
 import SwiftUI
 
 struct MainMenuView: View {
-    @EnvironmentObject var playersVM: PlayersViewModel
     @State private var navPath: [String] = []
     @State var showSettings: Bool = false
     var body: some View {
-        NavigationStack(path: $playersVM.navPath) {
-            ZStack {
-                Color.theme.background.ignoresSafeArea()
-                ScrollView {
-                    VStack {
-                        header
-                            .padding(.bottom, 8)
-                        menuButtons
-                    }
-                    .padding(.top)
-                    .padding(.horizontal)
+        ZStack {
+            Color.theme.background.ignoresSafeArea()
+            ScrollView {
+                VStack {
+                    header
+                        .padding(.bottom, 8)
+                    menuButtons
                 }
-                SettingsModalView(isShowing: $showSettings)
+                .padding(.top)
+                .padding(.horizontal)
             }
+            SettingsModalView(isShowing: $showSettings)
         }
     }
 }
 
 struct MainMenuView_Previews: PreviewProvider {
     static var previews: some View {
-        MainMenuView()
-            .environmentObject(dev.playersVM)
+        NavigationStack {
+            MainMenuView()
+                .environmentObject(dev.playersVM)
+        }
     }
 }
 
@@ -59,23 +58,10 @@ extension MainMenuView {
     private var menuButtons: some View {
         VStack {
             ForEach(GameMode.allCases, id: \.self) { mode in
-                NavigationLink(value: AppState.setPlayers.rawValue + mode.rawValue) {
+                NavigationLink(value: AppState.gameSettings.rawValue + mode.rawValue) {
                     MainMenuOptionView(title: mode.title, subtitle: mode.subtitle, icon: mode.icon, foregroundColor: .white, backgroundColor: .theme.accent)
                 }
                 .padding(.bottom, 10)
-            }
-            .navigationDestination(for: String.self) { pathValue in
-                ForEach(GameMode.allCases, id: \.self) { mode in
-                    if pathValue == AppState.setPlayers.rawValue + mode.rawValue {
-                        SetPlayersView(gameMode: mode)
-                    }
-                }
-                if pathValue == AppState.game.rawValue {
-                    GameView()
-                }
-                if pathValue == AppState.gameOver.rawValue {
-                    GameOverView()
-                }
             }
         }
     }

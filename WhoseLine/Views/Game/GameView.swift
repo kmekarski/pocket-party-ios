@@ -13,6 +13,7 @@ struct GameView: View {
     @State var folds: [Bool] = [false, false]
     @State var foldDirection: FoldDirection = .left
     @State var truthOrDarePickedState: TruthOrDarePickedState = .notPicked
+    @State var showSkipAnswerButtons: Bool = false
     var body: some View {
         ZStack {
             if let gameMode = playersVM.gameMode,
@@ -84,43 +85,45 @@ extension GameView {
     private func bottomButtons(player: Player, playerNumber: Int) -> some View {
         switch(gameMode) {
         case .truthOrDare:
-            switch truthOrDarePickedState {
-            case .notPicked:
-                return AnyView(HStack{})
-            case .truth, .dare:
                 return AnyView(
                     HStack(spacing: 16) {
-                        Button(action: {
-                            setNewFoldDirection()
-                            truthOrDarePickedState = .notPicked
-                            withAnimation(.easeIn(duration: 0.5)) {
-                                folds[0] = true
-                            }
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        if currentPlayers.contains(where: { currentPlayer in
+                            currentPlayer.id == player.id
+                        }) && showSkipAnswerButtons {
+                            Button(action: {
+                                truthOrDarePickedState = .notPicked
                                 playersVM.nextQuestion()
-                                playersVM.nextPlayer(playerNumber: 0)
-                                folds[0] = false
-                            }
-                        }, label: {
-                            WideButtonView(truthOrDarePickedState == .truth ? "Answer" : "Complete", size: .big, colorScheme: .primary)
-                        })
-                        Button(action: {
-                            setNewFoldDirection()
-                            truthOrDarePickedState = .notPicked
-                            withAnimation(.easeIn(duration: 0.5)) {
-                                folds[0] = true
-                            }
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                setNewFoldDirection()
+                                withAnimation(.easeIn(duration: 0.5)) {
+                                    folds[0] = true
+                                }
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                    playersVM.nextPlayer(playerNumber: 0)
+                                    folds[0] = false
+                                    showSkipAnswerButtons = false
+                                }
+                            }, label: {
+                                WideButtonView(truthOrDarePickedState == .truth ? "Answer" : "Complete", size: .big, colorScheme: .primary)
+                            })
+                            Button(action: {
+                                truthOrDarePickedState = .notPicked
                                 playersVM.nextQuestion()
-                                playersVM.decreasePlayerLives(playerNumber: 0)
-                                playersVM.nextPlayer(playerNumber: 0)
-                                folds[0] = false
-                            }
-                        }, label: {
-                            WideButtonView("Skip", size: .big, colorScheme: .primary)
-                        })
+                                setNewFoldDirection()
+                                withAnimation(.easeIn(duration: 0.5)) {
+                                    folds[0] = true
+                                }
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                    playersVM.decreasePlayerLives(playerNumber: 0)
+                                    playersVM.nextPlayer(playerNumber: 0)
+                                    folds[0] = false
+                                    showSkipAnswerButtons = false
+
+                                }
+                            }, label: {
+                                WideButtonView("Skip", size: .big, colorScheme: .primary)
+                            })
+                        }
                     })
-            }
             
         case .scenesFromAHat:
             return AnyView(
@@ -239,6 +242,7 @@ extension GameView {
     private func truthOrDatePickButton(result: TruthOrDarePickResult) -> some View {
         Button(action: {
             truthOrDarePickedState = TruthOrDarePickedState(rawValue: result.rawValue)!
+            showSkipAnswerButtons = true
         }, label: {
             Text(result.rawValue)
                 .font(.system(size: 24, weight: .bold))
@@ -264,12 +268,18 @@ extension GameView {
             case .truthOrDare:
                     switch truthOrDarePickedState {
                     case .notPicked:
-                        HStack(spacing: 10) {
-                            truthOrDatePickButton(result: .truth)
-                            Text("or")
+                        VStack {
+                            Text("\(playersVM.currentQuestionIndex+1) / \(playersVM.truthOrDareQuestions.count)")
+                                .font(.system(size: 16, weight: .bold))
                                 .foregroundColor(.white)
-                                .font(.system(size: 20, weight: .bold))
-                            truthOrDatePickButton(result: .dare)
+                            HStack(spacing: 10) {
+                                truthOrDatePickButton(result: .truth)
+                                Text("or")
+                                    .foregroundColor(.white)
+                                    .font(.system(size: 20, weight: .bold))
+                                truthOrDatePickButton(result: .dare)
+                            }
+                            .frame(maxHeight: .infinity)
                         }
                         .gameQuestionCard(.flippedTop)
 

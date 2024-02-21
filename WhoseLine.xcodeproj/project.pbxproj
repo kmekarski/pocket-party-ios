@@ -44,6 +44,7 @@
 		A76BDF762B860EC600019FA4 /* GameQuestionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BDF752B860EC600019FA4 /* GameQuestionModifier.swift */; };
 		A76BDF7C2B861FAC00019FA4 /* TruthOrDarePickedState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BDF7B2B861FAC00019FA4 /* TruthOrDarePickedState.swift */; };
 		A76BDF7E2B861FB900019FA4 /* TruthOrDarePickResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BDF7D2B861FB900019FA4 /* TruthOrDarePickResult.swift */; };
+		A76BDF832B86642A00019FA4 /* GameSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BDF822B86642A00019FA4 /* GameSettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -85,6 +86,7 @@
 		A76BDF752B860EC600019FA4 /* GameQuestionModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameQuestionModifier.swift; sourceTree = "<group>"; };
 		A76BDF7B2B861FAC00019FA4 /* TruthOrDarePickedState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TruthOrDarePickedState.swift; sourceTree = "<group>"; };
 		A76BDF7D2B861FB900019FA4 /* TruthOrDarePickResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TruthOrDarePickResult.swift; sourceTree = "<group>"; };
+		A76BDF822B86642A00019FA4 /* GameSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +164,7 @@
 		A7138D1C2B7B8CAF0031B709 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A76BDF812B86641F00019FA4 /* GameSettings */,
 				A74A32682B82615600438E8C /* SetPlayers */,
 				A74A325F2B823A1400438E8C /* Game */,
 				A704D4002B7F8BCB0005F8A5 /* MainMenu */,
@@ -286,6 +289,14 @@
 			path = Shapes;
 			sourceTree = "<group>";
 		};
+		A76BDF812B86641F00019FA4 /* GameSettings */ = {
+			isa = PBXGroup;
+			children = (
+				A76BDF822B86642A00019FA4 /* GameSettingsView.swift */,
+			);
+			path = GameSettings;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -381,6 +392,7 @@
 				A76BDF7C2B861FAC00019FA4 /* TruthOrDarePickedState.swift in Sources */,
 				A76BDF702B84F75600019FA4 /* Trapezoid.swift in Sources */,
 				A74A32882B82CC2F00438E8C /* GameMode.swift in Sources */,
+				A76BDF832B86642A00019FA4 /* GameSettingsView.swift in Sources */,
 				A74A32862B82BA2200438E8C /* PlayerTheme.swift in Sources */,
 				A76BDF762B860EC600019FA4 /* GameQuestionModifier.swift in Sources */,
 				A7138D2F2B7B902A0031B709 /* Color.swift in Sources */,

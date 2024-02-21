@@ -7,9 +7,28 @@
 
 import SwiftUI
 
-struct HomeView: View {    
+struct HomeView: View {
+    @EnvironmentObject var playersVM: PlayersViewModel
     var body: some View {
-        MainMenuView()
+        NavigationStack(path: $playersVM.navPath) {
+            MainMenuView()
+                .navigationDestination(for: String.self) { pathValue in
+                    ForEach(GameMode.allCases, id: \.self) { mode in
+                        if pathValue == AppState.gameSettings.rawValue + mode.rawValue {
+                            GameSettingsView(gameMode: mode)
+                        }
+                    }
+                    if pathValue == AppState.setPlayers.rawValue {
+                        SetPlayersView()
+                    }
+                    if pathValue == AppState.game.rawValue {
+                        GameView()
+                    }
+                    if pathValue == AppState.gameOver.rawValue {
+                        GameOverView()
+                    }
+                }
+        }
     }
 }
 
