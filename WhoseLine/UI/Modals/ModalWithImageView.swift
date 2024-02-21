@@ -25,7 +25,6 @@ struct ModalWithImageView<Content: View>: View {
                         .onTapGesture {
                             isShowing = false
                         }
-
                 }
                 VStack {
                     if isShowing {

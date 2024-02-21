@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct MainMenuView: View {
-    @EnvironmentObject var homeVM: HomeViewModel
     @EnvironmentObject var playersVM: PlayersViewModel
+    @State private var navPath: [String] = []
     @State var showSettings: Bool = false
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $playersVM.navPath) {
             ZStack {
                 Color.theme.background.ignoresSafeArea()
                 ScrollView {
@@ -33,7 +33,6 @@ struct MainMenuView: View {
 struct MainMenuView_Previews: PreviewProvider {
     static var previews: some View {
         MainMenuView()
-            .environmentObject(dev.homeVM)
             .environmentObject(dev.playersVM)
     }
 }
@@ -59,16 +58,22 @@ extension MainMenuView {
     
     private var menuButtons: some View {
         VStack(spacing: 24) {
-            NavigationLink {
-                SetPlayersView(gameMode: .scenesFromAHat)
-            } label: {
-                MainMenuOptionView(title: "Scenes from a Hat", subtitle: "Classic WLIIA Game", icon: "gear", foregroundColor: .white, backgroundColor: .theme.accent)
+            NavigationLink(value: AppState.setPlayers.rawValue + GameMode.scenesFromAHat.rawValue) {
+                MainMenuOptionView(title: "Scenes From a Hat", subtitle: "Classic WLIIA Game", icon: "gear", foregroundColor: .white, backgroundColor: .theme.accent)
             }
-            
-            NavigationLink {
-                SetPlayersView(gameMode: .neverHaveIEver)
-            } label: {
+            NavigationLink(value: AppState.setPlayers.rawValue + GameMode.neverHaveIEver.rawValue) {
                 MainMenuOptionView(title: "Never Have I Ever", subtitle: "Classic WLIIA Game", icon: "gear", foregroundColor: .white, backgroundColor: .theme.accent)
+            }
+            .navigationDestination(for: String.self) { pathValue in
+                if pathValue == AppState.setPlayers.rawValue + GameMode.scenesFromAHat.rawValue {
+                    SetPlayersView(gameMode: .scenesFromAHat)
+                } else if pathValue == AppState.setPlayers.rawValue + GameMode.neverHaveIEver.rawValue {
+                    SetPlayersView(gameMode: .neverHaveIEver)
+                } else if pathValue == AppState.game.rawValue {
+                    GameView()
+                } else if pathValue == AppState.gameOver.rawValue {
+                    GameOverView()
+                }
             }
         }
     }

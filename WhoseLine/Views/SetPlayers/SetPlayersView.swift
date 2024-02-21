@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SetPlayersView: View {
     @Environment(\.presentationMode) var presentationMode
+//    @Binding var path: [String]
     @EnvironmentObject var playersVM: PlayersViewModel
     @State var showAddPlayerModel: Bool = false
     @State var newPlayerName: String = ""
@@ -24,19 +25,7 @@ struct SetPlayersView: View {
                         playersList
                     }
                     Spacer()
-                    //                    Button(action: {
-                    //                        guard playersVM.tempPlayers.count >= gameMode.minimumPlayers else { return }
-                    //                        playersVM.startGame()
-                    //                    }, label: {
-                    //
-                    //                    })
-                    NavigationLink {
-                        GameView()
-                    } label: {
-                        WideButtonView("Start Game", disabled: playersVM.tempPlayers.count < gameMode.minimumPlayers, size: .big, colorScheme: .primary)
-                    }
-                    .disabled(playersVM.tempPlayers.count < gameMode.minimumPlayers)
-                    
+                    startButton
                 }
                 .padding()
                 .padding(.horizontal)
@@ -61,7 +50,6 @@ struct SetPlayersView: View {
     return NavigationStack {
         SetPlayersView(gameMode: .neverHaveIEver)
     }
-    .environmentObject(HomeViewModel())
     .environmentObject(playersVM)
 }
 
@@ -73,7 +61,7 @@ extension SetPlayersView {
     private var header: some View {
         HStack(alignment: .top) {
             Button {
-                self.presentationMode.wrappedValue.dismiss()
+                playersVM.goBack()
             } label: {
                 IconButtonView("arrow.left")
             }
@@ -119,6 +107,13 @@ extension SetPlayersView {
         }
     }
     
+    private var startButton: some View {        
+        NavigationLink(value: "game") {
+            WideButtonView("Start Game", disabled: playersVM.tempPlayers.count < gameMode.minimumPlayers, size: .big, colorScheme: .primary)
+        }
+        .disabled(playersVM.tempPlayers.count < gameMode.minimumPlayers)
+    }
+    
     private var addPlayerModalContent: some View {
         VStack {
             RegularTextFieldView(title: "Name:", text: $newPlayerName)
@@ -137,8 +132,8 @@ extension SetPlayersView {
         }
     }
     
-    private var emojiWidth: CGFloat { 48 }
-    private var highlightSize: CGFloat { 58 }
+    private var emojiWidth: CGFloat { 40 }
+    private var highlightSize: CGFloat { 48 }
     
     private var emojiHighlightOffset: CGFloat {
         if let index = selectedThemeIndex {

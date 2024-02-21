@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum GameMode {
+enum GameMode: String {
     case scenesFromAHat
     case neverHaveIEver
     

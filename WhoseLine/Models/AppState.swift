@@ -7,8 +7,9 @@
 
 import Foundation
 
-enum AppState: Int {
-    case mainMenu = 0
-    case setPlayers = 1
-    case game = 2
+enum AppState: String {
+    case mainMenu
+    case setPlayers
+    case game
+    case gameOver
 }

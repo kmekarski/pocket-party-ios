@@ -7,8 +7,7 @@
 
 import SwiftUI
 
-struct HomeView: View {
-    @EnvironmentObject var homeVM: HomeViewModel
+struct HomeView: View {    
     var body: some View {
         MainMenuView()
     }
@@ -17,7 +16,6 @@ struct HomeView: View {
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()
-            .environmentObject(dev.homeVM)
             .environmentObject(dev.playersVM)
     }
 }

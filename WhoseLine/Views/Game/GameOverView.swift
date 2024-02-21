@@ -8,15 +8,12 @@
 import SwiftUI
 
 struct GameOverView: View {
-    @EnvironmentObject var homeVM: HomeViewModel
     @EnvironmentObject var playersVM: PlayersViewModel
     var body: some View {
         ZStack {
             Color.theme.background.ignoresSafeArea()
-            if homeVM.appState == .game && !playersVM.gameIsOn {
                 SpinningSpotlightView(speed: 10)
                     .offset(y: 60)
-            }
             
             VStack {
                 header
@@ -28,14 +25,13 @@ struct GameOverView: View {
             }
             .padding()
         }
-        
+        .navigationBarBackButtonHidden(true)
     }
 }
 
 struct GameOverView_Previews: PreviewProvider {
     static var previews: some View {
         GameOverView()
-            .environmentObject(dev.homeVM)
             .environmentObject(dev.playersVMScenesFromAHat)
     }
 }
@@ -90,23 +86,23 @@ extension GameOverView {
     }
     
     private var buttonsSection: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 16) {
             Button(action: {
-                homeVM.goToMainMenu()
+                playersVM.goToMainMenu()
             }, label: {
                 WideButtonView("Choose different mode", size: .big, colorScheme: .primary)
             })
             Button(action: {
-                homeVM.goToGame()
                 playersVM.startGame()
+                playersVM.goBack()
             }, label: {
                 WideButtonView("Play again", size: .big, colorScheme: .primary)
             })
             Button(action: {
-                homeVM.goToSetPlayers()
+                playersVM.goBack()
+                playersVM.goBack()
             }, label: {
                 WideButtonView("Edit players", size: .big, colorScheme: .primary)
-                
             })
         }
         .padding(.top)

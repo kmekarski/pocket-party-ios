@@ -28,6 +28,21 @@ final class PlayersViewModel: ObservableObject {
     
     @Published var removedPlayers: [Player] = []
     
+    @Published var navPath: [String] = [] {
+        didSet {
+            print(navPath)
+            print("currentPlayersCount: ", currentPlayers.count)
+        }
+    }
+    
+    func goBack() {
+        navPath.removeLast()
+    }
+    
+    func goToMainMenu() {
+        navPath.removeAll()
+    }
+    
     var topPlayers: [Player] {
         return removedPlayers.suffix(3).reversed()
     }
@@ -82,12 +97,6 @@ final class PlayersViewModel: ObservableObject {
             playersQueue.append(currentPlayer)
             playersQueue.remove(at: 0)
         }
-        
-        print("all players: ", players)
-        print("\n")
-        print("queue: ", playersQueue)
-        print("\n")
-        print("current: ", currentPlayers)
     }
     
     func nextQuestion() {
@@ -104,6 +113,7 @@ final class PlayersViewModel: ObservableObject {
         withAnimation(.spring()) {
             gameIsOn = true
         }
+        resetPlayers()
         players = tempPlayers
         players.shuffle()
         currentPlayers = Array(players.prefix(upTo: gameMode.playersOnScreen))
@@ -126,10 +136,12 @@ final class PlayersViewModel: ObservableObject {
         withAnimation(.spring()) {
             gameIsOn = false
         }
+        navPath.append(AppState.gameOver.rawValue)
     }
     
     func resetPlayers() {
         players = []
         currentPlayers = []
+        removedPlayers = []
     }
 }

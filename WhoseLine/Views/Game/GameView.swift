@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct GameView: View {
-    @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var homeVM: HomeViewModel
     @EnvironmentObject var playersVM: PlayersViewModel
     @State var showInfo: Bool = false
     @State var folds: [Bool] = [false, false]
@@ -17,7 +15,7 @@ struct GameView: View {
     var body: some View {
         ZStack {
             if let gameMode = playersVM.gameMode,
-               !currentPlayers.isEmpty {
+               currentPlayers.count >= gameMode.playersOnScreen {
                 background
                 VStack {
                     header
@@ -25,13 +23,12 @@ struct GameView: View {
                     question
                     Spacer()
                 }
-                GameInfoModalView(isShowing: $showInfo, title: gameMode.title, description: gameMode.rulesDescription)
-                GameOverView()
-                    .moveFromEdgeTransition(active: !playersVM.gameIsOn, edge: .bottom)
             }
+            GameInfoModalView(isShowing: $showInfo, title: gameMode.title, description: gameMode.rulesDescription)
         }
         .navigationBarBackButtonHidden(true)
         .onAppear() {
+            print("game starts")
             playersVM.startGame()
         }
     }
@@ -40,10 +37,8 @@ struct GameView: View {
 struct GameView_Previews: PreviewProvider {
     static var previews: some View {
         GameView()
-            .environmentObject(dev.homeVM)
             .environmentObject(dev.playersVMNeverHaveIEver)
         GameView()
-            .environmentObject(dev.homeVM)
             .environmentObject(dev.playersVMScenesFromAHat)
     }
 }
@@ -175,16 +170,19 @@ extension GameView {
                 case .scenesFromAHat:
                     HStack(spacing: 0) {
                         ZStack {
-                            currentPlayers[1].theme.color.ignoresSafeArea()
+                            if currentPlayers.count >= 2 {
+                                currentPlayers[1].theme.color.ignoresSafeArea()
+                            }
                             ForEach(playersQueue.reversed()) { player in
                                 playerCard(playerId: player.id, playerNumber: 0)
                             }
                             playerCard(playerId: currentPlayers[0].id, playerNumber: 0)
                                 .foldTransition(active: folds[0], direction: .left)
-                            
                         }
                         ZStack {
-                            currentPlayers[0].theme.color.ignoresSafeArea()
+                            if currentPlayers.count >= 1 {
+                                currentPlayers[0].theme.color.ignoresSafeArea()
+                            }
                             ForEach(playersQueue.reversed()) { player in
                                 playerCard(playerId: player.id, playerNumber: 1)
                             }
@@ -200,8 +198,7 @@ extension GameView {
     private var header: some View {
         HStack {
             Button {
-                presentationMode.wrappedValue.dismiss()
-                playersVM.resetPlayers()
+                playersVM.goToMainMenu()
             } label: {
                 IconButtonView("xmark")
             }

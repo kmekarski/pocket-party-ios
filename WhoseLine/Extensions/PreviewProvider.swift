@@ -17,7 +17,6 @@ extension PreviewProvider {
 class DeveloperPreview {
     static let instance = DeveloperPreview()
     
-    let homeVM: HomeViewModel
     let playersVM: PlayersViewModel
     let playersVMNeverHaveIEver: PlayersViewModel
     let playersVMScenesFromAHat: PlayersViewModel
@@ -30,7 +29,6 @@ class DeveloperPreview {
     ]
     
     private init() {
-        self.homeVM = HomeViewModel()
         self.playersVM = PlayersViewModel()
         
         self.playersVMNeverHaveIEver = PlayersViewModel()
