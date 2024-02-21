@@ -34,7 +34,7 @@ final class PlayersViewModel: ObservableObject {
         navPath.removeAll()
     }
     
-    @Published var topPlayersWithPlaces: [PlayerWithPlace] = []
+    @Published var playersWithPlaces: [PlayerWithPlace] = []
     
     func addPlayer(name: String, theme: PlayerTheme) {
         let newPlayer = Player(id: UUID().uuidString, name: name, theme: theme, lives: 3)
@@ -143,16 +143,13 @@ final class PlayersViewModel: ObservableObject {
         }
         var place = 0
         for (index, player) in allPlayers.enumerated() {
-            if index == 3 {
-                break
-            }
             if index == 0 || allPlayers[index - 1].lives > player.lives{
                 place += 1
             }
             let playerWithPlace = PlayerWithPlace(player: player, place: place)
-            topPlayersWithPlaces.append(playerWithPlace)
+            playersWithPlaces.append(playerWithPlace)
         }
-        print(topPlayersWithPlaces
+        print(playersWithPlaces
         )
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             self.gameIsOn = false
@@ -164,6 +161,6 @@ final class PlayersViewModel: ObservableObject {
         players = []
         currentPlayers = []
         removedPlayers = []
-        topPlayersWithPlaces = []
+        playersWithPlaces = []
     }
 }

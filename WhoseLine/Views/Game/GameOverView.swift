@@ -14,11 +14,12 @@ struct GameOverView: View {
             Color.theme.background.ignoresSafeArea()
             SpinningSpotlightView(speed: 10)
                 .offset(y: 60)
-            VStack {
+            VStack(spacing: 24) {
                 header
                 Spacer()
-                if playersVM.topPlayersWithPlaces.count >= 2 {
+                if playersVM.playersWithPlaces.count >= 2 {
                     podium
+                    playersList
                 }
                 buttonsSection
             }
@@ -30,11 +31,8 @@ struct GameOverView: View {
 
 struct GameOverView_Previews: PreviewProvider {
     static var previews: some View {
-        ForEach(GameMode.allCases, id: \.self) { mode in
-            GameOverView()
-                .environmentObject(dev.playerVMs[mode]!)
-                .previewDisplayName(mode.title)
-        }
+        GameOverView()
+            .environmentObject(dev.playersVMAfterGame)
     }
 }
 
@@ -73,12 +71,42 @@ extension GameOverView {
     }
     
     private var podium: some View {
-        let topPlayers = playersVM.topPlayersWithPlaces
+        let topPlayers = playersVM.playersWithPlaces
         return HStack(alignment: .bottom, spacing: 16) {
-            ForEach(topPlayers) { playerWithPlace in
-                podiumRectangle(player: playerWithPlace.player, place: playerWithPlace.place)
+            ForEach(0..<min(3, topPlayers.count), id: \.self) { index in
+                podiumRectangle(player: topPlayers[index].player, place: topPlayers[index].place)
             }
         }
+    }
+    
+    private var playersList: some View {
+        VStack(spacing: 6) {
+            ForEach(playersVM.playersWithPlaces) { playerWithPlace in
+                let player = playerWithPlace.player
+                HStack(spacing: 24) {
+                    Text("\(playerWithPlace.place).")
+                        .font(.system(size: 20, weight: .semibold))
+                        .frame(width: 24, alignment: .trailing)
+                    Text(player.name + " " + player.theme.emoji)
+                        .font(.system(size: 20, weight: .semibold))
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                        .padding(.trailing)
+                    HStack(spacing: 0) {
+                        ForEach(0..<3, id: \.self) { index in
+                            Image(systemName: "heart.fill")
+                                .font(.system(size: 20))
+                                .foregroundColor(player.lives > 2 - index ? .theme.accent : .gray)
+                        }
+                    }
+                    .frame(width: 50)
+                }
+                .padding(.trailing)
+                .frame(maxWidth: 330)
+            }
+        }
+        .padding()
+        .background(Material.thick)
+        .cornerRadius(12)
     }
     
     private var buttonsSection: some View {
@@ -101,6 +129,5 @@ extension GameOverView {
                 WideButtonView("Edit players", size: .big, colorScheme: .primary)
             })
         }
-        .padding(.top)
     }
 }
