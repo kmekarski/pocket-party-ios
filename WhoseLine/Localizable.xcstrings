@@ -33,6 +33,9 @@
     "Game over!" : {
 
     },
+    "Game Settings" : {
+
+    },
     "Hello, world!" : {
       "extractionState" : "manual",
       "localizations" : {

@@ -24,12 +24,7 @@ final class PlayersViewModel: ObservableObject {
     
     @Published var removedPlayers: [Player] = []
     
-    @Published var navPath: [String] = [] {
-        didSet {
-            print(navPath)
-            print("currentPlayersCount: ", currentPlayers.count)
-        }
-    }
+    @Published var navPath: [String] = []
     
     func goBack() {
         navPath.removeLast()
@@ -39,9 +34,7 @@ final class PlayersViewModel: ObservableObject {
         navPath.removeAll()
     }
     
-    var topPlayers: [Player] {
-        return removedPlayers.suffix(3).reversed()
-    }
+    @Published var topPlayersWithPlaces: [PlayerWithPlace] = []
     
     func addPlayer(name: String, theme: PlayerTheme) {
         let newPlayer = Player(id: UUID().uuidString, name: name, theme: theme, lives: 3)
@@ -142,18 +135,35 @@ final class PlayersViewModel: ObservableObject {
     }
     
     func endGame() {
-        if let lastPlayer = players.first {
-            removedPlayers.append(lastPlayer)
+        var allPlayers: [Player] = []
+        allPlayers.append(contentsOf: removedPlayers)
+        allPlayers.append(contentsOf: players)
+        allPlayers.sort { lhs, rhs in
+            return lhs.lives > rhs.lives  // most lives first
         }
-        withAnimation(.spring()) {
-            gameIsOn = false
+        var place = 0
+        for (index, player) in allPlayers.enumerated() {
+            if index == 3 {
+                break
+            }
+            if index == 0 || allPlayers[index - 1].lives > player.lives{
+                place += 1
+            }
+            let playerWithPlace = PlayerWithPlace(player: player, place: place)
+            topPlayersWithPlaces.append(playerWithPlace)
         }
-        navPath.append(AppState.gameOver.rawValue)
+        print(topPlayersWithPlaces
+        )
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.gameIsOn = false
+            self.navPath.append(AppState.gameOver.rawValue)
+        }
     }
     
     func resetPlayers() {
         players = []
         currentPlayers = []
         removedPlayers = []
+        topPlayersWithPlaces = []
     }
 }

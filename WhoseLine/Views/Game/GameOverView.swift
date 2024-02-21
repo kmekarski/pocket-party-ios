@@ -12,13 +12,12 @@ struct GameOverView: View {
     var body: some View {
         ZStack {
             Color.theme.background.ignoresSafeArea()
-                SpinningSpotlightView(speed: 10)
-                    .offset(y: 60)
-            
+            SpinningSpotlightView(speed: 10)
+                .offset(y: 60)
             VStack {
                 header
                 Spacer()
-                if playersVM.topPlayers.count >= 2 {
+                if playersVM.topPlayersWithPlaces.count >= 2 {
                     podium
                 }
                 buttonsSection
@@ -64,7 +63,7 @@ extension GameOverView {
                     .frame(height: height)
                     .cornerRadius(12)
                     .customShadow(.subtleBorderShadow)
-
+                
                 Text("\(place)")
                     .font(.system(size: 36, weight: .bold))
                     .foregroundColor(player.theme.textColor)
@@ -74,16 +73,10 @@ extension GameOverView {
     }
     
     private var podium: some View {
-        let top3 = Array(playersVM.topPlayers.prefix(upTo: 3))
+        let topPlayers = playersVM.topPlayersWithPlaces
         return HStack(alignment: .bottom, spacing: 16) {
-            if top3.count > 2 {
-                podiumRectangle(player: top3[1], place: 2)
-                podiumRectangle(player: top3[0], place: 1)
-                podiumRectangle(player: top3[2], place: 3)
-            }
-            if top3.count == 2 {
-                podiumRectangle(player: top3[0], place: 1)
-                podiumRectangle(player: top3[1], place: 2)
+            ForEach(topPlayers) { playerWithPlace in
+                podiumRectangle(player: playerWithPlace.player, place: playerWithPlace.place)
             }
         }
     }

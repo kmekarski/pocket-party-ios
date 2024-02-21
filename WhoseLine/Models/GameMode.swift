@@ -92,7 +92,9 @@ enum GameMode: String, CaseIterable {
                 TruthOrDareQuestion(truth: "Truth 2", dare: "Dare 2"),
                 TruthOrDareQuestion(truth: "Truth 3", dare: "Dare 3"),
                 TruthOrDareQuestion(truth: "Truth 4", dare: "Dare 4"),
-                TruthOrDareQuestion(truth: "Truth 5", dare: "Dare 5")
+                TruthOrDareQuestion(truth: "Truth 5", dare: "Dare 5"),
+                TruthOrDareQuestion(truth: "Truth 6", dare: "Dare 6"),
+                TruthOrDareQuestion(truth: "Truth 7", dare: "Dare 7")
             ]
         }
     }

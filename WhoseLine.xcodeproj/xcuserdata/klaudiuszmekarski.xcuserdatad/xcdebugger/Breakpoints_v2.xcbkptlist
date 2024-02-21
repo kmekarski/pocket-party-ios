@@ -30,8 +30,8 @@
             filePath = "WhoseLine/ViewModels/PlayersViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "91"
-            endingLineNumber = "91"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
             landmarkName = "nextPlayer(playerNumber:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -46,8 +46,8 @@
             filePath = "WhoseLine/ViewModels/PlayersViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
+            startingLineNumber = "50"
+            endingLineNumber = "50"
             landmarkName = "setGameMode(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -62,8 +62,8 @@
             filePath = "WhoseLine/ViewModels/PlayersViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "51"
-            endingLineNumber = "51"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
             landmarkName = "deletePlayer(id:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -78,8 +78,8 @@
             filePath = "WhoseLine/ViewModels/PlayersViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
             landmarkName = "addPlayer(name:theme:)"
             landmarkType = "7">
          </BreakpointContent>

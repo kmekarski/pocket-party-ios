@@ -18,6 +18,7 @@ class DeveloperPreview {
     static let instance = DeveloperPreview()
     
     let playersVM: PlayersViewModel
+    let playersVMWithSetPlayers: PlayersViewModel
     var playerVMs: [GameMode: PlayersViewModel] = [:]
     
     let players = [
@@ -29,6 +30,8 @@ class DeveloperPreview {
     
     private init() {
         self.playersVM = PlayersViewModel()
+        self.playersVMWithSetPlayers = PlayersViewModel()
+        self.playersVMWithSetPlayers.tempPlayers = players
         
         for mode in GameMode.allCases {
             let viewModel = PlayersViewModel()
