@@ -30,6 +30,12 @@ final class PlayersViewModel: ObservableObject {
     @Published var removedPlayers: [Player] = []
     @Published var playersWithPlaces: [PlayerWithPlace] = []
     
+    @Published var teams: [Team] = []
+    @Published var tempTeams: [Team] = []
+    @Published var currentTeam: [Team] = []
+    @Published var teamsQueue: [Team] = []
+    @Published var teamsWithPlaces: [TeamWithPlace] = []
+    
     // Navigation
     @Published var navPath: [String] = []
     
@@ -61,6 +67,16 @@ final class PlayersViewModel: ObservableObject {
     func deletePlayer(id: String) {
         tempPlayers.removeAll { player in
             player.id == id
+        }
+    }
+    
+    func addTeam() {
+        tempTeams.append(Team(id: UUID().uuidString))
+    }
+    
+    func deleteTeam(id: String) {
+        tempTeams.removeAll { team in
+            team.id == id
         }
     }
     
@@ -109,7 +125,7 @@ final class PlayersViewModel: ObservableObject {
     func nextQuestion() {
         guard let gameMode = gameMode else { return }
         switch gameMode {
-        case .neverHaveIEver, .scenesFromAHat:
+        case .scenesFromAHat:
             if currentQuestionIndex < questions.count - 1 {
                 currentQuestionIndex += 1
                 currentQuestion = questions[currentQuestionIndex]
@@ -147,7 +163,7 @@ final class PlayersViewModel: ObservableObject {
         playersQueue = Array(players.suffix(from: gameMode.playersOnScreen))
         
         switch gameMode {
-        case .neverHaveIEver, .scenesFromAHat:
+        case .scenesFromAHat:
             questions.shuffle()
             currentQuestion = questions.first!
         case .truthOrDare:

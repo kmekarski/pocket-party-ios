@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SetPlayersRowView: View {
+struct SetPlayersPlayerView: View {
     @EnvironmentObject var playersVM: PlayersViewModel
     var player: Player
     var body: some View {
@@ -36,7 +36,7 @@ struct SetPlayersRowView: View {
 #Preview {
     return VStack(spacing: 10) {
         ForEach(PlayerTheme.allCases, id: \.self) { theme in
-            SetPlayersRowView(player: Player(id: "1", name: "John", theme: theme, lives: 3))
+            SetPlayersPlayerView(player: Player(id: "1", name: "John", theme: theme, lives: 3))
         }
     }
     .padding()

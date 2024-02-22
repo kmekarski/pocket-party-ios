@@ -29,6 +29,10 @@ class DeveloperPreview {
         Player(id: "4", name: "Sophie", theme: .sportsy, lives: 3)
     ]
     
+    let emptyTeam = Team(id: "1")
+    let halfEmptyTeam = Team(id: "2", player1: Player(id: "1", name: "John", theme: .playful, lives: 3))
+    let fullTeam = Team(id: "3", player1: Player(id: "5", name: "John", theme: .playful, lives: 3), player2: Player(id: "6", name: "Emily", theme: .animal, lives: 3))
+    
     let playersAfterGame = [
         Player(id: "1", name: "John", theme: .playful, lives: 3),
         Player(id: "2", name: "Blake", theme: .dark, lives: 2),

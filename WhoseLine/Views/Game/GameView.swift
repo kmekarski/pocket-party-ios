@@ -63,7 +63,7 @@ extension GameView {
     }
     
     private var gameMode: GameMode {
-        playersVM.gameMode ?? .neverHaveIEver
+        playersVM.gameMode ?? .truthOrDare
     }
     
     private func setNewFoldDirection() {
@@ -81,7 +81,7 @@ extension GameView {
                 .foregroundColor(player.theme.textColor)
                 .font(.system(size: 28, weight: .semibold))
             switch gameMode {
-            case .scenesFromAHat, .truthOrDare, .neverHaveIEver:
+            case .scenesFromAHat, .truthOrDare:
                 heartsDisplay(player: player)
                     .font(.system(size: 26, weight: .semibold))
             case .taboo:
@@ -154,7 +154,7 @@ extension GameView {
                     WideButtonView("\(player.name) out!", size: .big, colorScheme: .primary)
                 })
             )
-        case .neverHaveIEver, .taboo:
+        case .taboo:
             return AnyView(VStack{})
         }
     }
@@ -215,8 +215,6 @@ extension GameView {
                                 .foldTransition(active: folds[1], direction: .right)
                         }
                     }
-                case .neverHaveIEver:
-                    Color.theme.background.ignoresSafeArea()
                 case .taboo:
                     HStack(spacing: 0) {
                         ZStack {
@@ -330,17 +328,6 @@ extension GameView {
                         .gameQuestionCard(.top)
                         .foldTransition(active: folds[0], direction: foldDirection)
                 }
-            case .neverHaveIEver:
-                AnyView(
-                    VStack{
-                        Text("\(playersVM.currentQuestionIndex+1) / \(playersVM.questions.count)")
-                            .font(.system(size: 16, weight: .bold))
-                        Text(playersVM.currentQuestion)
-                            .font(.system(size: 24,weight: .semibold))
-                            .frame(maxHeight: .infinity)
-                    }
-                        .gameQuestionCard(.top)
-                )
             case .taboo:
                 AnyView(
                     ZStack {
@@ -401,15 +388,6 @@ extension GameView {
         switch(gameMode) {
         case .scenesFromAHat:
             return AnyView(ZStack{})
-        case .neverHaveIEver:
-            return AnyView(ZStack {
-                ForEach(0..<playersVM.questions.count - playersVM.currentQuestionIndex, id: \.self) { index in
-                    Rectangle()
-                        .gameQuestionCard(.background)
-                        .rotationEffect(Angle(degrees: log2(Double(index)) + 2))
-                        .offset(x: 1)
-                }
-            })
         case .truthOrDare:
             return AnyView(ZStack {
                 ForEach(0..<playersVM.truthOrDareQuestions.count - playersVM.currentQuestionIndex, id: \.self) { index in

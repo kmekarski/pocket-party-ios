@@ -20,15 +20,13 @@ struct SetPlayersView: View {
                 Color.theme.background.ignoresSafeArea()
                 VStack {
                     header
-                    if !playersVM.tempPlayers.isEmpty {
-                        playersList
-                    }
+                    playersList
                     Spacer()
                     startButton
                 }
                 .padding()
                 .padding(.horizontal)
-                if playersVM.tempPlayers.count < gameMode.minimumPlayers {
+                if collectionCount < gameMode.minimumPlayers {
                     tooFewPlayersInfo
                 }
                 ModalView(isShowing: $showAddPlayerModel, title: "New player", height: 210, content: {
@@ -40,9 +38,18 @@ struct SetPlayersView: View {
     }
 }
 
-#Preview {
+#Preview("Truth or Dare") {
     let playersVM = PlayersViewModel()
-    playersVM.gameMode = .neverHaveIEver
+    playersVM.gameMode = .truthOrDare
+    return NavigationStack {
+        SetPlayersView()
+    }
+    .environmentObject(playersVM)
+}
+
+#Preview("Taboo") {
+    let playersVM = PlayersViewModel()
+    playersVM.gameMode = .taboo
     return NavigationStack {
         SetPlayersView()
     }
@@ -50,6 +57,19 @@ struct SetPlayersView: View {
 }
 
 extension SetPlayersView {
+    private var gameMode: GameMode {
+        return playersVM.gameMode ?? .truthOrDare
+    }
+    
+    private var collectionCount: Int {
+        switch gameMode.setBeforeGame {
+        case .players:
+            playersVM.tempPlayers.count
+        case .teams:
+            playersVM.tempTeams.count
+        }
+    }
+    
     private var playerIsValid: Bool {
         return !newPlayerName.isEmpty && selectedThemeIndex != nil
     }
@@ -62,7 +82,7 @@ extension SetPlayersView {
                 IconButtonView("arrow.left")
             }
             Spacer()
-            Text("Players")
+            Text(gameMode.setBeforeGame.rawValue.capitalized)
                 .viewTitle()
             Spacer()
             Button {
@@ -76,9 +96,17 @@ extension SetPlayersView {
     private var playersList: some View {
         ScrollView {
             VStack(spacing: 12) {
-                ForEach(playersVM.tempPlayers) { player in
-                    SetPlayersRowView(player: player)
+                switch gameMode.setBeforeGame {
+                case .players:
+                    ForEach(playersVM.tempPlayers) { player in
+                        SetPlayersPlayerView(player: player)
+                    }
+                case.teams:
+                    ForEach(playersVM.tempTeams.indices, id: \.self) { index in
+                        SetPlayersTeamView(team: playersVM.tempTeams[index], teamIndex: index)
+                    }
                 }
+                
             }
             .padding(.horizontal)
         }
@@ -86,14 +114,19 @@ extension SetPlayersView {
     }
     
     private var tooFewPlayersInfo: some View {
-        VStack {
+        return VStack {
             if let gameMode = playersVM.gameMode {
                 Spacer()
-                Text(playersVM.tempPlayers.count == 0 ?  "No players set to play" : "We need \(gameMode.minimumPlayers) or more players")
+                Text(collectionCount == 0 ?  "No \(gameMode.setBeforeGame.rawValue) set to play" : "We need \(gameMode.minimumPlayers) or more \(gameMode.setBeforeGame.rawValue)")
                     .font(.system(size: 24))
                     .padding(.bottom, 4)
                 Button(action: {
-                    showAddPlayerModel = true
+                    switch gameMode.setBeforeGame {
+                    case .players:
+                        showAddPlayerModel = true
+                    case .teams:
+                        playersVM.addTeam()
+                    }
                 }, label: {
                     Text("Let's add some!")
                         .font(.system(size: 28, weight: .semibold))

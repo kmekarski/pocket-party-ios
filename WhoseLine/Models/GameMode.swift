@@ -17,22 +17,24 @@ struct TabooQuestion {
     let forbiddenWords: [String]
 }
 
+enum SetBeforeGame: String {
+    case players
+    case teams
+}
+
 enum GameMode: String, CaseIterable {
     case scenesFromAHat
     case truthOrDare
-    case neverHaveIEver
     case taboo
     
     var minimumPlayers: Int {
         switch self {
         case .scenesFromAHat:
             return 3
-        case .neverHaveIEver:
-            return 2
         case .truthOrDare:
             return 2
         case .taboo:
-            return 4
+            return 2
         }
     }
     
@@ -40,8 +42,6 @@ enum GameMode: String, CaseIterable {
         switch self {
         case .scenesFromAHat:
             return 2
-        case .neverHaveIEver:
-            return 1
         case .truthOrDare:
             return 1
         case .taboo:
@@ -49,12 +49,19 @@ enum GameMode: String, CaseIterable {
         }
     }
     
+    var setBeforeGame: SetBeforeGame {
+        switch self {
+        case .scenesFromAHat, .truthOrDare:
+            return .players
+        case .taboo:
+            return .teams
+        }
+    }
+    
     var title: String {
         switch self {
         case .scenesFromAHat:
             return "Scenes From a Hat"
-        case .neverHaveIEver:
-            return "Never Have I Ever"
         case .truthOrDare:
             return "Truth or Dare"
         case .taboo:
@@ -66,8 +73,6 @@ enum GameMode: String, CaseIterable {
         switch self {
         case .scenesFromAHat:
             return "Classic improvisation game"
-        case .neverHaveIEver:
-            return "Past adventures revealed"
         case .truthOrDare:
             return "Everyone has played this one"
         case .taboo:
@@ -79,10 +84,8 @@ enum GameMode: String, CaseIterable {
         switch self {
         case .scenesFromAHat:
             return "theatermasks.fill"
-        case .neverHaveIEver:
-            return "eyes.inverse"
         case .truthOrDare:
-            return "mouth.fill"
+            return "eyes.inverse"
         case .taboo:
             return "mouth.fill"
         }
@@ -92,8 +95,6 @@ enum GameMode: String, CaseIterable {
         switch self {
         case .scenesFromAHat:
             return "Scenes From a Hat is a game where players improvise scenes based on suggestions written on slips of paper."
-        case .neverHaveIEver:
-            return "Never Have I Ever is a game where players take turns admitting things they have never done."
         case .truthOrDare:
             return "Truth or Dare is a classic party game where players take turns choosing between answering a truth question or completing a dare."
         case .taboo:
@@ -102,7 +103,7 @@ enum GameMode: String, CaseIterable {
     }
     var truthOrDareQuestions: [TruthOrDareQuestion] {
         switch self {
-        case .scenesFromAHat, .neverHaveIEver:
+        case .scenesFromAHat:
             return []
         case .truthOrDare:
             return [
@@ -121,7 +122,7 @@ enum GameMode: String, CaseIterable {
     
     var tabooQuestions: [TabooQuestion] {
         switch self {
-        case .scenesFromAHat, .neverHaveIEver, .truthOrDare:
+        case .scenesFromAHat, .truthOrDare:
             return []
         case .taboo:
             return [
@@ -156,14 +157,6 @@ enum GameMode: String, CaseIterable {
                 "Scene 3",
                 "Scene 4",
                 "Scene 5"
-            ]
-        case .neverHaveIEver:
-            return [
-                "Question 1",
-                "Question 2",
-                "Question 3",
-                "Question 4",
-                "Question 5"
             ]
         case .truthOrDare:
             return []

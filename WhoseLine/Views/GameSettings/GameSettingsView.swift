@@ -30,9 +30,9 @@ struct GameSettingsView: View {
     }
 }
 
-#Preview("Never Have I Ever") {
+#Preview("Taboo") {
     NavigationStack {
-        GameSettingsView(gameMode: .neverHaveIEver)
+        GameSettingsView(gameMode: .taboo)
             .environmentObject(PlayersViewModel())
     }
 }
