@@ -16,7 +16,7 @@ struct GameSettingsView: View {
             VStack {
                 header
                 Spacer()
-                Text(gameMode.title)
+                Text("Minimum number of players: \(minimumNumberOfPlayers)")
                 Spacer()
                 nextButton
             }
@@ -60,10 +60,19 @@ extension GameSettingsView {
                 IconButtonView("arrow.left")
             }
             Spacer()
-            Text("Game Settings")
+            Text(gameMode.title)
                 .viewTitle()
             Spacer()
             IconButtonView("plus").opacity(0)
+        }
+    }
+    
+    private var minimumNumberOfPlayers: Int {
+        switch gameMode.setBeforeGame {
+        case .players:
+            return gameMode.minimumPlayers
+        case .teams:
+            return gameMode.minimumPlayers * 2
         }
     }
     

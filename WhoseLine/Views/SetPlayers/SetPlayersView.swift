@@ -14,6 +14,8 @@ struct SetPlayersView: View {
     @State var showAddPlayerModel: Bool = false
     @State var newPlayerName: String = ""
     @State var selectedThemeIndex: Int?
+    @State var selectedTeamIndex: Int?
+    @State var selectedPlayerInTeamIndex: Int?
     var body: some View {
         ZStack {
             if let gameMode = playersVM.gameMode {
@@ -70,8 +72,20 @@ extension SetPlayersView {
         }
     }
     
-    private var playerIsValid: Bool {
+    private var isPlayerValid: Bool {
         return !newPlayerName.isEmpty && selectedThemeIndex != nil
+    }
+    
+    private var isEverythingValid: Bool {
+        switch gameMode.setBeforeGame {
+        case .players:
+            return collectionCount >= gameMode.minimumPlayers
+        case .teams:
+            let allTeamsValid = playersVM.tempTeams.allSatisfy { team in
+                team.valid
+            }
+            return collectionCount >= gameMode.minimumPlayers && allTeamsValid
+        }
     }
     
     private var header: some View {
@@ -86,7 +100,12 @@ extension SetPlayersView {
                 .viewTitle()
             Spacer()
             Button {
-                showAddPlayerModel = true
+                switch gameMode.setBeforeGame {
+                case .players:
+                    showAddPlayerModel = true
+                case .teams:
+                    playersVM.addTeam()
+                }
             } label: {
                 IconButtonView("plus")
             }
@@ -103,7 +122,12 @@ extension SetPlayersView {
                     }
                 case.teams:
                     ForEach(playersVM.tempTeams.indices, id: \.self) { index in
-                        SetPlayersTeamView(team: playersVM.tempTeams[index], teamIndex: index)
+                        SetPlayersTeamView(selectedPlayerInTeamIndex: $selectedPlayerInTeamIndex, team: playersVM.tempTeams[index], teamIndex: index) {
+                            showAddPlayerModel = true
+                            selectedTeamIndex = index
+                        } onXTap: {
+                            playersVM.deleteTeam(id: playersVM.tempTeams[index].id)
+                        }
                     }
                 }
                 
@@ -140,9 +164,9 @@ extension SetPlayersView {
         VStack {
             if let gameMode = playersVM.gameMode {
                 NavigationLink(value: "game") {
-                    WideButtonView("Start Game", disabled: playersVM.tempPlayers.count < gameMode.minimumPlayers, size: .big, colorScheme: .primary)
+                    WideButtonView("Start Game", disabled: !isEverythingValid, size: .big, colorScheme: .primary)
                 }
-                .disabled(playersVM.tempPlayers.count < gameMode.minimumPlayers)
+                .disabled(!isEverythingValid)
             }
         }
     }
@@ -154,13 +178,24 @@ extension SetPlayersView {
             emojiPicker
             Spacer()
             Button(action: {
-                guard playerIsValid else { return }
-                playersVM.addPlayer(name: newPlayerName, theme: PlayerTheme.allCases[selectedThemeIndex!])
+                guard isPlayerValid else { return }
+                let newPlayerTheme = PlayerTheme.allCases[selectedThemeIndex!]
+                switch gameMode.setBeforeGame {
+                case .players:
+                    playersVM.addPlayer(name: newPlayerName, theme: newPlayerTheme)
+                    print(playersVM.tempPlayers)
+                case .teams:
+                    guard let selectedTeamIndex = selectedTeamIndex,
+                          let selectedPlayerInTeamIndex = selectedPlayerInTeamIndex else { return }
+                    playersVM.addPlayerInTeam(teamIndex: selectedTeamIndex, playerInTeamIndex: selectedPlayerInTeamIndex, name: newPlayerName, theme: newPlayerTheme)
+                }
                 newPlayerName = ""
                 selectedThemeIndex = nil
+                self.selectedTeamIndex = nil
+                self.selectedPlayerInTeamIndex = nil
                 showAddPlayerModel = false
             }, label: {
-                WideButtonView("Add", disabled: !playerIsValid, colorScheme: .primary)
+                WideButtonView("Add", disabled: !isPlayerValid, colorScheme: .primary)
             })
         }
     }

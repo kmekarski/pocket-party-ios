@@ -49,7 +49,7 @@ final class PlayersViewModel: ObservableObject {
     
     // Timer
     private lazy var timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in self.timeElapsed += 1
-        if self.timeElapsed == self.tabooRoundTime + 1 {
+        if self.timeElapsed == self.tabooRoundTime {
             // Time is up
             self.nextTabooPair()
         }
@@ -77,6 +77,29 @@ final class PlayersViewModel: ObservableObject {
     func deleteTeam(id: String) {
         tempTeams.removeAll { team in
             team.id == id
+        }
+    }
+    
+    func addPlayerInTeam(teamIndex: Int, playerInTeamIndex: Int, name: String, theme: PlayerTheme) {
+        let newPlayer = Player(id: UUID().uuidString, name: name, theme: theme, lives: 3)
+        if playerInTeamIndex == 0 {
+            tempTeams[teamIndex].player1 = newPlayer
+        }
+        if playerInTeamIndex == 1 {
+            tempTeams[teamIndex].player2 = newPlayer
+        }
+    }
+    
+    func deletePlayerInTeam(id: String) {
+        for (index, team) in tempTeams.enumerated() {
+            if team.player1?.id == id {
+                tempTeams[index].player1 = nil
+                break
+            }
+            if team.player2?.id == id {
+                tempTeams[index].player2 = nil
+                break
+            }
         }
     }
     

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SetPlayersPlayerView: View {
     @EnvironmentObject var playersVM: PlayersViewModel
+    var onXTap: () -> () = {}
     var player: Player
     var body: some View {
         HStack {
@@ -19,6 +20,7 @@ struct SetPlayersPlayerView: View {
             Spacer()
             Button(action: {
                 playersVM.deletePlayer(id: player.id)
+                onXTap()
             }, label: {
                 IconButtonView("xmark", color: player.theme.textColor, size: .small)
                     .fontWeight(.semibold)

@@ -91,6 +91,7 @@ extension GameView {
                     .padding(.top, 8)
             }
         }
+        .offset(y: 30)
     }
     
     private func bottomButtons(player: Player, playerNumber: Int) -> some View {
@@ -244,7 +245,7 @@ extension GameView {
     }
     
     private var header: some View {
-        HStack {
+        HStack(alignment: .top) {
             Button {
                 playersVM.goToMainMenu()
             } label: {

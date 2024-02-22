@@ -9,8 +9,11 @@ import SwiftUI
 
 struct SetPlayersTeamView: View {
     @EnvironmentObject var playersVM: PlayersViewModel
+    @Binding var selectedPlayerInTeamIndex: Int?
     var team: Team
     var teamIndex: Int
+    var onPlusTap: () -> ()
+    var onXTap: () -> ()
     var body: some View {
         VStack {
             HStack {
@@ -29,14 +32,16 @@ struct SetPlayersTeamView: View {
             .padding(.vertical, 8)
             VStack(spacing: 12) {
                 if let player1 = team.player1 {
-                    SetPlayersPlayerView(player: player1)
+                    SetPlayersPlayerView(onXTap: { playersVM.deletePlayerInTeam(id: player1.id)
+                    }, player: player1)
                 } else {
-                    emptyPlayer
+                    emptyPlayer(playerInTeamIndex: 0)
                 }
                 if let player2 = team.player2 {
-                    SetPlayersPlayerView(player: player2)
+                    SetPlayersPlayerView(onXTap: { playersVM.deletePlayerInTeam(id: player2.id)
+                    }, player: player2)
                 } else {
-                    emptyPlayer
+                    emptyPlayer(playerInTeamIndex: 1)
                 }
             }
         }
@@ -48,9 +53,9 @@ struct SetPlayersTeamView_Previews: PreviewProvider {
         ZStack {
             Color.theme.background.ignoresSafeArea()
             VStack(spacing: 20) {
-                SetPlayersTeamView(team: dev.fullTeam, teamIndex: 0)
-                SetPlayersTeamView(team: dev.halfEmptyTeam, teamIndex: 1)
-                SetPlayersTeamView(team: dev.emptyTeam, teamIndex: 2)
+                SetPlayersTeamView(selectedPlayerInTeamIndex: .constant(0), team: dev.fullTeam, teamIndex: 0) {} onXTap: {}
+                SetPlayersTeamView(selectedPlayerInTeamIndex: .constant(0), team: dev.halfEmptyTeam, teamIndex: 0) {} onXTap: {}
+                SetPlayersTeamView(selectedPlayerInTeamIndex: .constant(0), team: dev.emptyTeam, teamIndex: 0) {} onXTap: {}
             }
             .padding()
             .environmentObject(dev.playersVM)
@@ -59,10 +64,14 @@ struct SetPlayersTeamView_Previews: PreviewProvider {
 }
 
 extension SetPlayersTeamView {
-    private var emptyPlayer: some View {
+    private func emptyPlayer(playerInTeamIndex: Int) -> some View {
         HStack {
             Image(systemName: "plus")
             Text("Add player")
+        }
+        .onTapGesture {
+            onPlusTap()
+            selectedPlayerInTeamIndex = playerInTeamIndex
         }
         .font(.system(size: 20, weight: .semibold))
         .padding(.vertical)
