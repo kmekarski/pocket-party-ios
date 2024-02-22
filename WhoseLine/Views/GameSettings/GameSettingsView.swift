@@ -16,7 +16,10 @@ struct GameSettingsView: View {
             VStack {
                 header
                 Spacer()
+                Text(gameMode.rulesDescription)
+                    .padding(.bottom)
                 Text("Minimum number of players: \(minimumNumberOfPlayers)")
+                settings
                 Spacer()
                 nextButton
             }
@@ -73,6 +76,27 @@ extension GameSettingsView {
             return gameMode.minimumPlayers
         case .teams:
             return gameMode.minimumPlayers * 2
+        }
+    }
+    
+    private var settings: some View {
+        VStack {
+            switch gameMode {
+            case .scenesFromAHat:
+                VStack {
+                    Text("Lives: 1, 2, 3")
+                }
+            case .truthOrDare:
+                VStack {
+                    Text("Number of cards: 10, 15, 20")
+                    Text("Lives: 1, 2, 3")
+                }
+            case .taboo:
+                VStack {
+                    Text("Number of rounds: 1, 2, 3")
+                    Text("Time of round: 20, 30, 40")
+                }
+            }
         }
     }
     

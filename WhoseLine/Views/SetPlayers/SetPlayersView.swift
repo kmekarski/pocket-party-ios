@@ -9,7 +9,6 @@ import SwiftUI
 
 struct SetPlayersView: View {
     @Environment(\.presentationMode) var presentationMode
-//    @Binding var path: [String]
     @EnvironmentObject var playersVM: PlayersViewModel
     @State var showAddPlayerModel: Bool = false
     @State var newPlayerName: String = ""
@@ -172,10 +171,13 @@ extension SetPlayersView {
     }
     
     private var addPlayerModalContent: some View {
-        VStack {
+        let emojis = PlayerTheme.allCases.map { theme in
+            theme.emoji
+        }
+        return VStack {
             RegularTextFieldView(title: "Name:", text: $newPlayerName)
             Divider()
-            emojiPicker
+            CustomPickerView(collection: emojis, selectedIndex: $selectedThemeIndex)
             Spacer()
             Button(action: {
                 guard isPlayerValid else { return }

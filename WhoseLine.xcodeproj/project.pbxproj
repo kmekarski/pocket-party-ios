@@ -20,6 +20,7 @@
 		A7138D2D2B7B8EE00031B709 /* WideButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7138D2C2B7B8EE00031B709 /* WideButtonView.swift */; };
 		A7138D2F2B7B902A0031B709 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7138D2E2B7B902A0031B709 /* Color.swift */; };
 		A7138D312B7B938B0031B709 /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7138D302B7B938B0031B709 /* GameView.swift */; };
+		A744A5BA2B8784A10028F1CE /* CustomPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A744A5B92B8784A10028F1CE /* CustomPickerView.swift */; };
 		A74A325C2B81814700438E8C /* SettingsModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A325B2B81814700438E8C /* SettingsModalView.swift */; };
 		A74A325E2B8182B500438E8C /* LanguagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A325D2B8182B500438E8C /* LanguagePickerView.swift */; };
 		A74A32612B823A2700438E8C /* GameInfoModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74A32602B823A2700438E8C /* GameInfoModalView.swift */; };
@@ -67,6 +68,7 @@
 		A7138D2C2B7B8EE00031B709 /* WideButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WideButtonView.swift; sourceTree = "<group>"; };
 		A7138D2E2B7B902A0031B709 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		A7138D302B7B938B0031B709 /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
+		A744A5B92B8784A10028F1CE /* CustomPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPickerView.swift; sourceTree = "<group>"; };
 		A74A325B2B81814700438E8C /* SettingsModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModalView.swift; sourceTree = "<group>"; };
 		A74A325D2B8182B500438E8C /* LanguagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagePickerView.swift; sourceTree = "<group>"; };
 		A74A32602B823A2700438E8C /* GameInfoModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameInfoModalView.swift; sourceTree = "<group>"; };
@@ -237,6 +239,7 @@
 		A7138D2A2B7B8ED10031B709 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				A744A5B82B8784900028F1CE /* Other */,
 				A76BDF6E2B84F74A00019FA4 /* Shapes */,
 				A74A32802B82895C00438E8C /* ViewModifiers */,
 				A74A32772B82738200438E8C /* TextFields */,
@@ -253,6 +256,14 @@
 				A704D3FE2B7F88D20005F8A5 /* IconButtonView.swift */,
 			);
 			path = Buttons;
+			sourceTree = "<group>";
+		};
+		A744A5B82B8784900028F1CE /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				A744A5B92B8784A10028F1CE /* CustomPickerView.swift */,
+			);
+			path = Other;
 			sourceTree = "<group>";
 		};
 		A74A325F2B823A1400438E8C /* Game */ = {
@@ -410,6 +421,7 @@
 				A76BDF7C2B861FAC00019FA4 /* TruthOrDarePickedState.swift in Sources */,
 				A76BDF702B84F75600019FA4 /* Trapezoid.swift in Sources */,
 				A74A32882B82CC2F00438E8C /* GameMode.swift in Sources */,
+				A744A5BA2B8784A10028F1CE /* CustomPickerView.swift in Sources */,
 				A76BDF832B86642A00019FA4 /* GameSettingsView.swift in Sources */,
 				A74A32862B82BA2200438E8C /* PlayerTheme.swift in Sources */,
 				A76BDF762B860EC600019FA4 /* GameQuestionModifier.swift in Sources */,

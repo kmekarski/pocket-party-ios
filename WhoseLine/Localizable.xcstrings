@@ -30,13 +30,16 @@
     "%lld." : {
 
     },
+    "Add player" : {
+
+    },
     "App language:" : {
 
     },
     "Game over!" : {
 
     },
-    "Game Settings" : {
+    "Guesser" : {
 
     },
     "Hello, world!" : {
@@ -59,13 +62,22 @@
     "Let's add some!" : {
 
     },
-    "No players set to play" : {
+    "Lives: 1, 2, 3" : {
+
+    },
+    "Minimum number of players: %lld" : {
+
+    },
+    "No %@ set to play" : {
+
+    },
+    "Number of cards: 10, 15, 20" : {
+
+    },
+    "Number of rounds: 1, 2, 3" : {
 
     },
     "or" : {
-
-    },
-    "Players" : {
 
     },
     "Scenes From a Hat" : {
@@ -74,11 +86,27 @@
     "Settings" : {
 
     },
+    "Speaker" : {
+
+    },
+    "TEAM %lld" : {
+
+    },
     "The rules are simple. Blahblahblah blhablhjhqskjdb asdjbasdkjasbf askjfbask jfbasfj" : {
 
     },
-    "We need %lld or more players" : {
+    "Time of round: 20, 30, 40" : {
 
+    },
+    "We need %lld or more %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "We need %1$lld or more %2$@"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

@@ -76,7 +76,7 @@ enum GameMode: String, CaseIterable {
         case .truthOrDare:
             return "Everyone has played this one"
         case .taboo:
-            return "Taboo subtitle"
+            return "Guess it, but don't say it!"
         }
     }
     
@@ -98,7 +98,7 @@ enum GameMode: String, CaseIterable {
         case .truthOrDare:
             return "Truth or Dare is a classic party game where players take turns choosing between answering a truth question or completing a dare."
         case .taboo:
-            return "Taboo rules description"
+            return "Taboo is a word guessing game where players provide clues to their teammates without saying certain 'taboo' words."
         }
     }
     var truthOrDareQuestions: [TruthOrDareQuestion] {
