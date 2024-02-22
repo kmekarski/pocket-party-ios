@@ -10,6 +10,10 @@ import SwiftUI
 struct GameSettingsView: View {
     @EnvironmentObject var playersVM: PlayersViewModel
     var gameMode: GameMode
+    @State var numberOfLivesOptionIndex: Int? = 2
+    @State var numberOfCardsOptionIndex: Int? = 2
+    @State var numberOfRoundsOptionIndex: Int? = 0
+    @State var timeOfRoundOptionIndex: Int? = 1
     var body: some View {
         ZStack {
             Color.theme.background.ignoresSafeArea()
@@ -83,18 +87,38 @@ extension GameSettingsView {
         VStack {
             switch gameMode {
             case .scenesFromAHat:
+                let livesOptions = ["1", "2", "3"]
                 VStack {
-                    Text("Lives: 1, 2, 3")
+                    HStack {
+                        Text("Number of lives: ")
+                        CustomPickerView(collection:                     livesOptions, selectedIndex: $numberOfLivesOptionIndex)
+                    }
                 }
             case .truthOrDare:
+                let numberOfCardsOptions = ["10", "15", "20"]
+                let livesOptions = ["1", "2", "3"]
                 VStack {
-                    Text("Number of cards: 10, 15, 20")
-                    Text("Lives: 1, 2, 3")
+                    HStack {
+                        Text("Number of cards: ")
+                        CustomPickerView(collection:                     numberOfCardsOptions, selectedIndex: $numberOfCardsOptionIndex)
+                    }
+                    HStack {
+                        Text("Number of lives: ")
+                        CustomPickerView(collection:                     livesOptions, selectedIndex: $numberOfLivesOptionIndex)
+                    }
                 }
             case .taboo:
+                let numberOfRoundsOptions = ["1", "2", "3"]
+                let timeOfRoundOptions = ["20", "30", "40"]
                 VStack {
-                    Text("Number of rounds: 1, 2, 3")
-                    Text("Time of round: 20, 30, 40")
+                    HStack {
+                        Text("Number of rounds: ")
+                        CustomPickerView(collection:                     numberOfRoundsOptions, selectedIndex: $numberOfRoundsOptionIndex)
+                    }
+                    HStack {
+                        Text("Time of round: ")
+                        CustomPickerView(collection:                     timeOfRoundOptions, selectedIndex: $timeOfRoundOptionIndex)
+                    }
                 }
             }
         }
