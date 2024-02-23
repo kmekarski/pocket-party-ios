@@ -30,7 +30,7 @@ struct SetPlayersView: View {
                 if collectionCount < gameMode.minimumPlayers {
                     tooFewPlayersInfo
                 }
-                ModalView(isShowing: $showAddPlayerModel, title: "New player", height: 210, content: {
+                ModalView(isShowing: $showAddPlayerModel, title: "New player", content: {
                     addPlayerModalContent
                 })
             }
@@ -176,9 +176,9 @@ extension SetPlayersView {
         }
         return VStack {
             RegularTextFieldView(title: "Name:", text: $newPlayerName)
-            Divider()
+                .padding(.top, 6)
             CustomPickerView(collection: emojis, selectedItem: $selectedTheme)
-            Spacer()
+                .frame(height: 64)
             Button(action: {
                 guard isPlayerValid,
                       let newPlayerTheme = PlayerTheme.allCases.first(where: { theme in

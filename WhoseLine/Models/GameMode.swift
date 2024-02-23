@@ -58,6 +58,15 @@ enum GameMode: String, CaseIterable {
         }
     }
     
+    var hasPoints: Bool {
+        switch self {
+        case .scenesFromAHat, .truthOrDare:
+            false
+        case .taboo:
+            true
+        }
+    }
+    
     var title: String {
         switch self {
         case .scenesFromAHat:

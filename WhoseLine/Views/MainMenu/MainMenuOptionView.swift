@@ -29,6 +29,7 @@ struct MainMenuOptionView: View {
                 .foregroundColor(foregroundColor)
                 .font(.system(size: 22, weight: .regular))
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .multilineTextAlignment(.leading)
         }
         .padding(28)
         .background(backgroundColor)

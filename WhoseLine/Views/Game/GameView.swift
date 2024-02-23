@@ -17,23 +17,27 @@ struct GameView: View {
     @State var showSkipAnswerButtons: Bool = false
     var body: some View {
         ZStack {
-            if let gameMode = playersVM.gameMode,
-               currentPlayers.count >= gameMode.playersOnScreen {
+            if let gameMode = playersVM.gameMode {
                 background
                 VStack {
                     header
                     Spacer()
                     question
-                    Spacer()
-                    if gameMode == .taboo {
+                    if gameMode.hasPoints {
+                        pointsDisplay
+                    }
+                    
+                    switch gameMode {
+                    case .scenesFromAHat, .truthOrDare:
+                        Spacer()
+                    case .taboo:
                         tabooButtons
                     }
                 }
             }
             GameInfoModalView(isShowing: $showInfo, title: gameMode.title, description: gameMode.rulesDescription)
-            if gameMode == .taboo && playersVM.isShowingNextTeamBoard {
-                nextTeamBoard
-            }
+            
+            NextTeamBoardView()
         }
         .navigationBarBackButtonHidden(true)
         .onAppear() {
@@ -61,6 +65,14 @@ extension GameView {
         playersVM.currentPlayers
     }
     
+    private var teams: [Team] {
+        playersVM.teams
+    }
+    
+    private var currentTeam: Team? {
+        playersVM.currentTeam
+    }
+    
     private var playersQueue: [Player] {
         playersVM.playersQueue
     }
@@ -80,9 +92,16 @@ extension GameView {
     
     private func playerTitle(player: Player, playerNumber: Int) -> some View {
         VStack(spacing: 6) {
-            Text(player.name + " " + player.theme.emoji)
-                .foregroundColor(player.theme.textColor)
-                .font(.system(size: 28, weight: .semibold))
+            switch gameMode {
+            case .scenesFromAHat, .taboo:
+                Text(player.name)
+                    .foregroundColor(player.theme.textColor)
+                    .font(.system(size: 24, weight: .semibold))
+            case .truthOrDare:
+                Text(player.name + " " + player.theme.emoji)
+                    .foregroundColor(player.theme.textColor)
+                    .font(.system(size: 28, weight: .semibold))
+            }
             switch gameMode {
             case .scenesFromAHat, .truthOrDare:
                 heartsDisplay(player: player)
@@ -91,7 +110,6 @@ extension GameView {
                 Text(playerNumber == 0 ? "Speaker" : "Guesser")
                     .foregroundColor(player.theme.textColor)
                     .font(.system(size: 20, weight: .regular))
-                    .padding(.top, 8)
             }
         }
         .offset(y: 30)
@@ -137,7 +155,9 @@ extension GameView {
                             WideButtonView("Skip", size: .big, colorScheme: .primary)
                         })
                     }
-                })
+                }
+                    .padding(.bottom)
+            )
             
         case .scenesFromAHat:
             return AnyView(
@@ -157,6 +177,7 @@ extension GameView {
                 }, label: {
                     WideButtonView("\(player.name) out!", size: .big, colorScheme: .primary)
                 })
+                .padding(.bottom)
             )
         case .taboo:
             return AnyView(VStack{})
@@ -183,17 +204,35 @@ extension GameView {
         }
     }
     
+    private func playerCard(player: Player, playerNumber: Int) -> some View {
+        ZStack {
+            player.theme.color.ignoresSafeArea()
+            VStack {
+                playerTitle(player: player, playerNumber: playerNumber)
+                Spacer()
+                bottomButtons(player: player, playerNumber: playerNumber)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.top, 150)
+            .padding(.horizontal, 24)
+            .padding(.bottom, 32)
+            .ignoresSafeArea()
+        }
+    }
+    
     private var background: some View {
         ZStack {
             if let gameMode = playersVM.gameMode {
                 switch gameMode {
                 case .truthOrDare:
                     ZStack {
-                        ForEach(playersQueue.reversed()) { player in
-                            playerCard(playerId: player.id, playerNumber: 0)
+                        if currentPlayers.count > 0 {
+                            ForEach(playersQueue.reversed()) { player in
+                                playerCard(playerId: player.id, playerNumber: 0)
+                            }
+                            playerCard(playerId: currentPlayers[0].id, playerNumber: 0)
+                                .foldTransition(active: folds[0], direction: foldDirection)
                         }
-                        playerCard(playerId: currentPlayers[0].id, playerNumber: 0)
-                            .foldTransition(active: folds[0], direction: foldDirection)
                     }
                     
                 case .scenesFromAHat:
@@ -201,45 +240,36 @@ extension GameView {
                         ZStack {
                             if currentPlayers.count >= 2 {
                                 currentPlayers[1].theme.color.ignoresSafeArea()
+                                ForEach(playersQueue.reversed()) { player in
+                                    playerCard(playerId: player.id, playerNumber: 0)
+                                }
+                                playerCard(playerId: currentPlayers[0].id, playerNumber: 0)
+                                    .foldTransition(active: folds[0], direction: .left)
                             }
-                            ForEach(playersQueue.reversed()) { player in
-                                playerCard(playerId: player.id, playerNumber: 0)
-                            }
-                            playerCard(playerId: currentPlayers[0].id, playerNumber: 0)
-                                .foldTransition(active: folds[0], direction: .left)
                         }
                         ZStack {
-                            if currentPlayers.count >= 1 {
+                            if currentPlayers.count >= 2 {
                                 currentPlayers[0].theme.color.ignoresSafeArea()
+                                ForEach(playersQueue.reversed()) { player in
+                                    playerCard(playerId: player.id, playerNumber: 1)
+                                }
+                                playerCard(playerId: currentPlayers[1].id, playerNumber: 1)
+                                    .foldTransition(active: folds[1], direction: .right)
                             }
-                            ForEach(playersQueue.reversed()) { player in
-                                playerCard(playerId: player.id, playerNumber: 1)
-                            }
-                            playerCard(playerId: currentPlayers[1].id, playerNumber: 1)
-                                .foldTransition(active: folds[1], direction: .right)
                         }
                     }
                 case .taboo:
                     HStack(spacing: 0) {
-                        ZStack {
-                            if currentPlayers.count >= 2 {
-                                currentPlayers[1].theme.color.ignoresSafeArea()
+                        if let player1 = currentTeam?.player1,
+                           let player2 = currentTeam?.player2 {
+                            ZStack {
+                                player1.theme.color.ignoresSafeArea()
+                                playerCard(player: player1, playerNumber: 0)
                             }
-                            ForEach(playersQueue.reversed()) { player in
-                                playerCard(playerId: player.id, playerNumber: 0)
+                            ZStack {
+                                player2.theme.color.ignoresSafeArea()
+                                playerCard(player: player2, playerNumber: 1)
                             }
-                            playerCard(playerId: currentPlayers[0].id, playerNumber: 0)
-                                .foldTransition(active: folds[0], direction: .left)
-                        }
-                        ZStack {
-                            if currentPlayers.count >= 1 {
-                                currentPlayers[0].theme.color.ignoresSafeArea()
-                            }
-                            ForEach(playersQueue.reversed()) { player in
-                                playerCard(playerId: player.id, playerNumber: 1)
-                            }
-                            playerCard(playerId: currentPlayers[1].id, playerNumber: 1)
-                                .foldTransition(active: folds[1], direction: .right)
                         }
                     }
                 }
@@ -426,11 +456,30 @@ extension GameView {
             .customShadow(.subtleDownShadow)
     }
     
+    private var pointsDisplay: some View {
+        VStack {
+            if let currentTeam = currentTeam {
+                Text("Points: \(currentTeam.points)")
+                    .foregroundColor(.white)
+                    .font(.system(size: 22, weight: .semibold))
+                    .padding()
+                    .frame(width: 120)
+                    .background(Color.theme.accent)
+                    .cornerRadius(12)
+                    .padding(40)
+                    .customShadow(.subtleDownShadow)
+            }
+        }
+    }
+    
     private var tabooButtons: some View {
         HStack(spacing: 48) {
             Button(action: {
                 foldDirection = .left
                 swipeCard()
+                if let currentTeam = currentTeam {
+                    playersVM.givePointToTeam(teamId: currentTeam.id)
+                }
             }, label: {
                 WideButtonView("Correct", size: .big, colorScheme: .primary)
             })
@@ -442,21 +491,7 @@ extension GameView {
             })
         }
         .padding(.horizontal, 24)
-    }
-    
-    private var nextTeamBoard: some View {
-        ZStack {
-            Color.theme.background.ignoresSafeArea()
-            VStack {
-                Text("Next team")
-                Text("Prepare to play")
-                Button(action: {
-                    playersVM.nextTabooTeam()
-                }, label: {
-                    WideButtonView("Start", size: .big, colorScheme: .secondary)
-                })
-            }
-        }
+        .padding(.bottom)
     }
     
     private func swipeCard() {

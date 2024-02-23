@@ -10,16 +10,13 @@ import SwiftUI
 struct SettingsModalView: View {
     @Binding var isShowing: Bool
     var body: some View {
-        ModalWithImageView(isShowing: $isShowing, height: 330, content: {
+        ModalView(isShowing: $isShowing, title: "Settings") {
             VStack {
-                Text("Settings")
-                    .font(.system(size: 24, weight: .semibold))
-                Divider()
                 LanguagePickerView()
-                Spacer()
                 buttons
+                    .padding(.top, 8)
             }
-        }, headerImage: Image("MainLogo"))
+        }
     }
 }
 

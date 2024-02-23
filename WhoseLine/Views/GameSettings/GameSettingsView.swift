@@ -16,10 +16,11 @@ struct GameSettingsView: View {
             Color.theme.background.ignoresSafeArea()
             VStack {
                 header
-                Spacer()
                 Text(gameMode.rulesDescription)
-                    .padding(.bottom)
-                Text("Minimum number of players: \(minimumNumberOfPlayers)")
+                    .font(.system(size: 20))
+                    .padding(.top)
+                Divider()
+                    .padding(.vertical)
                 settingsView
                 Spacer()
                 nextButton
@@ -74,15 +75,29 @@ extension GameSettingsView {
         }
     }
     
+    private var pickerWidth: CGFloat { 130 }
+    
     private var settingsView: some View {
         VStack {
+            HStack {
+                Text("Number of players: ")
+                Spacer()
+                HStack(spacing: 0) {
+                    Text("\(minimumNumberOfPlayers)+")
+                        .font(.system(size: 24))
+                }
+                .frame(width: pickerWidth)
+            }
+            .padding(.bottom)
             switch gameMode {
             case .scenesFromAHat:
                 let livesOptions = ["1", "2", "3"]
                 VStack {
                     HStack {
                         Text("Number of lives: ")
+                        Spacer()
                         CustomPickerView(collection:                     livesOptions, selectedItem: $playersVM.settings.numberOfLivesString)
+                            .frame(width: pickerWidth, alignment: .leading)
                     }
                 }
             case .truthOrDare:
@@ -91,11 +106,15 @@ extension GameSettingsView {
                 VStack {
                     HStack {
                         Text("Number of cards: ")
+                        Spacer()
                         CustomPickerView(collection:                     numberOfCardsOptions, selectedItem: $playersVM.settings.numberOfCardsString)
+                            .frame(width: pickerWidth, alignment: .leading)
                     }
                     HStack {
                         Text("Number of lives: ")
-                        CustomPickerView(collection:                     livesOptions, selectedItem: $playersVM.settings.numberOfLivesString)
+                        Spacer()
+                        CustomPickerView(collection: livesOptions, selectedItem: $playersVM.settings.numberOfLivesString)
+                            .frame(width: pickerWidth, alignment: .leading)
                     }
                 }
             case .taboo:
@@ -104,15 +123,22 @@ extension GameSettingsView {
                 VStack {
                     HStack {
                         Text("Number of rounds: ")
+                        Spacer()
                         CustomPickerView(collection:                     numberOfRoundsOptions, selectedItem: $playersVM.settings.numberOfRoundsString)
+                            .frame(width: pickerWidth, alignment: .leading)
                     }
                     HStack {
                         Text("Time of round: ")
+                        Spacer()
                         CustomPickerView(collection:                     timeOfRoundOptions, selectedItem: $playersVM.settings.timeOfRoundString)
+                            .frame(width: pickerWidth, alignment: .leading)
+
                     }
                 }
             }
         }
+        .font(.system(size: 22, weight: .regular))
+        .frame(maxWidth: 320)
     }
     
     private var nextButton: some View {

@@ -20,8 +20,11 @@ struct RegularTextFieldView: View {
                     .foregroundColor(.theme.secondaryText))
                     .font(.system(size: 20))
                     .frame(height: 40)
-                    .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 16))
+                    .padding(EdgeInsets(top: 5, leading: 24, bottom: 5, trailing: 24))
                     .foregroundColor(.theme.primaryText)
+                    .background(Color.theme.secondaryBackground)
+                    .cornerRadius(10)
+                    .customShadow(.subtlerDownShadow)
             }
         }
     }
@@ -29,9 +32,12 @@ struct RegularTextFieldView: View {
 
 struct RegularTextFieldView_Previews: PreviewProvider {
     static var previews: some View {
-        VStack {
-            RegularTextFieldView(title: "Name:", text: .constant(""))
+        ZStack {
+            Color.theme.background.ignoresSafeArea()
+            VStack {
+                RegularTextFieldView(title: "Name:", text: .constant(""))
+            }
+            .padding()
         }
-        .padding()
     }
 }

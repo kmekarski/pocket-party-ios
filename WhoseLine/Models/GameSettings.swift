@@ -11,7 +11,7 @@ struct GameSettings {
     private let defaultNumberOfLives = 2
     private let defaultNumberOfCards = 10
     private let defaultNumberOfRounds = 2
-    private let defaultTimeOfRound = 30
+    private let defaultTimeOfRound = 20
     
     var numberOfLivesString: String?
     var numberOfCardsString: String?

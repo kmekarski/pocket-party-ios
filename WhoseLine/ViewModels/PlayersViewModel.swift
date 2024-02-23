@@ -20,6 +20,8 @@ final class PlayersViewModel: ObservableObject {
         }
     }
     @Published var gameIsOn: Bool = true
+    @Published var currentRoundIndex: Int = 1
+    private var currentSubRoundIndex: Int = 1
     
     //Questions
     @Published var currentQuestionIndex = 0
@@ -64,11 +66,13 @@ final class PlayersViewModel: ObservableObject {
     private lazy var timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in self.timeElapsed += 1
         if self.timeElapsed == self.settings.timeOfRound {
             // Time is up
+            self.nextTeam()
             self.showNextTeamBoard()
         }
     }
     
     @Published var timeElapsed: Int = 0
+    
     @Published var isShowingNextTeamBoard: Bool = false
     
     func addPlayer(name: String, theme: PlayerTheme) {
@@ -155,10 +159,42 @@ final class PlayersViewModel: ObservableObject {
     }
     
     func nextTeam() {
-        if let firstInQueue = teamsQueue.first {
-            currentTeam = firstInQueue
+        if gameMode == .taboo {
+            currentSubRoundIndex += 1
+            if currentSubRoundIndex > tempTeams.count {
+                currentRoundIndex += 1
+                currentSubRoundIndex = 1
+            }
+            if currentRoundIndex > settings.numberOfRounds {
+                endGame()
+            }
+        }
+        
+        if let firstInQueue = teamsQueue.first, gameIsOn {
             teamsQueue.append(currentTeam!)
+            currentTeam = firstInQueue
+            currentTeam!.swapPlayers()
             teamsQueue.remove(at: 0)
+        }
+    }
+    
+    func nextTabooRound() {
+        isShowingNextTeamBoard = false
+        timeElapsed = 0
+    }
+    
+    func showNextTeamBoard() {
+        if currentRoundIndex <= settings.numberOfRounds {
+            isShowingNextTeamBoard = true
+        }
+    }
+    
+    func givePointToTeam(teamId: String) {
+        if let index = teams.firstIndex(where: { team in
+            teamId == team.id
+        }), currentTeam != nil {
+            teams[index].givePoints(1)
+            currentTeam!.givePoints(1)
         }
     }
     
@@ -189,29 +225,27 @@ final class PlayersViewModel: ObservableObject {
         }
     }
     
-    func showNextTeamBoard() {
-        isShowingNextTeamBoard = true
-    }
-    
-    func nextTabooTeam() {
-        isShowingNextTeamBoard = false
-        timeElapsed = 0
-    }
-    
     func startGame() {
         guard let gameMode = gameMode else { return }
         gameIsOn = true
-        resetPlayers()
         
-        players = tempPlayers
-        players.shuffle()
-
-        teams = tempTeams
-        teams.shuffle()
+        switch gameMode.setBeforeGame {
+        case .players:
+            resetPlayers()
+            setUpPlayers()
+        case .teams:
+            resetTeams()
+            setUpTeams()
+        }
         
-        currentPlayers = Array(players.prefix(upTo: gameMode.playersOnScreen))
-        playersQueue = Array(players.suffix(from: gameMode.playersOnScreen))
-        
+        setUpQuestions()
+        setUpRounds()
+        setUpTimer()
+    }
+    
+    func setUpQuestions() {
+        guard let gameMode = gameMode else { return }
+        currentQuestionIndex = 0
         switch gameMode {
         case .scenesFromAHat:
             questions = gameMode.questions
@@ -223,16 +257,80 @@ final class PlayersViewModel: ObservableObject {
             truthOrDareQuestions = truthOrDareQuestions.suffix(settings.numberOfCards)
             currentTruthOrDareQuestion = truthOrDareQuestions.first!
         case .taboo:
-            isShowingNextTeamBoard = true
             tabooQuestions = gameMode.tabooQuestions
             tabooQuestions.shuffle()
             currentTabooQuestion = tabooQuestions.first!
-            timeElapsed = 0
-            timer.fire()
         }
     }
     
+    func setUpRounds() {
+        currentRoundIndex = 1
+        currentSubRoundIndex = 1
+    }
+    
+    func setUpTimer() {
+        timeElapsed = 0
+        timer.fire()
+    }
+    
+    func setUpPlayers() {
+        guard let gameMode = gameMode else { return }
+        if tempPlayers.count > 0 {
+            players = tempPlayers
+            players.shuffle()
+            currentPlayers = Array(players.prefix(upTo: gameMode.playersOnScreen))
+            playersQueue = Array(players.suffix(from: gameMode.playersOnScreen))
+        }
+    }
+    
+    func setUpTeams() {
+        if tempTeams.count > 0 {
+            teams = tempTeams
+            teams.shuffle()
+            currentTeam = teams.first!
+            teamsQueue = Array(teams.suffix(from: 1))
+            isShowingNextTeamBoard = true
+        }
+    }
+    
+    func resetPlayers() {
+        players = []
+        currentPlayers = []
+        removedPlayers = []
+        playersWithPlaces = []
+    }
+    
+    func resetTeams() {
+        teams = []
+        currentTeam = nil
+        teamsWithPlaces = []
+    }
+    
     func endGame() {
+        guard let gameMode = gameMode else { return }
+        
+        switch gameMode.setBeforeGame {
+        case .players:
+            calculatePlayersPlaces()
+        case .teams:
+            calculateTeamsPlaces()
+        }
+        
+        switch gameMode {
+        case .scenesFromAHat, .truthOrDare:
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                self.gameIsOn = false
+                self.navPath.append(AppState.gameOver.rawValue)
+                self.currentQuestionIndex = 0
+            }
+        case .taboo:
+            self.gameIsOn = false
+            self.navPath.append(AppState.gameOver.rawValue)
+            self.currentQuestionIndex = 0
+        }
+    }
+    
+    func calculatePlayersPlaces() {
         var allPlayers: [Player] = []
         allPlayers.append(contentsOf: removedPlayers)
         allPlayers.append(contentsOf: players)
@@ -247,21 +345,22 @@ final class PlayersViewModel: ObservableObject {
             let playerWithPlace = PlayerWithPlace(player: player, place: place)
             playersWithPlaces.append(playerWithPlace)
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            self.gameIsOn = false
-            self.navPath.append(AppState.gameOver.rawValue)
-            self.currentQuestionIndex = 0
-        }
     }
     
-    func resetPlayers() {
-        players = []
-        currentPlayers = []
-        removedPlayers = []
-        playersWithPlaces = []
-        
-        teams = []
-        currentTeam = nil
-        teamsWithPlaces = []
+    func calculateTeamsPlaces() {
+        var allTeams: [Team] = []
+        allTeams.append(contentsOf: teams)
+        allTeams.sort { lhs, rhs in
+            return lhs.points > rhs.points  // most points first
+        }
+        var place = 0
+        for (index, team) in allTeams.enumerated() {
+            if index == 0 || allTeams[index - 1].points > team.points{
+                place += 1
+            }
+            let teamWithPlace = TeamWithPlace(team: team, place: place)
+            teamsWithPlaces.append(teamWithPlace)
+        }
+        print(teamsWithPlaces)
     }
 }

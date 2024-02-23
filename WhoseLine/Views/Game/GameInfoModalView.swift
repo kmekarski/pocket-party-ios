@@ -12,22 +12,19 @@ struct GameInfoModalView: View {
     var title: String
     var description: String
     var body: some View {
-        ModalWithImageView(isShowing: $isShowing, height: 400, showX: false, content:  {
+        ModalView(isShowing: $isShowing, title: title) {
             VStack {
-                Text(title)
-                    .font(.system(size: 24, weight: .semibold))
-                Divider()
                 Text(description)
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                Spacer()
                 Button(action: {
                     isShowing.toggle()
                 }, label: {
                     WideButtonView("OK", colorScheme: .primary)
                 })
+                .padding(.top, 8)
             }
-        }, headerImage: Image("MainLogo"))
+        }
     }
 }
 

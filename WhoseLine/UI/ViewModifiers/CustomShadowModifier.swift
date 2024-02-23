@@ -11,6 +11,7 @@ import SwiftUI
 enum CustomShadowType {
     case subtleDownShadow
     case middleShadow
+    case subtleMiddleShadow
     case subtlerDownShadow
     case subtleBorderShadow
 }
@@ -24,6 +25,9 @@ struct CustomShadowModifier: ViewModifier {
         case .middleShadow:
             return content
                 .shadow(color: .black.opacity(0.25), radius: 3, x: 0, y: 0)
+        case .subtleMiddleShadow:
+            return content
+                .shadow(color: .black.opacity(0.15), radius: 3, x: 0, y: 0)
         case.subtleBorderShadow:
             return content
                 .shadow(color: .black.opacity(0.3), radius: 2)

@@ -18,10 +18,11 @@ struct CustomPickerView: View {
         ZStack {
             if selectedIndex != nil {
                 Rectangle()
-                    .foregroundColor(.white.opacity(0.3))
+                    .foregroundStyle(Material.thin)
                     .frame(width: highlightSize, height: highlightSize)
                     .cornerRadius(10)
                     .offset(x: highlightOffset)
+                    .customShadow(.subtleMiddleShadow)
             }
             HStack(spacing: 0) {
                 ForEach(0..<collection.count, id: \.self) { index in
@@ -37,7 +38,6 @@ struct CustomPickerView: View {
                 }
             }
             .frame(height: 30)
-            .padding()
         }
         .onAppear() {
             selectedIndex = collection.firstIndex(where: { el in

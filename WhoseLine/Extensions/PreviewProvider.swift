@@ -34,8 +34,8 @@ class DeveloperPreview {
     let fullTeam = Team(id: "3", player1: Player(id: "5", name: "John", theme: .playful, lives: 3), player2: Player(id: "6", name: "Emily", theme: .animal, lives: 3))
     
     let teams = [
-        Team(id: "1", player1: Player(id: "1", name: "John", theme: .playful, lives: 3), player2: Player(id: "2", name: "Emily", theme: .animal, lives: 3)),
-        Team(id: "2", player1: Player(id: "3", name: "Blake", theme: .dark, lives: 3), player2: Player(id: "4", name: "Sophie", theme: .sportsy, lives: 3))
+        Team(id: "1", player1: Player(id: "1", name: "JohnTeam", theme: .playful, lives: 3), player2: Player(id: "2", name: "EmilyTeam", theme: .animal, lives: 3)),
+        Team(id: "2", player1: Player(id: "3", name: "BlakeTeam", theme: .dark, lives: 3), player2: Player(id: "4", name: "SophieTeam", theme: .sportsy, lives: 3))
     ]
     
     let playersAfterGame = [
@@ -52,6 +52,12 @@ class DeveloperPreview {
         PlayerWithPlace(player: Player(id: "4", name: "Sopgie", theme: .sportsy, lives: 0), place: 3)
     ]
     
+    let teamsWithPlaces = [
+        TeamWithPlace(team: Team(id: "1", player1: Player(id: "1", name: "John", theme: .playful, lives: 3), player2: Player(id: "2", name: "Blake", theme: .dark, lives: 2), points: 10), place: 1),
+        TeamWithPlace(team: Team(id: "2", player1: Player(id: "3", name: "Emily", theme: .animal, lives: 3), player2: Player(id: "4", name: "Sophie", theme: .sportsy, lives: 2), points: 7), place: 2),
+
+    ]
+    
     private init() {
         self.playersVM = PlayersViewModel()
         
@@ -60,13 +66,16 @@ class DeveloperPreview {
         self.playersVMWithSetPlayers.tempTeams = teams
         
         self.playersVMAfterGame = PlayersViewModel()
+        self.playersVMAfterGame.setGameMode(.taboo)
         self.playersVMAfterGame.players = playersAfterGame
         self.playersVMAfterGame.playersWithPlaces = playersWithPlaces
+        self.playersVMAfterGame.teamsWithPlaces = teamsWithPlaces
         
         for mode in GameMode.allCases {
             let viewModel = PlayersViewModel()
             viewModel.setGameMode(mode)
             viewModel.tempPlayers = players
+            viewModel.tempTeams = teams
             viewModel.startGame()
             playerVMs[mode] = viewModel
         }

@@ -62,7 +62,7 @@ extension MainMenuView {
                     MainMenuOptionView(title: mode.title, subtitle: mode.subtitle, icon: mode.icon, foregroundColor: .white, backgroundColor: .theme.accent)
                 }
             }
-            MainMenuOptionView(title: "Another game modes", subtitle: "Coming soon...", icon: "hammer.fill")
+            MainMenuOptionView(title: "More game modes", subtitle: "Coming soon...", icon: "hammer.fill")
         }
     }
 }

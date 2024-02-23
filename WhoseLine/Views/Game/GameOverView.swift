@@ -17,9 +17,17 @@ struct GameOverView: View {
             VStack(spacing: 24) {
                 header
                 Spacer()
-                if playersVM.playersWithPlaces.count >= 2 {
-                    podium
-                    playersList
+                switch gameMode.setBeforeGame {
+                case .players:
+                    if playersVM.playersWithPlaces.count >= 2 {
+                        podium
+                        playersList
+                    }
+                case .teams:
+                    if playersVM.teamsWithPlaces.count >= 2 {
+                        podium
+                        teamsList
+                    }
                 }
                 buttonsSection
             }
@@ -37,20 +45,25 @@ struct GameOverView_Previews: PreviewProvider {
 }
 
 extension GameOverView {
+    
+    private var gameMode: GameMode {
+        return playersVM.gameMode ?? .scenesFromAHat
+    }
     private var header: some View {
         Text("Game over!")
             .viewTitle()
     }
     
-    private func podiumRectangle(player: Player, place: Int) -> some View {
-        var height: CGFloat {
-            switch(place) {
-            case 1: return 200
-            case 2: return 150
-            case 3: return 120
-            default: return 50
-            }
+    private func podiumRectangleHeight(place: Int) -> CGFloat {
+        switch(place) {
+        case 1: return 200
+        case 2: return 150
+        case 3: return 120
+        default: return 50
         }
+    }
+    
+    private func podiumRectangle(player: Player, place: Int) -> some View {
         return VStack {
             Text(player.name + " " + player.theme.emoji)
                 .font(.system(size: 20, weight: .semibold))
@@ -58,7 +71,7 @@ extension GameOverView {
                 Rectangle()
                     .foregroundColor(player.theme.color)
                     .frame(maxWidth: 120)
-                    .frame(height: height)
+                    .frame(height: podiumRectangleHeight(place: place))
                     .cornerRadius(12)
                     .customShadow(.subtleBorderShadow)
                 
@@ -70,11 +83,48 @@ extension GameOverView {
         }
     }
     
+    private func podiumRectangle(team: Team, place: Int) -> some View {
+        return VStack {
+            if let player1 = team.player1, let player2 = team.player2 {
+                VStack(spacing: 4) {
+                    Text(player1.name + " " + player1.theme.emoji)
+                    Text(player2.name + " " + player2.theme.emoji)
+                }
+                .font(.system(size: 20, weight: .semibold))
+                ZStack(alignment: .top) {
+                    Rectangle()
+                        .foregroundColor(.clear)
+                        .frame(maxWidth: 120)
+                        .frame(height: podiumRectangleHeight(place: place))
+                        .cornerRadius(12)
+                        .background(VStack(spacing: 0) {
+                            player1.theme.color
+                            player2.theme.color
+                        })
+                        .customShadow(.subtleBorderShadow)
+                    
+                    Text("\(place)")
+                        .font(.system(size: 36, weight: .bold))
+                        .foregroundColor(player1.theme.textColor)
+                        .padding()
+                }
+            }
+        }
+    }
+    
     private var podium: some View {
         let topPlayers = playersVM.playersWithPlaces
+        let topTeams = playersVM.teamsWithPlaces
         return HStack(alignment: .bottom, spacing: 16) {
-            ForEach(0..<min(3, topPlayers.count), id: \.self) { index in
-                podiumRectangle(player: topPlayers[index].player, place: topPlayers[index].place)
+            switch gameMode.setBeforeGame {
+            case .players:
+                ForEach(0..<min(3, topPlayers.count), id: \.self) { index in
+                    podiumRectangle(player: topPlayers[index].player, place: topPlayers[index].place)
+                }
+            case .teams:
+                ForEach(0..<min(3, topTeams.count), id: \.self) { index in
+                    podiumRectangle(team: topTeams[index].team, place: topTeams[index].place)
+                }
             }
         }
     }
@@ -102,6 +152,31 @@ extension GameOverView {
                 }
                 .padding(.trailing)
                 .frame(maxWidth: 330)
+            }
+        }
+        .padding()
+        .background(Material.thick)
+        .cornerRadius(12)
+    }
+    
+    private var teamsList: some View {
+        VStack(spacing: 6) {
+            ForEach(playersVM.teamsWithPlaces) { teamWithPlace in
+                let team = teamWithPlace.team
+                if let player1 = team.player1, let player2 = team.player2 {
+                    HStack(spacing: 24) {
+                        Text("\(teamWithPlace.place).")
+                            .frame(width: 24, alignment: .trailing)
+                        Text(player1.name + " & " + player2.name)
+                            .frame(maxWidth: .infinity, alignment: .trailing)
+                            .padding(.trailing)
+                        Text(team.points.asPointsString())
+                            .frame(width: 78)
+                    }
+                    .font(.system(size: 18, weight: .semibold))
+                    .padding(.trailing)
+                    .frame(maxWidth: 330)
+                }
             }
         }
         .padding()

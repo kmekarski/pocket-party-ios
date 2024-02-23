@@ -10,7 +10,6 @@ import SwiftUI
 struct ModalView<Content: View>: View {
     @Binding var isShowing: Bool
     var title: String
-    var height: CGFloat
     var showX: Bool = true
     @ViewBuilder let content: Content
     
@@ -26,13 +25,24 @@ struct ModalView<Content: View>: View {
                             isShowing = false
                         }
                 }
-                VStack {
+                VStack(spacing: 0) {
                     if isShowing {
-                        mainView
+                        Text(title)
+                            .font(.system(size: 24, weight: .semibold))
+                            .foregroundColor(.white)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.theme.accent)
+                            .cornerRadius(20, corners: [.topLeft, .topRight])
+                        content
+                            .padding(24)
+                            .frame(maxWidth: .infinity)
+                            .background(Color.theme.background)
+                            .cornerRadius(20, corners: [.bottomLeft, .bottomRight])
+                            .customShadow(.subtleDownShadow)
                     }
                 }
                 .frame(maxWidth: 330)
-                .frame(height: isShowing ? height : 0)
             }
             .ignoresSafeArea()
         }
@@ -41,66 +51,16 @@ struct ModalView<Content: View>: View {
 
 struct ModalView_Previews: PreviewProvider {
     static var previews: some View {
-        VStack {
-            ModalWithImageView(isShowing: .constant(true), height: 400, content:  {
-                VStack {
-                    Text("Scenes From a Hat")
-                        .font(.system(size: 28, weight: .bold))
-                        .frame(maxWidth: .infinity, alignment: .center)
-                    Text("The rules are simple. Blahblahblah blhablhjhqskjdb asdjbasdkjasbf askjfbask jfbasfj")
-                        .multilineTextAlignment(.leading)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    Spacer()
-                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                        WideButtonView("Button", colorScheme: .primary)
-                    })
-                }
-            }, headerImage: Image("MainLogo"))
-            ModalView(isShowing: .constant(true), title: "Title", height: 220) {
-                VStack {
-                    Text("The rules are simple. Blahblahblah blhablhjhqskjdb asdjbasdkjasbf askjfbask jfbasfj")
-                        .multilineTextAlignment(.leading)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    Spacer()
-                    Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-                        WideButtonView("Button", colorScheme: .primary)
-                    })
-                }
+        ModalView(isShowing: .constant(true), title: "Title") {
+            VStack(spacing: 24) {
+                Text("The rules are simple. Blahblahblah blhablhjhqskjdb asdjbasdkjasbf askjfbask jfbasfj")
+                    .multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                    WideButtonView("Button", colorScheme: .primary)
+                })
             }
         }
-        
     }
 }
 
-extension ModalView {
-    private var mainView: some View {
-        VStack {
-            HStack {
-                IconButtonView("xmark", size: .small)
-                    .fontWeight(.semibold)
-                    .opacity(0)
-                Spacer()
-                Text(title)
-                    .font(.system(size: 24, weight: .semibold))
-                Spacer()
-                Button(action: {
-                    isShowing.toggle()
-                }, label: {
-                    IconButtonView("xmark", size: .small)
-                        .fontWeight(.semibold)
-                        .opacity(showX ? 1 : 0)
-                })
-            }
-            .padding(.bottom, 8)
-            content
-        }
-        .frame(maxHeight: height)
-        .padding(.top, 20)
-        .padding(.bottom, 20)
-        .padding(.horizontal, 28)
-        .frame(maxWidth: .infinity)
-        .background(Color.theme.background)
-        .cornerRadius(20)
-        .customShadow(.subtleDownShadow)
-    }
-}

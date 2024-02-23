@@ -30,6 +30,9 @@
     "%lld." : {
 
     },
+    "%lld+" : {
+
+    },
     "Add player" : {
 
     },
@@ -62,10 +65,10 @@
     "Let's add some!" : {
 
     },
-    "Minimum number of players: %lld" : {
+    "No %@ set to play" : {
 
     },
-    "No %@ set to play" : {
+    "Now playing:" : {
 
     },
     "Number of cards: " : {
@@ -74,17 +77,27 @@
     "Number of lives: " : {
 
     },
+    "Number of players: " : {
+
+    },
     "Number of rounds: " : {
 
     },
     "or" : {
 
     },
-    "Scenes From a Hat" : {
+    "Points: %lld" : {
 
     },
-    "Settings" : {
-
+    "Round %lld/%lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Round %1$lld/%2$lld"
+          }
+        }
+      }
     },
     "Speaker" : {
 

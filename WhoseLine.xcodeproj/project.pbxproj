@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		A70438A22B88C9A6007D3B73 /* GameSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70438A12B88C9A6007D3B73 /* GameSettings.swift */; };
+		A70438A42B88FACA007D3B73 /* NextTeamBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70438A32B88FACA007D3B73 /* NextTeamBoardView.swift */; };
 		A704D3FF2B7F88D20005F8A5 /* IconButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A704D3FE2B7F88D20005F8A5 /* IconButtonView.swift */; };
 		A704D4022B7F8BDC0005F8A5 /* MainMenuOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A704D4012B7F8BDC0005F8A5 /* MainMenuOptionView.swift */; };
-		A704D4092B7F93520005F8A5 /* ModalWithImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A704D4082B7F93520005F8A5 /* ModalWithImageView.swift */; };
 		A7138D0D2B7B8C2E0031B709 /* WhoseLineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7138D0C2B7B8C2E0031B709 /* WhoseLineApp.swift */; };
 		A7138D112B7B8C2F0031B709 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A7138D102B7B8C2F0031B709 /* Assets.xcassets */; };
 		A7138D142B7B8C2F0031B709 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A7138D132B7B8C2F0031B709 /* Preview Assets.xcassets */; };
@@ -56,9 +56,9 @@
 
 /* Begin PBXFileReference section */
 		A70438A12B88C9A6007D3B73 /* GameSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettings.swift; sourceTree = "<group>"; };
+		A70438A32B88FACA007D3B73 /* NextTeamBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextTeamBoardView.swift; sourceTree = "<group>"; };
 		A704D3FE2B7F88D20005F8A5 /* IconButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconButtonView.swift; sourceTree = "<group>"; };
 		A704D4012B7F8BDC0005F8A5 /* MainMenuOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuOptionView.swift; sourceTree = "<group>"; };
-		A704D4082B7F93520005F8A5 /* ModalWithImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalWithImageView.swift; sourceTree = "<group>"; };
 		A7138D092B7B8C2E0031B709 /* WhoseLine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhoseLine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7138D0C2B7B8C2E0031B709 /* WhoseLineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoseLineApp.swift; sourceTree = "<group>"; };
 		A7138D102B7B8C2F0031B709 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -128,7 +128,6 @@
 		A704D4032B7F93160005F8A5 /* Modals */ = {
 			isa = PBXGroup;
 			children = (
-				A704D4082B7F93520005F8A5 /* ModalWithImageView.swift */,
 				A74A327C2B8276BC00438E8C /* ModalView.swift */,
 			);
 			path = Modals;
@@ -275,6 +274,7 @@
 				A7138D302B7B938B0031B709 /* GameView.swift */,
 				A74A32602B823A2700438E8C /* GameInfoModalView.swift */,
 				A76BDF652B8376A700019FA4 /* GameOverView.swift */,
+				A70438A32B88FACA007D3B73 /* NextTeamBoardView.swift */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -414,7 +414,6 @@
 				A76BDF6B2B84BF5700019FA4 /* FoldTransitionModifier.swift in Sources */,
 				A74A32722B82675000438E8C /* Player.swift in Sources */,
 				A74A32672B82606D00438E8C /* QuestionsManager.swift in Sources */,
-				A704D4092B7F93520005F8A5 /* ModalWithImageView.swift in Sources */,
 				A7138D312B7B938B0031B709 /* GameView.swift in Sources */,
 				A74A32822B82898400438E8C /* CustomShadowModifier.swift in Sources */,
 				A7138D232B7B8D060031B709 /* AppState.swift in Sources */,
@@ -430,6 +429,7 @@
 				A74A32862B82BA2200438E8C /* PlayerTheme.swift in Sources */,
 				A76BDF762B860EC600019FA4 /* GameQuestionModifier.swift in Sources */,
 				A7138D2F2B7B902A0031B709 /* Color.swift in Sources */,
+				A70438A42B88FACA007D3B73 /* NextTeamBoardView.swift in Sources */,
 				A74A325C2B81814700438E8C /* SettingsModalView.swift in Sources */,
 				A74A32742B8269DF00438E8C /* PlayersViewModel.swift in Sources */,
 				A74A32762B826ACF00438E8C /* SetPlayersPlayerView.swift in Sources */,
