@@ -15,6 +15,7 @@ struct LanguagePickerView: View {
     var body: some View {
         HStack {
             Text("App language:")
+                .font(.custom())
             Spacer()
             Picker(selection: $selectedLanguageIndex) {
                 ForEach(0..<languages.count, id: \.self) { index in

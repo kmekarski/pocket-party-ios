@@ -66,7 +66,7 @@ extension GameOverView {
     private func podiumRectangle(player: Player, place: Int) -> some View {
         return VStack {
             Text(player.name + " " + player.theme.emoji)
-                .font(.system(size: 20, weight: .semibold))
+                .font(.custom(size: 20, weight: .semibold))
             ZStack(alignment: .top) {
                 Rectangle()
                     .foregroundColor(player.theme.color)
@@ -76,7 +76,7 @@ extension GameOverView {
                     .customShadow(.subtleBorderShadow)
                 
                 Text("\(place)")
-                    .font(.system(size: 36, weight: .bold))
+                    .font(.custom(size: 36, weight: .bold))
                     .foregroundColor(player.theme.textColor)
                     .padding()
             }
@@ -90,7 +90,7 @@ extension GameOverView {
                     Text(player1.name + " " + player1.theme.emoji)
                     Text(player2.name + " " + player2.theme.emoji)
                 }
-                .font(.system(size: 20, weight: .semibold))
+                .font(.custom(size: 20, weight: .semibold))
                 ZStack(alignment: .top) {
                     Rectangle()
                         .foregroundColor(.clear)
@@ -104,7 +104,7 @@ extension GameOverView {
                         .customShadow(.subtleBorderShadow)
                     
                     Text("\(place)")
-                        .font(.system(size: 36, weight: .bold))
+                        .font(.custom(size: 36, weight: .bold))
                         .foregroundColor(player1.theme.textColor)
                         .padding()
                 }
@@ -135,16 +135,16 @@ extension GameOverView {
                 let player = playerWithPlace.player
                 HStack(spacing: 24) {
                     Text("\(playerWithPlace.place).")
-                        .font(.system(size: 20, weight: .semibold))
+                        .font(.custom(size: 20, weight: .semibold))
                         .frame(width: 24, alignment: .trailing)
                     Text(player.name + " " + player.theme.emoji)
-                        .font(.system(size: 20, weight: .semibold))
+                        .font(.custom(size: 20, weight: .semibold))
                         .frame(maxWidth: .infinity, alignment: .trailing)
                         .padding(.trailing)
                     HStack(spacing: 0) {
                         ForEach(0..<playersVM.settings.numberOfLives, id: \.self) { index in
                             Image(systemName: "heart.fill")
-                                .font(.system(size: 20))
+                                .font(.custom(size: 20))
                                 .foregroundColor(player.lives > playersVM.settings.numberOfLives - 1 - index ? .theme.accent : .gray)
                         }
                     }
@@ -173,7 +173,7 @@ extension GameOverView {
                         Text(team.points.asPointsString())
                             .frame(width: 78)
                     }
-                    .font(.system(size: 18, weight: .semibold))
+                    .font(.custom(size: 18, weight: .semibold))
                     .padding(.trailing)
                     .frame(maxWidth: 330)
                 }

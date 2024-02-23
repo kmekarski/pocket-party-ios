@@ -17,7 +17,7 @@ struct GameSettingsView: View {
             VStack {
                 header
                 Text(gameMode.rulesDescription)
-                    .font(.system(size: 20))
+                    .font(.custom(size: 20))
                     .padding(.top)
                 Divider()
                     .padding(.vertical)
@@ -84,7 +84,7 @@ extension GameSettingsView {
                 Spacer()
                 HStack(spacing: 0) {
                     Text("\(minimumNumberOfPlayers)+")
-                        .font(.system(size: 24))
+                        .font(.custom(size: 24))
                 }
                 .frame(width: pickerWidth)
             }
@@ -137,7 +137,7 @@ extension GameSettingsView {
                 }
             }
         }
-        .font(.system(size: 22, weight: .regular))
+        .font(.custom(size: 20, weight: .regular))
         .frame(maxWidth: 320)
     }
     

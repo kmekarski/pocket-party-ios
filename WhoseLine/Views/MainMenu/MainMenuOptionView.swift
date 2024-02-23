@@ -19,15 +19,15 @@ struct MainMenuOptionView: View {
             HStack {
                 Text(title)
                     .foregroundColor(foregroundColor)
-                            .font(.system(size: 24, weight: .bold))
+                    .font(.custom(size: 24, weight: .semibold))
                 Spacer()
                 Image(systemName: icon)
                     .foregroundColor(foregroundColor)
-                    .font(.system(size: 36, weight: .regular))
+                    .font(.custom(size: 36, weight: .regular))
             }
             Text(subtitle)
                 .foregroundColor(foregroundColor)
-                .font(.system(size: 22, weight: .regular))
+                .font(.custom(size: 22))
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .multilineTextAlignment(.leading)
         }

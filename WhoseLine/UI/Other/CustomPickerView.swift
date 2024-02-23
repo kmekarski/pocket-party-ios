@@ -27,7 +27,7 @@ struct CustomPickerView: View {
             HStack(spacing: 0) {
                 ForEach(0..<collection.count, id: \.self) { index in
                     Text(collection[index])
-                        .font(.system(size: selectedIndex == index ? 36 : 24))
+                        .font(.custom(size: selectedIndex == index ? 36 : 24))
                         .frame(minWidth: itemSize)
                         .onTapGesture {
                             withAnimation(.linear(duration: 0.2)) {

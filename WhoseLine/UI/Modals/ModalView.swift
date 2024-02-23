@@ -28,7 +28,7 @@ struct ModalView<Content: View>: View {
                 VStack(spacing: 0) {
                     if isShowing {
                         Text(title)
-                            .font(.system(size: 24, weight: .semibold))
+                            .font(.custom(size: 24, weight: .semibold))
                             .foregroundColor(.white)
                             .padding()
                             .frame(maxWidth: .infinity)
@@ -56,6 +56,8 @@ struct ModalView_Previews: PreviewProvider {
                 Text("The rules are simple. Blahblahblah blhablhjhqskjdb asdjbasdkjasbf askjfbask jfbasfj")
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.custom())
+
                 Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
                     WideButtonView("Button", colorScheme: .primary)
                 })

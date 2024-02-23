@@ -11,6 +11,6 @@ import SwiftUI
 struct ViewTitleModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .font(.system(size: 28, weight: .semibold))
+            .font(.custom(size: 28, weight: .semibold))
     }
 }

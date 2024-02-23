@@ -17,8 +17,9 @@ struct RegularTextFieldView: View {
         ZStack(alignment: .trailing) {
             VStack(spacing: 2) {
                 TextField("", text: $text, prompt: Text(title)
-                    .foregroundColor(.theme.secondaryText))
-                    .font(.system(size: 20))
+                    .foregroundColor(.theme.secondaryText)
+                    .font(.custom(size: 20, weight: .regular)))
+                    .font(.custom(size: 20, weight: .regular))
                     .frame(height: 40)
                     .padding(EdgeInsets(top: 5, leading: 24, bottom: 5, trailing: 24))
                     .foregroundColor(.theme.primaryText)

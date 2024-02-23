@@ -72,7 +72,7 @@ struct WideButtonView: View {
 
     var body: some View {
         Text(text)
-            .font(.system(size: size == .big ? 20 : 16, weight: .bold))
+            .font(.custom(size: size == .big ? 20 : 16, weight: .bold))
             .foregroundColor(colorScheme.foregroundColor.opacity(disabled ? 0.55 : 1))
             .frame(maxWidth: .infinity)
             .padding(.vertical, size == .big ? 16 : 10)
@@ -88,7 +88,7 @@ struct WideButtonView_Previews: PreviewProvider {
             Color.theme.background.ignoresSafeArea()
             HStack {
                 VStack(spacing: 20) {
-                    WideButtonView("Game", colorScheme: .primary)
+                    WideButtonView("GAME", colorScheme: .primary)
                     WideButtonView("Game", size: .big, colorScheme: .primary)
                     WideButtonView("Game", disabled: true, colorScheme: .primary)
                     WideButtonView("Game", disabled: true, size: .big, colorScheme: .primary)

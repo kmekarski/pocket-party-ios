@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		A70438A22B88C9A6007D3B73 /* GameSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70438A12B88C9A6007D3B73 /* GameSettings.swift */; };
 		A70438A42B88FACA007D3B73 /* NextTeamBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70438A32B88FACA007D3B73 /* NextTeamBoardView.swift */; };
+		A70438BC2B895660007D3B73 /* ShantellSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A70438B02B89565F007D3B73 /* ShantellSans-Bold.ttf */; };
+		A70438BE2B895660007D3B73 /* ShantellSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A70438B22B89565F007D3B73 /* ShantellSans-SemiBold.ttf */; };
+		A70438BF2B895660007D3B73 /* ShantellSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A70438B32B89565F007D3B73 /* ShantellSans-Regular.ttf */; };
+		A70438CB2B89597C007D3B73 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70438CA2B89597C007D3B73 /* Font.swift */; };
 		A704D3FF2B7F88D20005F8A5 /* IconButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A704D3FE2B7F88D20005F8A5 /* IconButtonView.swift */; };
 		A704D4022B7F8BDC0005F8A5 /* MainMenuOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A704D4012B7F8BDC0005F8A5 /* MainMenuOptionView.swift */; };
 		A7138D0D2B7B8C2E0031B709 /* WhoseLineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7138D0C2B7B8C2E0031B709 /* WhoseLineApp.swift */; };
@@ -57,6 +61,11 @@
 /* Begin PBXFileReference section */
 		A70438A12B88C9A6007D3B73 /* GameSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettings.swift; sourceTree = "<group>"; };
 		A70438A32B88FACA007D3B73 /* NextTeamBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextTeamBoardView.swift; sourceTree = "<group>"; };
+		A70438A82B89536B007D3B73 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		A70438B02B89565F007D3B73 /* ShantellSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ShantellSans-Bold.ttf"; sourceTree = "<group>"; };
+		A70438B22B89565F007D3B73 /* ShantellSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ShantellSans-SemiBold.ttf"; sourceTree = "<group>"; };
+		A70438B32B89565F007D3B73 /* ShantellSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ShantellSans-Regular.ttf"; sourceTree = "<group>"; };
+		A70438CA2B89597C007D3B73 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		A704D3FE2B7F88D20005F8A5 /* IconButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconButtonView.swift; sourceTree = "<group>"; };
 		A704D4012B7F8BDC0005F8A5 /* MainMenuOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuOptionView.swift; sourceTree = "<group>"; };
 		A7138D092B7B8C2E0031B709 /* WhoseLine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhoseLine.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -114,6 +123,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A70438AD2B895644007D3B73 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				A70438B02B89565F007D3B73 /* ShantellSans-Bold.ttf */,
+				A70438B32B89565F007D3B73 /* ShantellSans-Regular.ttf */,
+				A70438B22B89565F007D3B73 /* ShantellSans-SemiBold.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		A704D4002B7F8BCB0005F8A5 /* MainMenu */ = {
 			isa = PBXGroup;
 			children = (
@@ -152,6 +171,8 @@
 		A7138D0B2B7B8C2E0031B709 /* WhoseLine */ = {
 			isa = PBXGroup;
 			children = (
+				A70438AD2B895644007D3B73 /* Fonts */,
+				A70438A82B89536B007D3B73 /* Info.plist */,
 				A7138D2A2B7B8ED10031B709 /* UI */,
 				A7138D272B7B8DEA0031B709 /* Extensions */,
 				A7138D242B7B8D340031B709 /* Managers */,
@@ -234,6 +255,7 @@
 				A7138D2E2B7B902A0031B709 /* Color.swift */,
 				A74A32832B8289AE00438E8C /* View.swift */,
 				A76BDF862B86BC1C00019FA4 /* Int.swift */,
+				A70438CA2B89597C007D3B73 /* Font.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -386,8 +408,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				A7138D142B7B8C2F0031B709 /* Preview Assets.xcassets in Resources */,
+				A70438BE2B895660007D3B73 /* ShantellSans-SemiBold.ttf in Resources */,
 				A7138D112B7B8C2F0031B709 /* Assets.xcassets in Resources */,
+				A70438BC2B895660007D3B73 /* ShantellSans-Bold.ttf in Resources */,
 				A74A32632B825F1F00438E8C /* Localizable.xcstrings in Resources */,
+				A70438BF2B895660007D3B73 /* ShantellSans-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -409,6 +434,7 @@
 				A7138D0D2B7B8C2E0031B709 /* WhoseLineApp.swift in Sources */,
 				A74A32842B8289AE00438E8C /* View.swift in Sources */,
 				A76BDF7E2B861FB900019FA4 /* TruthOrDarePickResult.swift in Sources */,
+				A70438CB2B89597C007D3B73 /* Font.swift in Sources */,
 				A76BDF6D2B84C41A00019FA4 /* ViewTitleModifier.swift in Sources */,
 				A704D3FF2B7F88D20005F8A5 /* IconButtonView.swift in Sources */,
 				A76BDF6B2B84BF5700019FA4 /* FoldTransitionModifier.swift in Sources */,
@@ -575,6 +601,7 @@
 				DEVELOPMENT_TEAM = U567PBZ4LV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WhoseLine/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -604,6 +631,7 @@
 				DEVELOPMENT_TEAM = U567PBZ4LV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = WhoseLine/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

@@ -40,7 +40,7 @@ struct IconButtonView: View {
     var body: some View {
         Image(systemName: icon)
         .foregroundColor(color)
-        .font(.system(size: size.rawValue, weight: .semibold))    }
+        .font(.custom(size: size.rawValue, weight: .semibold))    }
 }
 
 struct IconButtonView_Previews: PreviewProvider {

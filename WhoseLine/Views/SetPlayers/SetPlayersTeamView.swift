@@ -26,7 +26,7 @@ struct SetPlayersTeamView: View {
                 })
             }
             .foregroundColor(.theme.secondaryText)
-            .font(.system(size: 16, weight: .semibold))
+            .font(.custom(size: 16, weight: .semibold))
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal)
             .padding(.vertical, 8)
@@ -73,7 +73,7 @@ extension SetPlayersTeamView {
             onPlusTap()
             selectedPlayerInTeamIndex = playerInTeamIndex
         }
-        .font(.system(size: 20, weight: .semibold))
+        .font(.custom(size: 20, weight: .semibold))
         .padding(.vertical)
         .frame(maxWidth: .infinity)
         .overlay(

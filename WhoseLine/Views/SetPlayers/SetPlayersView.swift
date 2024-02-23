@@ -141,7 +141,7 @@ extension SetPlayersView {
             if let gameMode = playersVM.gameMode {
                 Spacer()
                 Text(collectionCount == 0 ?  "No \(gameMode.setBeforeGame.rawValue) set to play" : "We need \(gameMode.minimumPlayers) or more \(gameMode.setBeforeGame.rawValue)")
-                    .font(.system(size: 24))
+                    .font(.custom(size: 24))
                     .padding(.bottom, 4)
                 Button(action: {
                     switch gameMode.setBeforeGame {
@@ -152,7 +152,7 @@ extension SetPlayersView {
                     }
                 }, label: {
                     Text("Let's add some!")
-                        .font(.system(size: 28, weight: .semibold))
+                        .font(.custom(size: 28, weight: .semibold))
                 })
                 Spacer()
             }

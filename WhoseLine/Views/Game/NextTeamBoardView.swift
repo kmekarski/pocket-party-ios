@@ -20,20 +20,20 @@ struct NextTeamBoardView: View {
                     if let currentTeam = playersVM.currentTeam {
                         Spacer()
                         Text("Now playing:")
-                            .font(.system(size: 20, weight: .semibold))
+                            .font(.custom(size: 20, weight: .semibold))
                             .padding(.bottom)
                         VStack(spacing: 24) {
                             VStack(spacing: 8) {
                                 Text(currentTeam.player1!.name + " " + currentTeam.player1!.theme.emoji)
-                                    .font(.system(size: 28, weight: .semibold))
+                                    .font(.custom(size: 28, weight: .semibold))
                                 Text("Speaker")
-                                    .font(.system(size: 20, weight: .regular))
+                                    .font(.custom(size: 20, weight: .regular))
                             }
                             VStack(spacing: 8) {
                                 Text(currentTeam.player2!.name + " " + currentTeam.player2!.theme.emoji)
-                                    .font(.system(size: 28, weight: .semibold))
+                                    .font(.custom(size: 28, weight: .semibold))
                                 Text("Guesser")
-                                    .font(.system(size: 20, weight: .regular))
+                                    .font(.custom(size: 20, weight: .regular))
                             }
                         }
                         .padding()
@@ -49,7 +49,7 @@ struct NextTeamBoardView: View {
                         WideButtonView("Start", size: .big, colorScheme: .primary)
                     })
                 }
-                .font(.system(size: 28, weight: .semibold))
+                .font(.custom(size: 28, weight: .semibold))
                 .padding()
             }
         }

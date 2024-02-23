@@ -14,7 +14,7 @@ struct SetPlayersPlayerView: View {
     var body: some View {
         HStack {
             Text(player.name + " " + player.theme.emoji)
-                .font(.system(size: 20, weight: .semibold))
+                .font(.custom(size: 20, weight: .semibold))
             
             
             Spacer()

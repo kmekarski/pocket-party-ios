@@ -96,20 +96,20 @@ extension GameView {
             case .scenesFromAHat, .taboo:
                 Text(player.name)
                     .foregroundColor(player.theme.textColor)
-                    .font(.system(size: 24, weight: .semibold))
+                    .font(.custom(size: 24, weight: .semibold))
             case .truthOrDare:
                 Text(player.name + " " + player.theme.emoji)
                     .foregroundColor(player.theme.textColor)
-                    .font(.system(size: 28, weight: .semibold))
+                    .font(.custom(size: 28, weight: .semibold))
             }
             switch gameMode {
             case .scenesFromAHat, .truthOrDare:
                 heartsDisplay(player: player)
-                    .font(.system(size: 26, weight: .semibold))
+                    .font(.custom(size: 26, weight: .semibold))
             case .taboo:
                 Text(playerNumber == 0 ? "Speaker" : "Guesser")
                     .foregroundColor(player.theme.textColor)
-                    .font(.system(size: 20, weight: .regular))
+                    .font(.custom(size: 20, weight: .regular))
             }
         }
         .offset(y: 30)
@@ -313,7 +313,7 @@ extension GameView {
             showSkipAnswerButtons = true
         }, label: {
             Text(result.rawValue)
-                .font(.system(size: 24, weight: .bold))
+                .font(.custom(size: 24, weight: .semibold))
                 .frame(maxWidth: .infinity)
                 .padding()
                 .background(Color.white)
@@ -329,7 +329,7 @@ extension GameView {
             case .scenesFromAHat:
                 AnyView(VStack{
                     Text(playersVM.currentQuestion)
-                        .font(.system(size: 24,weight: .semibold))
+                        .font(.custom(size: 24,weight: .semibold))
                 }
                     .gameQuestionCard(.top)
                 )
@@ -338,13 +338,13 @@ extension GameView {
                 case .notPicked:
                     VStack {
                         Text("\(playersVM.currentQuestionIndex+1) / \(playersVM.truthOrDareQuestions.count)")
-                            .font(.system(size: 16, weight: .bold))
+                            .font(.custom(size: 16, weight: .bold))
                             .foregroundColor(.white)
                         HStack(spacing: 10) {
                             truthOrDatePickButton(result: .truth)
                             Text("or")
                                 .foregroundColor(.white)
-                                .font(.system(size: 20, weight: .bold))
+                                .font(.custom(size: 20, weight: .semibold))
                             truthOrDatePickButton(result: .dare)
                         }
                         .frame(maxHeight: .infinity)
@@ -353,12 +353,12 @@ extension GameView {
                     
                 case .truth:
                     Text(playersVM.currentTruthOrDareQuestion.truth)
-                        .font(.system(size: 24,weight: .semibold))
+                        .font(.custom(size: 24,weight: .semibold))
                         .gameQuestionCard(.top)
                         .foldTransition(active: folds[0], direction: foldDirection)
                 case .dare:
                     Text(playersVM.currentTruthOrDareQuestion.dare)
-                        .font(.system(size: 24,weight: .semibold))
+                        .font(.custom(size: 24,weight: .semibold))
                         .gameQuestionCard(.top)
                         .foldTransition(active: folds[0], direction: foldDirection)
                 }
@@ -380,13 +380,13 @@ extension GameView {
     private func truthOrDareCard() -> some View {
         VStack {
             Text("\(playersVM.currentQuestionIndex+1) / \(playersVM.truthOrDareQuestions.count)")
-                .font(.system(size: 16, weight: .bold))
+                .font(.custom(size: 16, weight: .bold))
                 .foregroundColor(.white)
             HStack(spacing: 10) {
                 truthOrDatePickButton(result: .truth)
                 Text("or")
                     .foregroundColor(.white)
-                    .font(.system(size: 20, weight: .bold))
+                    .font(.custom(size: 20, weight: .bold))
                 truthOrDatePickButton(result: .dare)
             }
             .frame(maxHeight: .infinity)
@@ -398,7 +398,7 @@ extension GameView {
         let isGoing = playersVM.currentTabooQuestion.wordToGuess == question.wordToGuess && cardGoingOut
         return VStack{
             Text(question.wordToGuess.uppercased())
-                .font(.system(size: 22, weight: .semibold))
+                .font(.custom(size: 22, weight: .semibold))
                 .foregroundColor(.white)
                 .frame(maxWidth: .infinity)
                 .padding(10)
@@ -407,7 +407,7 @@ extension GameView {
             VStack(spacing: 12) {
                 ForEach(question.forbiddenWords, id: \.self) { word in
                     Text(word.uppercased())
-                        .font(.system(size: 20, weight: .regular))
+                        .font(.custom(size: 20, weight: .regular))
                 }
             }
             .frame(maxHeight: .infinity)
@@ -446,7 +446,7 @@ extension GameView {
     private var timer: some View {
         Text((playersVM.settings.timeOfRound - playersVM.timeElapsed).asClockString())
             .foregroundColor(.white)
-            .font(.system(size: 22, weight: .semibold))
+            .font(.custom(size: 22, weight: .semibold))
             .padding()
             .frame(width: 90)
             .background(Color.theme.accent)
@@ -461,9 +461,9 @@ extension GameView {
             if let currentTeam = currentTeam {
                 Text("Points: \(currentTeam.points)")
                     .foregroundColor(.white)
-                    .font(.system(size: 22, weight: .semibold))
+                    .font(.custom(size: 20, weight: .semibold))
                     .padding()
-                    .frame(width: 120)
+                    .frame(width: 140)
                     .background(Color.theme.accent)
                     .cornerRadius(12)
                     .padding(40)
