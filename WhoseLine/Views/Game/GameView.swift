@@ -39,6 +39,7 @@ struct GameView: View {
             
             NextTeamBoardView()
         }
+        .foregroundColor(.theme.primaryText)
         .navigationBarBackButtonHidden(true)
         .onAppear() {
             playersVM.startGame()
@@ -313,6 +314,7 @@ extension GameView {
             showSkipAnswerButtons = true
         }, label: {
             Text(result.rawValue)
+                .foregroundColor(.theme.accent)
                 .font(.custom(size: 24, weight: .semibold))
                 .frame(maxWidth: .infinity)
                 .padding()

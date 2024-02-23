@@ -16,6 +16,7 @@ struct GameInfoModalView: View {
             VStack {
                 Text(description)
                     .font(.custom())
+                    .foregroundColor(.theme.primaryText)
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 Button(action: {

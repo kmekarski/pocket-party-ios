@@ -50,6 +50,7 @@ struct NextTeamBoardView: View {
                     })
                 }
                 .font(.custom(size: 28, weight: .semibold))
+                .foregroundColor(.theme.primaryText)
                 .padding()
             }
         }

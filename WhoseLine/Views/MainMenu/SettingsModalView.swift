@@ -16,6 +16,7 @@ struct SettingsModalView: View {
                 buttons
                     .padding(.top, 8)
             }
+            .foregroundColor(.theme.primaryText)
         }
     }
 }

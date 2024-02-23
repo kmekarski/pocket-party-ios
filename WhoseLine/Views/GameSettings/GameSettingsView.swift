@@ -25,6 +25,7 @@ struct GameSettingsView: View {
                 Spacer()
                 nextButton
             }
+            .foregroundColor(.theme.primaryText)
             .padding()
             .padding(.horizontal)
             .onAppear() {

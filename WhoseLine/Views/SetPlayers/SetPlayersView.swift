@@ -35,6 +35,7 @@ struct SetPlayersView: View {
                 })
             }
         }
+        .foregroundColor(.theme.primaryText)
         .navigationBarBackButtonHidden(true)
     }
 }
@@ -153,6 +154,7 @@ extension SetPlayersView {
                 }, label: {
                     Text("Let's add some!")
                         .font(.custom(size: 28, weight: .semibold))
+                        .foregroundColor(.theme.accent)
                 })
                 Spacer()
             }
