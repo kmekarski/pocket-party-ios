@@ -9,20 +9,28 @@ import Foundation
 import SwiftUI
 
 final class PlayersViewModel: ObservableObject {
+    
+    // Game
     @Published var gameMode: GameMode?
+    @Published var settings: GameSettings = GameSettings() {
+        didSet {
+            for index in tempPlayers.indices {
+                tempPlayers[index].setLives(settings.numberOfLives)
+            }
+        }
+    }
+    @Published var gameIsOn: Bool = true
     
+    //Questions
     @Published var currentQuestionIndex = 0
-    
     @Published var currentQuestion: String = ""
     @Published var currentTruthOrDareQuestion: TruthOrDareQuestion = TruthOrDareQuestion(truth: "", dare: "")
     @Published var currentTabooQuestion: TabooQuestion = TabooQuestion(wordToGuess: "", forbiddenWords: [""])
-    
     @Published var questions: [String] = []
     @Published var truthOrDareQuestions: [TruthOrDareQuestion] = []
     @Published var tabooQuestions: [TabooQuestion] = []
     
-    @Published var gameIsOn: Bool = true
-    
+    // Players
     @Published var players: [Player] = []
     @Published var tempPlayers: [Player] = []
     @Published var currentPlayers: [Player] = []
@@ -30,9 +38,10 @@ final class PlayersViewModel: ObservableObject {
     @Published var removedPlayers: [Player] = []
     @Published var playersWithPlaces: [PlayerWithPlace] = []
     
+    // Teams
     @Published var teams: [Team] = []
     @Published var tempTeams: [Team] = []
-    @Published var currentTeam: [Team] = []
+    @Published var currentTeam: Team? = nil
     @Published var teamsQueue: [Team] = []
     @Published var teamsWithPlaces: [TeamWithPlace] = []
     
@@ -40,27 +49,30 @@ final class PlayersViewModel: ObservableObject {
     @Published var navPath: [String] = []
     
     func goBack() {
-        navPath.removeLast()
+        if navPath.count > 0 {
+            navPath.removeLast()
+        }
     }
     
     func goToMainMenu() {
-        navPath.removeAll()
+        if navPath.count > 0 {
+            navPath.removeAll()
+        }
     }
     
     // Timer
     private lazy var timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in self.timeElapsed += 1
-        if self.timeElapsed == self.tabooRoundTime {
+        if self.timeElapsed == self.settings.timeOfRound {
             // Time is up
-            self.nextTabooPair()
+            self.showNextTeamBoard()
         }
     }
     
     @Published var timeElapsed: Int = 0
-    var tabooRoundTime: Int = 30
-
+    @Published var isShowingNextTeamBoard: Bool = false
     
     func addPlayer(name: String, theme: PlayerTheme) {
-        let newPlayer = Player(id: UUID().uuidString, name: name, theme: theme, lives: 3)
+        let newPlayer = Player(id: UUID().uuidString, name: name, theme: theme, lives: settings.numberOfLives)
         tempPlayers.append(newPlayer)
     }
     
@@ -105,9 +117,6 @@ final class PlayersViewModel: ObservableObject {
     
     func setGameMode(_ gameMode: GameMode) {
         self.gameMode = gameMode
-        questions = gameMode.questions
-        truthOrDareQuestions = gameMode.truthOrDareQuestions
-        tabooQuestions = gameMode.tabooQuestions
     }
     
     func decreasePlayerLives(playerNumber: Int) {
@@ -145,6 +154,14 @@ final class PlayersViewModel: ObservableObject {
         }
     }
     
+    func nextTeam() {
+        if let firstInQueue = teamsQueue.first {
+            currentTeam = firstInQueue
+            teamsQueue.append(currentTeam!)
+            teamsQueue.remove(at: 0)
+        }
+    }
+    
     func nextQuestion() {
         guard let gameMode = gameMode else { return }
         switch gameMode {
@@ -172,7 +189,12 @@ final class PlayersViewModel: ObservableObject {
         }
     }
     
-    func nextTabooPair() {
+    func showNextTeamBoard() {
+        isShowingNextTeamBoard = true
+    }
+    
+    func nextTabooTeam() {
+        isShowingNextTeamBoard = false
         timeElapsed = 0
     }
     
@@ -180,21 +202,32 @@ final class PlayersViewModel: ObservableObject {
         guard let gameMode = gameMode else { return }
         gameIsOn = true
         resetPlayers()
+        
         players = tempPlayers
         players.shuffle()
+
+        teams = tempTeams
+        teams.shuffle()
+        
         currentPlayers = Array(players.prefix(upTo: gameMode.playersOnScreen))
         playersQueue = Array(players.suffix(from: gameMode.playersOnScreen))
         
         switch gameMode {
         case .scenesFromAHat:
+            questions = gameMode.questions
             questions.shuffle()
             currentQuestion = questions.first!
         case .truthOrDare:
+            truthOrDareQuestions = gameMode.truthOrDareQuestions
             truthOrDareQuestions.shuffle()
+            truthOrDareQuestions = truthOrDareQuestions.suffix(settings.numberOfCards)
             currentTruthOrDareQuestion = truthOrDareQuestions.first!
         case .taboo:
+            isShowingNextTeamBoard = true
+            tabooQuestions = gameMode.tabooQuestions
             tabooQuestions.shuffle()
             currentTabooQuestion = tabooQuestions.first!
+            timeElapsed = 0
             timer.fire()
         }
     }
@@ -226,5 +259,9 @@ final class PlayersViewModel: ObservableObject {
         currentPlayers = []
         removedPlayers = []
         playersWithPlaces = []
+        
+        teams = []
+        currentTeam = nil
+        teamsWithPlaces = []
     }
 }

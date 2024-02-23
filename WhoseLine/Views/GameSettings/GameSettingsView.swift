@@ -10,10 +10,7 @@ import SwiftUI
 struct GameSettingsView: View {
     @EnvironmentObject var playersVM: PlayersViewModel
     var gameMode: GameMode
-    @State var numberOfLivesOptionIndex: Int? = 2
-    @State var numberOfCardsOptionIndex: Int? = 2
-    @State var numberOfRoundsOptionIndex: Int? = 0
-    @State var timeOfRoundOptionIndex: Int? = 1
+    @State var gameSettings: GameSettings = GameSettings()
     var body: some View {
         ZStack {
             Color.theme.background.ignoresSafeArea()
@@ -23,7 +20,7 @@ struct GameSettingsView: View {
                 Text(gameMode.rulesDescription)
                     .padding(.bottom)
                 Text("Minimum number of players: \(minimumNumberOfPlayers)")
-                settings
+                settingsView
                 Spacer()
                 nextButton
             }
@@ -38,24 +35,18 @@ struct GameSettingsView: View {
 }
 
 #Preview("Taboo") {
-    NavigationStack {
-        GameSettingsView(gameMode: .taboo)
-            .environmentObject(PlayersViewModel())
-    }
+    GameSettingsView(gameMode: .taboo)
+        .environmentObject(PlayersViewModel())
 }
 
 #Preview("Scenes From a Hat") {
-    NavigationStack {
-        GameSettingsView(gameMode: .scenesFromAHat)
-            .environmentObject(PlayersViewModel())
-    }
+    GameSettingsView(gameMode: .scenesFromAHat)
+        .environmentObject(PlayersViewModel())
 }
 
 #Preview("Truth or Dare") {
-    NavigationStack {
-        GameSettingsView(gameMode: .truthOrDare)
-            .environmentObject(PlayersViewModel())
-    }
+    GameSettingsView(gameMode: .truthOrDare)
+        .environmentObject(PlayersViewModel())
 }
 
 extension GameSettingsView {
@@ -83,7 +74,7 @@ extension GameSettingsView {
         }
     }
     
-    private var settings: some View {
+    private var settingsView: some View {
         VStack {
             switch gameMode {
             case .scenesFromAHat:
@@ -91,7 +82,7 @@ extension GameSettingsView {
                 VStack {
                     HStack {
                         Text("Number of lives: ")
-                        CustomPickerView(collection:                     livesOptions, selectedIndex: $numberOfLivesOptionIndex)
+                        CustomPickerView(collection:                     livesOptions, selectedItem: $playersVM.settings.numberOfLivesString)
                     }
                 }
             case .truthOrDare:
@@ -100,11 +91,11 @@ extension GameSettingsView {
                 VStack {
                     HStack {
                         Text("Number of cards: ")
-                        CustomPickerView(collection:                     numberOfCardsOptions, selectedIndex: $numberOfCardsOptionIndex)
+                        CustomPickerView(collection:                     numberOfCardsOptions, selectedItem: $playersVM.settings.numberOfCardsString)
                     }
                     HStack {
                         Text("Number of lives: ")
-                        CustomPickerView(collection:                     livesOptions, selectedIndex: $numberOfLivesOptionIndex)
+                        CustomPickerView(collection:                     livesOptions, selectedItem: $playersVM.settings.numberOfLivesString)
                     }
                 }
             case .taboo:
@@ -113,11 +104,11 @@ extension GameSettingsView {
                 VStack {
                     HStack {
                         Text("Number of rounds: ")
-                        CustomPickerView(collection:                     numberOfRoundsOptions, selectedIndex: $numberOfRoundsOptionIndex)
+                        CustomPickerView(collection:                     numberOfRoundsOptions, selectedItem: $playersVM.settings.numberOfRoundsString)
                     }
                     HStack {
                         Text("Time of round: ")
-                        CustomPickerView(collection:                     timeOfRoundOptions, selectedIndex: $timeOfRoundOptionIndex)
+                        CustomPickerView(collection:                     timeOfRoundOptions, selectedItem: $playersVM.settings.timeOfRoundString)
                     }
                 }
             }

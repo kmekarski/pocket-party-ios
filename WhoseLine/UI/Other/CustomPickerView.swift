@@ -9,7 +9,8 @@ import SwiftUI
 
 struct CustomPickerView: View {
     var collection: [String]
-    @Binding var selectedIndex: Int?
+    @Binding var selectedItem: String?
+    @State var selectedIndex: Int?
     var itemSize: CGFloat = 40
     var highlightSize: CGFloat = 48
 
@@ -30,12 +31,18 @@ struct CustomPickerView: View {
                         .onTapGesture {
                             withAnimation(.linear(duration: 0.2)) {
                                 selectedIndex = index
+                                selectedItem = collection[index]
                             }
                         }
                 }
             }
             .frame(height: 30)
             .padding()
+        }
+        .onAppear() {
+            selectedIndex = collection.firstIndex(where: { el in
+                el == selectedItem
+            })
         }
     }
 }
@@ -46,7 +53,7 @@ struct CustomPickerView: View {
     }
     return ZStack {
         Color.theme.background.ignoresSafeArea()
-        CustomPickerView(collection: allEmojis, selectedIndex: .constant(1))
+        CustomPickerView(collection: allEmojis, selectedItem: .constant(allEmojis[1]))
     }
 }
 
@@ -54,7 +61,7 @@ struct CustomPickerView: View {
     let collection = ["1", "2", "3"]
     return ZStack {
         Color.theme.background.ignoresSafeArea()
-        CustomPickerView(collection: collection, selectedIndex: .constant(1))
+        CustomPickerView(collection: collection, selectedItem: .constant("1"))
     }
 }
 

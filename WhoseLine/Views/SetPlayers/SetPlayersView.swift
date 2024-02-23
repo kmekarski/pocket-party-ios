@@ -12,7 +12,7 @@ struct SetPlayersView: View {
     @EnvironmentObject var playersVM: PlayersViewModel
     @State var showAddPlayerModel: Bool = false
     @State var newPlayerName: String = ""
-    @State var selectedThemeIndex: Int?
+    @State var selectedTheme: String?
     @State var selectedTeamIndex: Int?
     @State var selectedPlayerInTeamIndex: Int?
     var body: some View {
@@ -72,7 +72,7 @@ extension SetPlayersView {
     }
     
     private var isPlayerValid: Bool {
-        return !newPlayerName.isEmpty && selectedThemeIndex != nil
+        return !newPlayerName.isEmpty && selectedTheme != nil
     }
     
     private var isEverythingValid: Bool {
@@ -177,11 +177,14 @@ extension SetPlayersView {
         return VStack {
             RegularTextFieldView(title: "Name:", text: $newPlayerName)
             Divider()
-            CustomPickerView(collection: emojis, selectedIndex: $selectedThemeIndex)
+            CustomPickerView(collection: emojis, selectedItem: $selectedTheme)
             Spacer()
             Button(action: {
-                guard isPlayerValid else { return }
-                let newPlayerTheme = PlayerTheme.allCases[selectedThemeIndex!]
+                guard isPlayerValid,
+                      let newPlayerTheme = PlayerTheme.allCases.first(where: { theme in
+                          theme.emoji == selectedTheme
+                      }) else { return }
+                
                 switch gameMode.setBeforeGame {
                 case .players:
                     playersVM.addPlayer(name: newPlayerName, theme: newPlayerTheme)
@@ -192,49 +195,13 @@ extension SetPlayersView {
                     playersVM.addPlayerInTeam(teamIndex: selectedTeamIndex, playerInTeamIndex: selectedPlayerInTeamIndex, name: newPlayerName, theme: newPlayerTheme)
                 }
                 newPlayerName = ""
-                selectedThemeIndex = nil
+                selectedTheme = nil
                 self.selectedTeamIndex = nil
                 self.selectedPlayerInTeamIndex = nil
                 showAddPlayerModel = false
             }, label: {
                 WideButtonView("Add", disabled: !isPlayerValid, colorScheme: .primary)
             })
-        }
-    }
-    
-    private var emojiWidth: CGFloat { 40 }
-    private var highlightSize: CGFloat { 48 }
-    
-    private var emojiHighlightOffset: CGFloat {
-        if let index = selectedThemeIndex {
-            return CGFloat(-2.5*emojiWidth + CGFloat(index) * emojiWidth)
-        }
-        return 0
-    }
-    
-    private var emojiPicker: some View {
-        ZStack {
-            if selectedThemeIndex != nil {
-                Rectangle()
-                    .foregroundColor(.white.opacity(0.3))
-                    .frame(width: highlightSize, height: highlightSize)
-                    .cornerRadius(10)
-                    .offset(x: emojiHighlightOffset)
-            }
-            HStack(spacing: 0) {
-                ForEach(0..<PlayerTheme.allCases.count, id: \.self) { index in
-                    Text(PlayerTheme.allCases[index].emoji)
-                        .font(.system(size: selectedThemeIndex == index ? 36 : 24))
-                        .frame(minWidth: emojiWidth)
-                        .onTapGesture {
-                            withAnimation(.linear(duration: 0.2)) {
-                                selectedThemeIndex = index
-                            }
-                        }
-                }
-            }
-            .frame(height: 30)
-            .padding()
         }
     }
 }

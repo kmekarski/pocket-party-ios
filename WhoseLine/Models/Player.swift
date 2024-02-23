@@ -12,4 +12,8 @@ struct Player: Identifiable {
     var name: String
     var theme: PlayerTheme
     var lives: Int
+    
+    mutating func setLives(_ numberOfLives: Int) {
+        self.lives = numberOfLives
+    }
 }

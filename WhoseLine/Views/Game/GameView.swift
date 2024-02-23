@@ -31,6 +31,9 @@ struct GameView: View {
                 }
             }
             GameInfoModalView(isShowing: $showInfo, title: gameMode.title, description: gameMode.rulesDescription)
+            if gameMode == .taboo && playersVM.isShowingNextTeamBoard {
+                nextTeamBoard
+            }
         }
         .navigationBarBackButtonHidden(true)
         .onAppear() {
@@ -411,7 +414,7 @@ extension GameView {
     }
     
     private var timer: some View {
-        Text((playersVM.tabooRoundTime - playersVM.timeElapsed).asClockString())
+        Text((playersVM.settings.timeOfRound - playersVM.timeElapsed).asClockString())
             .foregroundColor(.white)
             .font(.system(size: 22, weight: .semibold))
             .padding()
@@ -439,6 +442,21 @@ extension GameView {
             })
         }
         .padding(.horizontal, 24)
+    }
+    
+    private var nextTeamBoard: some View {
+        ZStack {
+            Color.theme.background.ignoresSafeArea()
+            VStack {
+                Text("Next team")
+                Text("Prepare to play")
+                Button(action: {
+                    playersVM.nextTabooTeam()
+                }, label: {
+                    WideButtonView("Start", size: .big, colorScheme: .secondary)
+                })
+            }
+        }
     }
     
     private func swipeCard() {

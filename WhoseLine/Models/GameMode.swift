@@ -113,7 +113,21 @@ enum GameMode: String, CaseIterable {
                 TruthOrDareQuestion(truth: "Truth 4", dare: "Dare 4"),
                 TruthOrDareQuestion(truth: "Truth 5", dare: "Dare 5"),
                 TruthOrDareQuestion(truth: "Truth 6", dare: "Dare 6"),
-                TruthOrDareQuestion(truth: "Truth 7", dare: "Dare 7")
+                TruthOrDareQuestion(truth: "Truth 7", dare: "Dare 7"),
+                TruthOrDareQuestion(truth: "Truth 8", dare: "Dare 8"),
+                TruthOrDareQuestion(truth: "Truth 9", dare: "Dare 9"),
+                TruthOrDareQuestion(truth: "Truth 10", dare: "Dare 10"),
+                TruthOrDareQuestion(truth: "Truth 11", dare: "Dare 11"),
+                TruthOrDareQuestion(truth: "Truth 12", dare: "Dare 12"),
+                TruthOrDareQuestion(truth: "Truth 13", dare: "Dare 13"),
+                TruthOrDareQuestion(truth: "Truth 14", dare: "Dare 14"),
+                TruthOrDareQuestion(truth: "Truth 15", dare: "Dare 15"),
+                TruthOrDareQuestion(truth: "Truth 16", dare: "Dare 16"),
+                TruthOrDareQuestion(truth: "Truth 17", dare: "Dare 17"),
+                TruthOrDareQuestion(truth: "Truth 18", dare: "Dare 18"),
+                TruthOrDareQuestion(truth: "Truth 19", dare: "Dare 19"),
+                TruthOrDareQuestion(truth: "Truth 20", dare: "Dare 20"),
+                TruthOrDareQuestion(truth: "Truth 21", dare: "Dare 21"),
             ]
         case .taboo:
             return []

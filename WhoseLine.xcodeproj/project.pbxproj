@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A70438A22B88C9A6007D3B73 /* GameSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70438A12B88C9A6007D3B73 /* GameSettings.swift */; };
 		A704D3FF2B7F88D20005F8A5 /* IconButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A704D3FE2B7F88D20005F8A5 /* IconButtonView.swift */; };
 		A704D4022B7F8BDC0005F8A5 /* MainMenuOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A704D4012B7F8BDC0005F8A5 /* MainMenuOptionView.swift */; };
 		A704D4092B7F93520005F8A5 /* ModalWithImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A704D4082B7F93520005F8A5 /* ModalWithImageView.swift */; };
@@ -54,6 +55,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A70438A12B88C9A6007D3B73 /* GameSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettings.swift; sourceTree = "<group>"; };
 		A704D3FE2B7F88D20005F8A5 /* IconButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconButtonView.swift; sourceTree = "<group>"; };
 		A704D4012B7F8BDC0005F8A5 /* MainMenuOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuOptionView.swift; sourceTree = "<group>"; };
 		A704D4082B7F93520005F8A5 /* ModalWithImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalWithImageView.swift; sourceTree = "<group>"; };
@@ -213,6 +215,7 @@
 				A76BDF842B867A1300019FA4 /* PlayerWithPlace.swift */,
 				A76BDF882B86C3D100019FA4 /* Team.swift */,
 				A76BDF8A2B86C44900019FA4 /* TeamWithPlace.swift */,
+				A70438A12B88C9A6007D3B73 /* GameSettings.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -415,6 +418,7 @@
 				A7138D312B7B938B0031B709 /* GameView.swift in Sources */,
 				A74A32822B82898400438E8C /* CustomShadowModifier.swift in Sources */,
 				A7138D232B7B8D060031B709 /* AppState.swift in Sources */,
+				A70438A22B88C9A6007D3B73 /* GameSettings.swift in Sources */,
 				A74A32612B823A2700438E8C /* GameInfoModalView.swift in Sources */,
 				A76BDF872B86BC1C00019FA4 /* Int.swift in Sources */,
 				A74A326A2B82618800438E8C /* SetPlayersView.swift in Sources */,

@@ -92,10 +92,10 @@ extension GameOverView {
                         .frame(maxWidth: .infinity, alignment: .trailing)
                         .padding(.trailing)
                     HStack(spacing: 0) {
-                        ForEach(0..<3, id: \.self) { index in
+                        ForEach(0..<playersVM.settings.numberOfLives, id: \.self) { index in
                             Image(systemName: "heart.fill")
                                 .font(.system(size: 20))
-                                .foregroundColor(player.lives > 2 - index ? .theme.accent : .gray)
+                                .foregroundColor(player.lives > playersVM.settings.numberOfLives - 1 - index ? .theme.accent : .gray)
                         }
                     }
                     .frame(width: 50)
