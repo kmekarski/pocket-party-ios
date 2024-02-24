@@ -37,7 +37,7 @@ struct ModalView<Content: View>: View {
                         content
                             .padding(24)
                             .frame(maxWidth: .infinity)
-                            .background(Color.theme.background)
+                            .background(Color.theme.colorfulBackground)
                             .cornerRadius(20, corners: [.bottomLeft, .bottomRight])
                             .customShadow(.subtleDownShadow)
                     }

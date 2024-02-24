@@ -13,7 +13,7 @@ struct GameSettingsView: View {
     @State var gameSettings: GameSettings = GameSettings()
     var body: some View {
         ZStack {
-            Color.theme.background.ignoresSafeArea()
+            Color.theme.colorfulBackground.ignoresSafeArea()
             VStack {
                 header
                 Text(gameMode.rulesDescription)

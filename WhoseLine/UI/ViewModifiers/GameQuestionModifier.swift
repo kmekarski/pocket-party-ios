@@ -27,7 +27,7 @@ struct GameQuestionModifier: ViewModifier {
                 .frame(height: 150)
                 .background(
                     RoundedRectangle(cornerSize: CGSize(width: 24, height: 24))
-                        .fill(.shadow(.inner(color: .black.opacity(0.15), radius: 6)))
+                        .fill(.shadow(.inner(color: .black.opacity(0.25), radius: 6)))
                         .foregroundColor(.white)
                 )
                     .cornerRadius(24)
@@ -64,7 +64,7 @@ struct GameQuestionModifier: ViewModifier {
                 .frame(height: 280)
                 .background(
                     RoundedRectangle(cornerSize: CGSize(width: 24, height: 24))
-                        .fill(.shadow(.inner(color: .black.opacity(0.15), radius: 6)))
+                        .fill(.shadow(.inner(color: .black.opacity(0.25), radius: 6)))
                         .foregroundColor(.white)
                 )
                     .cornerRadius(24)

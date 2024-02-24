@@ -13,6 +13,7 @@
 		A70438BE2B895660007D3B73 /* ShantellSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A70438B22B89565F007D3B73 /* ShantellSans-SemiBold.ttf */; };
 		A70438BF2B895660007D3B73 /* ShantellSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A70438B32B89565F007D3B73 /* ShantellSans-Regular.ttf */; };
 		A70438CB2B89597C007D3B73 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70438CA2B89597C007D3B73 /* Font.swift */; };
+		A70438CD2B8A1492007D3B73 /* BackgroundImageModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A70438CC2B8A1492007D3B73 /* BackgroundImageModifier.swift */; };
 		A704D3FF2B7F88D20005F8A5 /* IconButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A704D3FE2B7F88D20005F8A5 /* IconButtonView.swift */; };
 		A704D4022B7F8BDC0005F8A5 /* MainMenuOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A704D4012B7F8BDC0005F8A5 /* MainMenuOptionView.swift */; };
 		A7138D0D2B7B8C2E0031B709 /* WhoseLineApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7138D0C2B7B8C2E0031B709 /* WhoseLineApp.swift */; };
@@ -66,6 +67,7 @@
 		A70438B22B89565F007D3B73 /* ShantellSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ShantellSans-SemiBold.ttf"; sourceTree = "<group>"; };
 		A70438B32B89565F007D3B73 /* ShantellSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ShantellSans-Regular.ttf"; sourceTree = "<group>"; };
 		A70438CA2B89597C007D3B73 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
+		A70438CC2B8A1492007D3B73 /* BackgroundImageModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundImageModifier.swift; sourceTree = "<group>"; };
 		A704D3FE2B7F88D20005F8A5 /* IconButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconButtonView.swift; sourceTree = "<group>"; };
 		A704D4012B7F8BDC0005F8A5 /* MainMenuOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuOptionView.swift; sourceTree = "<group>"; };
 		A7138D092B7B8C2E0031B709 /* WhoseLine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhoseLine.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -327,6 +329,7 @@
 				A76BDF6C2B84C41A00019FA4 /* ViewTitleModifier.swift */,
 				A76BDF732B85108500019FA4 /* MoveFromEdgeTransitionModifier.swift */,
 				A76BDF752B860EC600019FA4 /* GameQuestionModifier.swift */,
+				A70438CC2B8A1492007D3B73 /* BackgroundImageModifier.swift */,
 			);
 			path = ViewModifiers;
 			sourceTree = "<group>";
@@ -441,6 +444,7 @@
 				A74A32722B82675000438E8C /* Player.swift in Sources */,
 				A74A32672B82606D00438E8C /* QuestionsManager.swift in Sources */,
 				A7138D312B7B938B0031B709 /* GameView.swift in Sources */,
+				A70438CD2B8A1492007D3B73 /* BackgroundImageModifier.swift in Sources */,
 				A74A32822B82898400438E8C /* CustomShadowModifier.swift in Sources */,
 				A7138D232B7B8D060031B709 /* AppState.swift in Sources */,
 				A70438A22B88C9A6007D3B73 /* GameSettings.swift in Sources */,

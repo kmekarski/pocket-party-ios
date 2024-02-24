@@ -12,11 +12,9 @@ struct MainMenuView: View {
     @State var showSettings: Bool = false
     var body: some View {
         ZStack {
-            Color.theme.background.ignoresSafeArea()
             ScrollView {
                 VStack {
                     header
-                        .padding(.bottom, 8)
                     menuButtons
                 }
                 .padding(.top)
@@ -24,6 +22,7 @@ struct MainMenuView: View {
             }
             SettingsModalView(isShowing: $showSettings)
         }
+        .partyImageBackground()
     }
 }
 
@@ -44,7 +43,7 @@ extension MainMenuView {
             Image("MainLogo")
                 .resizable()
                 .scaledToFit()
-                .frame(height: 156)
+                .frame(height: 140)
             Spacer()
             Button {
                 showSettings.toggle()

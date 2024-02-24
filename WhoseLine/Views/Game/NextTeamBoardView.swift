@@ -12,8 +12,8 @@ struct NextTeamBoardView: View {
     var body: some View {
         ZStack {
             if playersVM.gameMode == .taboo && playersVM.isShowingNextTeamBoard {
-                Color.theme.background.ignoresSafeArea()
-                SpinningSpotlightView()
+                Color.theme.colorfulBackground.ignoresSafeArea()
+                SpinningSpotlightView(speed: 10)
                 VStack {
                     Text("Round \(playersVM.currentRoundIndex)/\(playersVM.settings.numberOfRounds)")
                         .padding(.top)

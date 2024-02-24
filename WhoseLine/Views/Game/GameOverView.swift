@@ -11,7 +11,7 @@ struct GameOverView: View {
     @EnvironmentObject var playersVM: PlayersViewModel
     var body: some View {
         ZStack {
-            Color.theme.background.ignoresSafeArea()
+            Color.theme.colorfulBackground.ignoresSafeArea()
             SpinningSpotlightView(speed: 10)
                 .offset(y: 60)
             VStack(spacing: 24) {

@@ -15,7 +15,7 @@ struct GameInfoModalView: View {
         ModalView(isShowing: $isShowing, title: title) {
             VStack {
                 Text(description)
-                    .font(.custom())
+                    .font(.custom(size: 20))
                     .foregroundColor(.theme.primaryText)
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)

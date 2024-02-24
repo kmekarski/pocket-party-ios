@@ -17,8 +17,8 @@ struct SetPlayersView: View {
     @State var selectedPlayerInTeamIndex: Int?
     var body: some View {
         ZStack {
+            Color.theme.colorfulBackground.ignoresSafeArea()
             if let gameMode = playersVM.gameMode {
-                Color.theme.background.ignoresSafeArea()
                 VStack {
                     header
                     playersList
@@ -141,21 +141,27 @@ extension SetPlayersView {
         return VStack {
             if let gameMode = playersVM.gameMode {
                 Spacer()
-                Text(collectionCount == 0 ?  "No \(gameMode.setBeforeGame.rawValue) set to play" : "We need \(gameMode.minimumPlayers) or more \(gameMode.setBeforeGame.rawValue)")
-                    .font(.custom(size: 24))
-                    .padding(.bottom, 4)
-                Button(action: {
-                    switch gameMode.setBeforeGame {
-                    case .players:
-                        showAddPlayerModel = true
-                    case .teams:
-                        playersVM.addTeam()
-                    }
-                }, label: {
-                    Text("Let's add some!")
-                        .font(.custom(size: 28, weight: .semibold))
-                        .foregroundColor(.theme.accent)
-                })
+                VStack {
+                    Text(collectionCount == 0 ?  "No \(gameMode.setBeforeGame.rawValue) set to play" : "We need \(gameMode.minimumPlayers) or more \(gameMode.setBeforeGame.rawValue)")
+                        .font(.custom(size: 24))
+                        .padding(.bottom, 4)
+                    Button(action: {
+                        switch gameMode.setBeforeGame {
+                        case .players:
+                            showAddPlayerModel = true
+                        case .teams:
+                            playersVM.addTeam()
+                        }
+                    }, label: {
+                        Text("Let's add some!")
+                            .font(.custom(size: 28, weight: .semibold))
+                            .foregroundColor(.theme.accent)
+                    })
+                }
+                .padding()
+                .background(Material.regular)
+                .cornerRadius(12)
+                .customShadow(.subtleDownShadow)
                 Spacer()
             }
         }

@@ -36,7 +36,7 @@ enum PlayerTheme: CaseIterable {
     var textColor: Color {
         switch self {
         case .playful, .sportsy, .animal:
-            return .black
+            return .theme.primaryText
         case .dark, .artsy, .futuristic:
             return .white
         }
