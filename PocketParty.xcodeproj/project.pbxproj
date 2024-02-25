@@ -72,7 +72,7 @@
 		A70438CF2B8A27E8007D3B73 /* ConfettiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiView.swift; sourceTree = "<group>"; };
 		A704D3FE2B7F88D20005F8A5 /* IconButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconButtonView.swift; sourceTree = "<group>"; };
 		A704D4012B7F8BDC0005F8A5 /* MainMenuOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuOptionView.swift; sourceTree = "<group>"; };
-		A7138D092B7B8C2E0031B709 /* WhoseLine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhoseLine.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A7138D092B7B8C2E0031B709 /* PocketParty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PocketParty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7138D0C2B7B8C2E0031B709 /* WhoseLineApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhoseLineApp.swift; sourceTree = "<group>"; };
 		A7138D102B7B8C2F0031B709 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A7138D132B7B8C2F0031B709 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -168,7 +168,7 @@
 		A7138D002B7B8C2E0031B709 = {
 			isa = PBXGroup;
 			children = (
-				A7138D0B2B7B8C2E0031B709 /* WhoseLine */,
+				A7138D0B2B7B8C2E0031B709 /* PocketParty */,
 				A7138D0A2B7B8C2E0031B709 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -176,12 +176,12 @@
 		A7138D0A2B7B8C2E0031B709 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A7138D092B7B8C2E0031B709 /* WhoseLine.app */,
+				A7138D092B7B8C2E0031B709 /* PocketParty.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A7138D0B2B7B8C2E0031B709 /* WhoseLine */ = {
+		A7138D0B2B7B8C2E0031B709 /* PocketParty */ = {
 			isa = PBXGroup;
 			children = (
 				A70438AD2B895644007D3B73 /* Fonts */,
@@ -197,7 +197,7 @@
 				A7138D122B7B8C2F0031B709 /* Preview Content */,
 				A74A32622B825F1F00438E8C /* Localizable.xcstrings */,
 			);
-			path = WhoseLine;
+			path = PocketParty;
 			sourceTree = "<group>";
 		};
 		A7138D122B7B8C2F0031B709 /* Preview Content */ = {
@@ -365,9 +365,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A7138D082B7B8C2E0031B709 /* WhoseLine */ = {
+		A7138D082B7B8C2E0031B709 /* PocketParty */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A7138D172B7B8C2F0031B709 /* Build configuration list for PBXNativeTarget "WhoseLine" */;
+			buildConfigurationList = A7138D172B7B8C2F0031B709 /* Build configuration list for PBXNativeTarget "PocketParty" */;
 			buildPhases = (
 				A7138D052B7B8C2E0031B709 /* Sources */,
 				A7138D062B7B8C2E0031B709 /* Frameworks */,
@@ -377,9 +377,9 @@
 			);
 			dependencies = (
 			);
-			name = WhoseLine;
+			name = PocketParty;
 			productName = WhoseLine;
-			productReference = A7138D092B7B8C2E0031B709 /* WhoseLine.app */;
+			productReference = A7138D092B7B8C2E0031B709 /* PocketParty.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -411,7 +411,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A7138D082B7B8C2E0031B709 /* WhoseLine */,
+				A7138D082B7B8C2E0031B709 /* PocketParty */,
 			);
 		};
 /* End PBXProject section */
@@ -613,11 +613,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"WhoseLine/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"PocketParty/Preview Content\"";
 				DEVELOPMENT_TEAM = U567PBZ4LV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = WhoseLine/Info.plist;
+				INFOPLIST_FILE = PocketParty/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -628,7 +628,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.kmekarski.WhoseLine;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kmekarski.PocketParty;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -643,11 +643,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"WhoseLine/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"PocketParty/Preview Content\"";
 				DEVELOPMENT_TEAM = U567PBZ4LV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = WhoseLine/Info.plist;
+				INFOPLIST_FILE = PocketParty/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -658,7 +658,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.kmekarski.WhoseLine;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kmekarski.PocketParty;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -678,7 +678,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A7138D172B7B8C2F0031B709 /* Build configuration list for PBXNativeTarget "WhoseLine" */ = {
+		A7138D172B7B8C2F0031B709 /* Build configuration list for PBXNativeTarget "PocketParty" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A7138D182B7B8C2F0031B709 /* Debug */,

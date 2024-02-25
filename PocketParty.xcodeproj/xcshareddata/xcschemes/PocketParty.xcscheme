@@ -16,8 +16,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A7138D082B7B8C2E0031B709"
-               BuildableName = "WhoseLine.app"
-               BlueprintName = "WhoseLine"
+               BuildableName = "PocketParty.app"
+               BlueprintName = "PocketParty"
                ReferencedContainer = "container:PocketParty.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,8 +45,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A7138D082B7B8C2E0031B709"
-            BuildableName = "WhoseLine.app"
-            BlueprintName = "WhoseLine"
+            BuildableName = "PocketParty.app"
+            BlueprintName = "PocketParty"
             ReferencedContainer = "container:PocketParty.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -62,8 +62,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A7138D082B7B8C2E0031B709"
-            BuildableName = "WhoseLine.app"
-            BlueprintName = "WhoseLine"
+            BuildableName = "PocketParty.app"
+            BlueprintName = "PocketParty"
             ReferencedContainer = "container:PocketParty.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
