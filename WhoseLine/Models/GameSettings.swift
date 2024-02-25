@@ -9,9 +9,9 @@ import Foundation
 
 struct GameSettings {
     private let defaultNumberOfLives = 2
-    private let defaultNumberOfCards = 10
+    private let defaultNumberOfCards = 15
     private let defaultNumberOfRounds = 2
-    private let defaultTimeOfRound = 20
+    private let defaultTimeOfRound = 30
     
     var numberOfLivesString: String?
     var numberOfCardsString: String?
