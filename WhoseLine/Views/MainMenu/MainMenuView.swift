@@ -17,14 +17,14 @@ struct MainMenuView: View {
                     header
                     menuButtons
                 }
+            }
                 .padding(.top)
                 .padding(.horizontal)
-            }
             SettingsModalView(isShowing: $showSettings)
         }
         .background(
             ZStack {
-                Color.theme.background.ignoresSafeArea()
+                Color.theme.colorfulBackground.ignoresSafeArea()
                 ConfettiView().ignoresSafeArea()
             }
         )

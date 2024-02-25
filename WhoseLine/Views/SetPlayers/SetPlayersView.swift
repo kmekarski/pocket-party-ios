@@ -143,7 +143,7 @@ extension SetPlayersView {
                 Spacer()
                 VStack {
                     Text(collectionCount == 0 ?  "No \(gameMode.setBeforeGame.rawValue) set to play" : "We need \(gameMode.minimumPlayers) or more \(gameMode.setBeforeGame.rawValue)")
-                        .font(.custom(size: 24))
+                        .font(.custom(size: 22))
                         .padding(.bottom, 4)
                     Button(action: {
                         switch gameMode.setBeforeGame {
@@ -159,9 +159,11 @@ extension SetPlayersView {
                     })
                 }
                 .padding()
+                .frame(maxWidth: .infinity)
                 .background(Material.regular)
                 .cornerRadius(12)
                 .customShadow(.subtleDownShadow)
+                .padding(32)
                 Spacer()
             }
         }
@@ -169,7 +171,7 @@ extension SetPlayersView {
     
     private var startButton: some View {
         VStack {
-            if let gameMode = playersVM.gameMode {
+            if playersVM.gameMode != nil {
                 NavigationLink(value: "game") {
                     WideButtonView("Start Game", disabled: !isEverythingValid, size: .big, colorScheme: .primary)
                 }

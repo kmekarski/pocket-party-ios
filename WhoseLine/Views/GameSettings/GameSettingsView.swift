@@ -42,7 +42,7 @@ struct GameSettingsView: View {
 }
 
 #Preview("Scenes From a Hat") {
-    GameSettingsView(gameMode: .scenesFromAHat)
+    GameSettingsView(gameMode: .questionsOnly)
         .environmentObject(PlayersViewModel())
 }
 
@@ -91,7 +91,7 @@ extension GameSettingsView {
             }
             .padding(.bottom)
             switch gameMode {
-            case .scenesFromAHat:
+            case .questionsOnly:
                 let livesOptions = ["1", "2", "3"]
                 VStack {
                     HStack {
@@ -139,7 +139,7 @@ extension GameSettingsView {
             }
         }
         .font(.custom(size: 20, weight: .regular))
-        .frame(maxWidth: 320)
+        .frame(maxWidth: 330)
     }
     
     private var nextButton: some View {

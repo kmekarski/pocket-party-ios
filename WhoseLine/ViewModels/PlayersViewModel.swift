@@ -23,14 +23,14 @@ final class PlayersViewModel: ObservableObject {
     @Published var currentRoundIndex: Int = 1
     private var currentSubRoundIndex: Int = 1
     
-    //Questions
-    @Published var currentQuestionIndex = 0
-    @Published var currentQuestion: String = ""
-    @Published var currentTruthOrDareQuestion: TruthOrDareQuestion = TruthOrDareQuestion(truth: "", dare: "")
-    @Published var currentTabooQuestion: TabooQuestion = TabooQuestion(wordToGuess: "", forbiddenWords: [""])
-    @Published var questions: [String] = []
-    @Published var truthOrDareQuestions: [TruthOrDareQuestion] = []
-    @Published var tabooQuestions: [TabooQuestion] = []
+    // Cards
+    @Published var currentCardIndex = 0
+    @Published var currentQuestionsOnlyPrompt: String = ""
+    @Published var currentTruthOrDareCard: TruthOrDareCard = TruthOrDareCard(truth: "", dare: "")
+    @Published var currentTabooCard: TabooCard = TabooCard(wordToGuess: "", forbiddenWords: [""])
+    @Published var questionsOnlyPrompts: [String] = []
+    @Published var truthOrDareCards: [TruthOrDareCard] = []
+    @Published var tabooCards: [TabooCard] = []
     
     // Players
     @Published var players: [Player] = []
@@ -201,24 +201,24 @@ final class PlayersViewModel: ObservableObject {
     func nextQuestion() {
         guard let gameMode = gameMode else { return }
         switch gameMode {
-        case .scenesFromAHat:
-            if currentQuestionIndex < questions.count - 1 {
-                currentQuestionIndex += 1
-                currentQuestion = questions[currentQuestionIndex]
+        case .questionsOnly:
+            if currentCardIndex < questionsOnlyPrompts.count - 1 {
+                currentCardIndex += 1
+                currentQuestionsOnlyPrompt = questionsOnlyPrompts[currentCardIndex]
             } else {
                 endGame()
             }
         case .truthOrDare:
-            if currentQuestionIndex < truthOrDareQuestions.count - 1 {
-                currentQuestionIndex += 1
-                currentTruthOrDareQuestion = truthOrDareQuestions[currentQuestionIndex]
+            if currentCardIndex < truthOrDareCards.count - 1 {
+                currentCardIndex += 1
+                currentTruthOrDareCard = truthOrDareCards[currentCardIndex]
             } else {
                 endGame()
             }
         case .taboo:
-            if currentQuestionIndex < tabooQuestions.count - 1 {
-                currentQuestionIndex += 1
-                currentTabooQuestion = tabooQuestions[currentQuestionIndex]
+            if currentCardIndex < tabooCards.count - 1 {
+                currentCardIndex += 1
+                currentTabooCard = tabooCards[currentCardIndex]
             } else {
                 endGame()
             }
@@ -245,21 +245,21 @@ final class PlayersViewModel: ObservableObject {
     
     func setUpQuestions() {
         guard let gameMode = gameMode else { return }
-        currentQuestionIndex = 0
+        currentCardIndex = 0
         switch gameMode {
-        case .scenesFromAHat:
-            questions = gameMode.questions
-            questions.shuffle()
-            currentQuestion = questions.first!
+        case .questionsOnly:
+            questionsOnlyPrompts = gameMode.questionsOnlyPrompts
+            questionsOnlyPrompts.shuffle()
+            currentQuestionsOnlyPrompt = questionsOnlyPrompts.first!
         case .truthOrDare:
-            truthOrDareQuestions = gameMode.truthOrDareQuestions
-            truthOrDareQuestions.shuffle()
-            truthOrDareQuestions = truthOrDareQuestions.suffix(settings.numberOfCards)
-            currentTruthOrDareQuestion = truthOrDareQuestions.first!
+            truthOrDareCards = gameMode.truthOrDareCards
+            truthOrDareCards.shuffle()
+            truthOrDareCards = truthOrDareCards.suffix(settings.numberOfCards)
+            currentTruthOrDareCard = truthOrDareCards.first!
         case .taboo:
-            tabooQuestions = gameMode.tabooQuestions
-            tabooQuestions.shuffle()
-            currentTabooQuestion = tabooQuestions.first!
+            tabooCards = gameMode.tabooCards
+            tabooCards.shuffle()
+            currentTabooCard = tabooCards.first!
         }
     }
     
@@ -317,16 +317,16 @@ final class PlayersViewModel: ObservableObject {
         }
         
         switch gameMode {
-        case .scenesFromAHat, .truthOrDare:
+        case .questionsOnly, .truthOrDare:
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                 self.gameIsOn = false
                 self.navPath.append(AppState.gameOver.rawValue)
-                self.currentQuestionIndex = 0
+                self.currentCardIndex = 0
             }
         case .taboo:
             self.gameIsOn = false
             self.navPath.append(AppState.gameOver.rawValue)
-            self.currentQuestionIndex = 0
+            self.currentCardIndex = 0
         }
     }
     

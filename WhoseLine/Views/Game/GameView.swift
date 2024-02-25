@@ -22,13 +22,13 @@ struct GameView: View {
                 VStack {
                     header
                     Spacer()
-                    question
+                    topCard
                     if gameMode.hasPoints {
                         pointsDisplay
                     }
                     
                     switch gameMode {
-                    case .scenesFromAHat, .truthOrDare:
+                    case .questionsOnly, .truthOrDare:
                         Spacer()
                     case .taboo:
                         tabooButtons
@@ -94,7 +94,7 @@ extension GameView {
     private func playerTitle(player: Player, playerNumber: Int) -> some View {
         VStack(spacing: 6) {
             switch gameMode {
-            case .scenesFromAHat, .taboo:
+            case .questionsOnly, .taboo:
                 Text(player.name)
                     .foregroundColor(player.theme.textColor)
                     .font(.custom(size: 24, weight: .semibold))
@@ -104,7 +104,7 @@ extension GameView {
                     .font(.custom(size: 28, weight: .semibold))
             }
             switch gameMode {
-            case .scenesFromAHat, .truthOrDare:
+            case .questionsOnly, .truthOrDare:
                 heartsDisplay(player: player)
                     .font(.custom(size: 26, weight: .semibold))
             case .taboo:
@@ -160,7 +160,7 @@ extension GameView {
                     .padding(.bottom)
             )
             
-        case .scenesFromAHat:
+        case .questionsOnly:
             return AnyView(
                 Button(action: {
                     if playersQueue.isEmpty {
@@ -236,7 +236,7 @@ extension GameView {
                         }
                     }
                     
-                case .scenesFromAHat:
+                case .questionsOnly:
                     HStack(spacing: 0) {
                         ZStack {
                             if currentPlayers.count >= 2 {
@@ -324,13 +324,13 @@ extension GameView {
         })
     }
     
-    private var question: some View {
+    private var topCard: some View {
         ZStack {
-            questionsStack
+            cardsStack
             switch(gameMode) {
-            case .scenesFromAHat:
+            case .questionsOnly:
                 AnyView(VStack{
-                    Text(playersVM.currentQuestion)
+                    Text(playersVM.currentQuestionsOnlyPrompt)
                         .font(.custom(size: 20,weight: .semibold))
                 }
                     .gameQuestionCard(.top)
@@ -339,7 +339,7 @@ extension GameView {
                 switch truthOrDarePickedState {
                 case .notPicked:
                     VStack {
-                        Text("\(playersVM.currentQuestionIndex+1) / \(playersVM.truthOrDareQuestions.count)")
+                        Text("\(playersVM.currentCardIndex+1) / \(playersVM.truthOrDareCards.count)")
                             .font(.custom(size: 16, weight: .bold))
                             .foregroundColor(.white)
                         HStack(spacing: 10) {
@@ -354,12 +354,12 @@ extension GameView {
                     .gameQuestionCard(.flippedTop)
                     
                 case .truth:
-                    Text(playersVM.currentTruthOrDareQuestion.truth)
+                    Text(playersVM.currentTruthOrDareCard.truth)
                         .font(.custom(size: 20, weight: .semibold))
                         .gameQuestionCard(.top)
                         .foldTransition(active: folds[0], direction: foldDirection)
                 case .dare:
-                    Text(playersVM.currentTruthOrDareQuestion.dare)
+                    Text(playersVM.currentTruthOrDareCard.dare)
                         .font(.custom(size: 20, weight: .semibold))
                         .gameQuestionCard(.top)
                         .foldTransition(active: folds[0], direction: foldDirection)
@@ -367,12 +367,12 @@ extension GameView {
             case .taboo:
                 AnyView(
                     ZStack {
-                        let nextQuestionIndex = playersVM.currentQuestionIndex + 1
-                        if nextQuestionIndex < playersVM.tabooQuestions.count {
-                            let nextTabooQuestion = playersVM.tabooQuestions[nextQuestionIndex]
-                            tabooCard(question: nextTabooQuestion)
+                        let nextQuestionIndex = playersVM.currentCardIndex + 1
+                        if nextQuestionIndex < playersVM.tabooCards.count {
+                            let nextTabooQuestion = playersVM.tabooCards[nextQuestionIndex]
+                            tabooCard(card: nextTabooQuestion)
                         }
-                        tabooCard(question: playersVM.currentTabooQuestion)
+                        tabooCard(card: playersVM.currentTabooCard)
                     }
                 )
             }
@@ -381,7 +381,7 @@ extension GameView {
     
     private func truthOrDareCard() -> some View {
         VStack {
-            Text("\(playersVM.currentQuestionIndex+1) / \(playersVM.truthOrDareQuestions.count)")
+            Text("\(playersVM.currentCardIndex+1) / \(playersVM.truthOrDareCards.count)")
                 .font(.custom(size: 16, weight: .bold))
                 .foregroundColor(.white)
             HStack(spacing: 10) {
@@ -396,10 +396,10 @@ extension GameView {
         .gameQuestionCard(.flippedTop)
     }
     
-    private func tabooCard(question: TabooQuestion) -> some View {
-        let isGoing = playersVM.currentTabooQuestion.wordToGuess == question.wordToGuess && cardGoingOut
+    private func tabooCard(card: TabooCard) -> some View {
+        let isGoing = playersVM.currentTabooCard.wordToGuess == card.wordToGuess && cardGoingOut
         return VStack{
-            Text(question.wordToGuess.uppercased())
+            Text(card.wordToGuess.uppercased())
                 .font(.custom(size: 22, weight: .semibold))
                 .foregroundColor(.white)
                 .frame(maxWidth: .infinity)
@@ -407,7 +407,7 @@ extension GameView {
                 .background(Color.theme.accent)
                 .cornerRadius(8)
             VStack(spacing: 12) {
-                ForEach(question.forbiddenWords, id: \.self) { word in
+                ForEach(card.forbiddenWords, id: \.self) { word in
                     Text(word.uppercased())
                         .font(.custom(size: 20, weight: .regular))
                 }
@@ -420,13 +420,13 @@ extension GameView {
         .rotationEffect(.degrees(CGFloat(isGoing ? foldDirection.rawValue * 20 : 0)))
     }
     
-    private var questionsStack: some View {
+    private var cardsStack: some View {
         switch(gameMode) {
-        case .scenesFromAHat:
+        case .questionsOnly:
             return AnyView(ZStack{})
         case .truthOrDare:
             return AnyView(ZStack {
-                ForEach(0..<playersVM.truthOrDareQuestions.count - playersVM.currentQuestionIndex, id: \.self) { index in
+                ForEach(0..<playersVM.truthOrDareCards.count - playersVM.currentCardIndex, id: \.self) { index in
                     Rectangle()
                         .gameQuestionCard(.background)
                         .rotationEffect(Angle(degrees: log2(Double(index)) + 2))
@@ -435,7 +435,7 @@ extension GameView {
             })
         case .taboo:
             return AnyView(ZStack {
-                ForEach(0..<playersVM.tabooQuestions.count - playersVM.currentQuestionIndex, id: \.self) { index in
+                ForEach(0..<playersVM.tabooCards.count - playersVM.currentCardIndex, id: \.self) { index in
                     Rectangle()
                         .gameQuestionCard(.verticalBackground)
                         .rotationEffect(Angle(degrees: log2(Double(index)) + 2))

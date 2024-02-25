@@ -12,14 +12,15 @@ struct CustomPickerView: View {
     @Binding var selectedItem: String?
     @State var selectedIndex: Int?
     var itemSize: CGFloat = 40
-    var highlightSize: CGFloat = 48
+    var highlightWidth: CGFloat = 40
+    var highlightHeight: CGFloat = 48
 
     var body: some View {
         ZStack {
             if selectedIndex != nil {
                 Rectangle()
                     .foregroundStyle(Material.thin)
-                    .frame(width: highlightSize, height: highlightSize)
+                    .frame(width: highlightWidth, height: highlightHeight)
                     .cornerRadius(10)
                     .offset(x: highlightOffset)
                     .customShadow(.subtleMiddleShadow)
@@ -27,7 +28,7 @@ struct CustomPickerView: View {
             HStack(spacing: 0) {
                 ForEach(0..<collection.count, id: \.self) { index in
                     Text(collection[index])
-                        .font(.custom(size: selectedIndex == index ? 36 : 24))
+                        .font(.custom(size: 24))
                         .frame(minWidth: itemSize)
                         .onTapGesture {
                             withAnimation(.linear(duration: 0.2)) {
@@ -58,7 +59,7 @@ struct CustomPickerView: View {
 }
 
 #Preview("Numbers") {
-    let collection = ["1", "2", "3"]
+    let collection = ["20", "30", "40"]
     return ZStack {
         Color.theme.background.ignoresSafeArea()
         CustomPickerView(collection: collection, selectedItem: .constant("1"))

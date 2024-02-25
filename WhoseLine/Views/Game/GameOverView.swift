@@ -47,7 +47,7 @@ struct GameOverView_Previews: PreviewProvider {
 extension GameOverView {
     
     private var gameMode: GameMode {
-        return playersVM.gameMode ?? .scenesFromAHat
+        return playersVM.gameMode ?? .questionsOnly
     }
     private var header: some View {
         Text("Game over!")
