@@ -12,6 +12,8 @@ struct MainMenuView: View {
     @State var showSettings: Bool = false
     var body: some View {
         ZStack {
+            Color.theme.background.ignoresSafeArea()
+            ConfettiView().ignoresSafeArea()
             ScrollView {
                 VStack {
                     header
@@ -22,7 +24,6 @@ struct MainMenuView: View {
             }
             SettingsModalView(isShowing: $showSettings)
         }
-        .partyImageBackground()
     }
 }
 
@@ -49,7 +50,6 @@ extension MainMenuView {
                 showSettings.toggle()
             } label: {
                 IconButtonView("gearshape.fill")
-                    .offset(y: 18)
             }
         }
     }
