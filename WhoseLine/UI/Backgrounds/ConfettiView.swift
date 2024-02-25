@@ -15,16 +15,17 @@ class ConfettViewModel: ObservableObject {
             withAnimation(.linear(duration: 0.5)) {
                 self.dots[index].move()
             }
-            if self.dots[index].posY > UIScreen.main.bounds.height {
+            if self.dots[index].posY - 100 > UIScreen.main.bounds.height / 2 {
                 self.dots[index].resetHeight()
             }
         }
     }
     
+    let dotsCount = 40
     
     init() {
         self.dots = []
-                for _ in 0..<40 {
+                for _ in 0..<dotsCount {
                     let dot = ConfettiDot()
                     self.dots.append(dot)
                 }
@@ -37,8 +38,8 @@ class ConfettViewModel: ObservableObject {
 struct ConfettiDot {
     var posX:  Double = Double.random(in: -UIScreen.main.bounds.width / 2 ...  UIScreen.main.bounds.width / 2)
     var posY: Double = Double.random(in: -UIScreen.main.bounds.height / 2 ...  UIScreen.main.bounds.height / 2)
-    var speed: CGFloat = Double.random(in: 30...90)
-    var size: CGFloat = Double.random(in: 8...12)
+    var speed: CGFloat = Double.random(in: 50...90)
+    var size: CGFloat = Double.random(in: 12...16)
     var color: Color = [Color.theme.logoRed, Color.theme.logoBlue, Color.theme.logoYellow].randomElement()!
     
     mutating func move() {
@@ -68,6 +69,10 @@ struct ConfettiView: View {
 }
 
 #Preview {
-    ConfettiView()
+    ZStack {
+        Color.theme.background.ignoresSafeArea()
+        ConfettiView()
+            .ignoresSafeArea()
+    }
 }
 

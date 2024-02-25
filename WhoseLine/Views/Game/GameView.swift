@@ -331,7 +331,7 @@ extension GameView {
             case .scenesFromAHat:
                 AnyView(VStack{
                     Text(playersVM.currentQuestion)
-                        .font(.custom(size: 24,weight: .semibold))
+                        .font(.custom(size: 20,weight: .semibold))
                 }
                     .gameQuestionCard(.top)
                 )
@@ -355,12 +355,12 @@ extension GameView {
                     
                 case .truth:
                     Text(playersVM.currentTruthOrDareQuestion.truth)
-                        .font(.custom(size: 24,weight: .semibold))
+                        .font(.custom(size: 20, weight: .semibold))
                         .gameQuestionCard(.top)
                         .foldTransition(active: folds[0], direction: foldDirection)
                 case .dare:
                     Text(playersVM.currentTruthOrDareQuestion.dare)
-                        .font(.custom(size: 24,weight: .semibold))
+                        .font(.custom(size: 20, weight: .semibold))
                         .gameQuestionCard(.top)
                         .foldTransition(active: folds[0], direction: foldDirection)
                 }
