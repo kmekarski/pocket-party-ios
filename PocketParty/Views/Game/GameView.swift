@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct GameView: View {
-    @EnvironmentObject var playersVM: PlayersViewModel
+    @EnvironmentObject var playersVM: GameViewModel
     @State var showInfo: Bool = false
     @State var folds: [Bool] = [false, false]
     @State var foldDirection: FoldDirection = .left
@@ -126,7 +126,7 @@ extension GameView {
                     }) && showSkipAnswerButtons {
                         Button(action: {
                             truthOrDarePickedState = .notPicked
-                            playersVM.nextQuestion()
+                            playersVM.nextCard()
                             setNewFoldDirection()
                             withAnimation(.easeIn(duration: 0.5)) {
                                 folds[0] = true
@@ -142,7 +142,7 @@ extension GameView {
                         Button(action: {
                             truthOrDarePickedState = .notPicked
                             setNewFoldDirection()
-                            playersVM.nextQuestion()
+                            playersVM.nextCard()
                             withAnimation(.easeIn(duration: 0.5)) {
                                 folds[0] = true
                             }
@@ -502,7 +502,7 @@ extension GameView {
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             cardGoingOut = false
-            playersVM.nextQuestion()
+            playersVM.nextCard()
         }
     }
 }

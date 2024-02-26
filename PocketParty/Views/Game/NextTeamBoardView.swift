@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct NextTeamBoardView: View {
-    @EnvironmentObject var playersVM: PlayersViewModel
+    @EnvironmentObject var playersVM: GameViewModel
     var body: some View {
         ZStack {
             if playersVM.gameMode == .taboo && playersVM.isShowingNextTeamBoard {

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HomeView: View {
-    @EnvironmentObject var playersVM: PlayersViewModel
+    @EnvironmentObject var playersVM: GameViewModel
     var body: some View {
         NavigationStack(path: $playersVM.navPath) {
             MainMenuView()

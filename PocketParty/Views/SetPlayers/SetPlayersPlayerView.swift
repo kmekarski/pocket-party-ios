@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SetPlayersPlayerView: View {
-    @EnvironmentObject var playersVM: PlayersViewModel
+    @EnvironmentObject var playersVM: GameViewModel
     var onXTap: () -> () = {}
     var player: Player
     var body: some View {
@@ -42,5 +42,5 @@ struct SetPlayersPlayerView: View {
         }
     }
     .padding()
-    .environmentObject(PlayersViewModel())
+    .environmentObject(GameViewModel())
 }

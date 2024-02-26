@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SetPlayersView: View {
     @Environment(\.presentationMode) var presentationMode
-    @EnvironmentObject var playersVM: PlayersViewModel
+    @EnvironmentObject var playersVM: GameViewModel
     @State var showAddPlayerModel: Bool = false
     @State var newPlayerName: String = ""
     @State var selectedTheme: String?
@@ -41,7 +41,7 @@ struct SetPlayersView: View {
 }
 
 #Preview("Truth or Dare") {
-    let playersVM = PlayersViewModel()
+    let playersVM = GameViewModel()
     playersVM.gameMode = .truthOrDare
     return NavigationStack {
         SetPlayersView()
@@ -50,7 +50,7 @@ struct SetPlayersView: View {
 }
 
 #Preview("Taboo") {
-    let playersVM = PlayersViewModel()
+    let playersVM = GameViewModel()
     playersVM.gameMode = .taboo
     return NavigationStack {
         SetPlayersView()
@@ -198,7 +198,6 @@ extension SetPlayersView {
                 switch gameMode.setBeforeGame {
                 case .players:
                     playersVM.addPlayer(name: newPlayerName, theme: newPlayerTheme)
-                    print(playersVM.tempPlayers)
                 case .teams:
                     guard let selectedTeamIndex = selectedTeamIndex,
                           let selectedPlayerInTeamIndex = selectedPlayerInTeamIndex else { return }

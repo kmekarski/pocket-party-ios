@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct GameSettingsView: View {
-    @EnvironmentObject var playersVM: PlayersViewModel
+    @EnvironmentObject var playersVM: GameViewModel
     var gameMode: GameMode
     @State var gameSettings: GameSettings = GameSettings()
     var body: some View {
@@ -38,17 +38,17 @@ struct GameSettingsView: View {
 
 #Preview("Taboo") {
     GameSettingsView(gameMode: .taboo)
-        .environmentObject(PlayersViewModel())
+        .environmentObject(GameViewModel())
 }
 
 #Preview("Scenes From a Hat") {
     GameSettingsView(gameMode: .questionsOnly)
-        .environmentObject(PlayersViewModel())
+        .environmentObject(GameViewModel())
 }
 
 #Preview("Truth or Dare") {
     GameSettingsView(gameMode: .truthOrDare)
-        .environmentObject(PlayersViewModel())
+        .environmentObject(GameViewModel())
 }
 
 extension GameSettingsView {

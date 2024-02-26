@@ -17,10 +17,10 @@ extension PreviewProvider {
 class DeveloperPreview {
     static let instance = DeveloperPreview()
     
-    let playersVM: PlayersViewModel
-    let playersVMWithSetPlayers: PlayersViewModel
-    let playersVMAfterGame: PlayersViewModel
-    var playerVMs: [GameMode: PlayersViewModel] = [:]
+    let playersVM: GameViewModel
+    let playersVMWithSetPlayers: GameViewModel
+    let playersVMAfterGame: GameViewModel
+    var playerVMs: [GameMode: GameViewModel] = [:]
     
     let players = [
         Player(id: "1", name: "John", theme: .playful, lives: 3),
@@ -59,20 +59,20 @@ class DeveloperPreview {
     ]
     
     private init() {
-        self.playersVM = PlayersViewModel()
+        self.playersVM = GameViewModel()
         
-        self.playersVMWithSetPlayers = PlayersViewModel()
+        self.playersVMWithSetPlayers = GameViewModel()
         self.playersVMWithSetPlayers.tempPlayers = players
         self.playersVMWithSetPlayers.tempTeams = teams
         
-        self.playersVMAfterGame = PlayersViewModel()
+        self.playersVMAfterGame = GameViewModel()
         self.playersVMAfterGame.setGameMode(.taboo)
         self.playersVMAfterGame.players = playersAfterGame
         self.playersVMAfterGame.playersWithPlaces = playersWithPlaces
         self.playersVMAfterGame.teamsWithPlaces = teamsWithPlaces
         
         for mode in GameMode.allCases {
-            let viewModel = PlayersViewModel()
+            let viewModel = GameViewModel()
             viewModel.setGameMode(mode)
             viewModel.tempPlayers = players
             viewModel.tempTeams = teams

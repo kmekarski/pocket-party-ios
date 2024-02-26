@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SetPlayersTeamView: View {
-    @EnvironmentObject var playersVM: PlayersViewModel
+    @EnvironmentObject var playersVM: GameViewModel
     @Binding var selectedPlayerInTeamIndex: Int?
     var team: Team
     var teamIndex: Int

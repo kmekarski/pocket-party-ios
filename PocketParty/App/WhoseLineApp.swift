@@ -9,10 +9,10 @@ import SwiftUI
 
 @main
 struct WhoseLineApp: App {
-    var playersVM: PlayersViewModel
+    var playersVM: GameViewModel
     
     init() {
-        self.playersVM = PlayersViewModel()
+        self.playersVM = GameViewModel()
     }
     var body: some Scene {
         WindowGroup {

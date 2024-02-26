@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct GameOverView: View {
-    @EnvironmentObject var playersVM: PlayersViewModel
+    @EnvironmentObject var playersVM: GameViewModel
     var body: some View {
         ZStack {
             Color.theme.colorfulBackground.ignoresSafeArea()
