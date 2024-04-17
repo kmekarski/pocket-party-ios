@@ -34,6 +34,7 @@ Next, select the players who will be participating in the game. Players play on 
 <div align="center">
   <img width="200" alt="Selecting players - empty" src="https://github.com/kmekarski/pocket-party-ios/assets/72306134/08ee761e-16f1-44dc-ad41-ae15b23e0b11">
   <img width="200" alt="Selecting players" src="https://github.com/kmekarski/pocket-party-ios/assets/72306134/4f1d3f18-2c31-4522-a931-270026748937">
+  <img width="200" alt="Selecting teams" src="https://github.com/kmekarski/pocket-party-ios/assets/72306134/e86065cf-aef3-41f2-98aa-d1e80896c25e">
 </div>
 
 #### Game modes
@@ -49,7 +50,8 @@ Each mode is presented on similar UI but offers different experience. For now, t
 2. **Truth or Dare**
   <p>This is the classic party game. Players take turns in selecting Truth to answer a question or Dare to complete a dare that appears on the card. If they refuse, they lose a heart.</p>
   <div align="center">
-    <img width="200" alt="Truth or dare game mode" src="https://github.com/kmekarski/pocket-party-ios/assets/72306134/4a105367-f66d-4188-ae30-b147851d85f4">
+    <img width="200" alt="Choose truth or dare" src="https://github.com/kmekarski/pocket-party-ios/assets/72306134/4a105367-f66d-4188-ae30-b147851d85f4">
+    <img width="200" alt="Complete the dare" src="https://github.com/kmekarski/pocket-party-ios/assets/72306134/5ae5f182-e8da-46b6-8bf3-0e1e03879037">
   </div>
    
 3. **Taboo**:
@@ -58,7 +60,7 @@ Each mode is presented on similar UI but offers different experience. For now, t
     <img width="200" alt="Taboo game mode" src="https://github.com/kmekarski/pocket-party-ios/assets/72306134/6943714c-a00e-4e80-9e2b-51a3c324b0c6">
     <img width="200" alt="Switch teams board" src="https://github.com/kmekarski/pocket-party-ios/assets/72306134/a749f32d-e64b-48ad-b6b9-66ba9948ce91">
   </div>
-  
+
 #### Game over
 When the game ends, game over screen is presented, displaying the final results, celebration animations and option to play again.
 
